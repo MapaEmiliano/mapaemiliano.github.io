@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MapaEmiliano</title>
+    <link href="https://www.cssscript.com/demo/sticky.css" rel="stylesheet" type="text/css">
+    <!-- bootstrap 5 css -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+      crossorigin="anonymous"
+    />
+    <!-- BOX ICONS CSS-->
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css"rel="stylesheet"/>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    <!-- custom css -->
+    <link rel="stylesheet" href="/assets/css/styleMain.css" />
+
+  </head>
+
+<body>
+
+    <div class="navbar d-flex flex-column text-center navCont" style="max-heigh: 1vh; background-color: #9D080D; color:white;">
+      <span class="navbar-brand mb-0 h1">MAPA-EMILIANO</span>
+        <span class="align-middle">An Interactive School Map for Emilio Aguinaldo College-Cavite</span>
+    </div>
+
+      <section class="container-fluid d-flex justify-content-center mt-5 mb-5">
+
+        <div class="row g-0 loginCont">
+
+              <div class="col-md-7 col-lg-7 d-flex lRow">
+                <img src="/imgs/eac.jpg" alt="login form" class="img-fluid">
+              </div>
+
+              <div class="col-md-5 col-lg-5 d-flex align-items-center rRow" style="background-image: url(/imgs/3047223.jpg);">
+
+                <div class="w-100 p-4 p-lg-5 text-black">
+          
+                          <div>
+                            <div class="d-flex 
+                            align-self-start align-items-center justify-content-start pb-4">
+                              <i class="fas fa-map fa-2x me-3" style="color: #9D080D;"></i>
+                              <span class="h1 fw-bold mb-0">MAPA-EMILIANO</span>
+                            </div>
+                            
+                            <h5 class="pb-4" style="letter-spacing: 1px;">Sign into your account</h5>
+          
+                            <div class="input-box">
+                              
+                              <div class="input-field">
+                                  <input type="text" class="input" id="email" required autocomplete="off">
+                                  <label for="email">Email</label>
+                              </div>
+                              <div class="input-field">
+                                  <input type="password" class="input" id="password" required>
+                                  <label for="password">Password</label>
+                              </div>
+                              <div class="input-field">
+                                  <input type="submit" id="loginBtn" class="submit" value="Sign in">
+                                  
+                              </div>
+                              <div class="signup">
+                                  <span>Dont have an account? <a href="../pages/signup.html">Sign Up</a></span>
+                              </div>
+                            </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          
+</body>
+
+<script src="assets/js/firebase.js" type="module"> </script>
+
+</html>
