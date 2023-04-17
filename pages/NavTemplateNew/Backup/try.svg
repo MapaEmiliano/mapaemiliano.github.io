@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="969" height="882" viewBox="-0.5 -0.5 969 882">
+  <path fill="#afb1ba" pointer-events="none" d="M11 6h125v870H11z"/>
+  <path d="M5.5 876V6m136 0v870m0-870" fill="none" stroke="#000" stroke-width="12" stroke-miterlimit="10" pointer-events="none"/>
+  <path fill="#afb1ba" pointer-events="none" d="M831 6h125v870H831z"/>
+  <path d="M825.5 876V6m136 0v870m0-870" fill="none" stroke="#000" stroke-width="12" stroke-miterlimit="10" pointer-events="none"/>
+  <path fill="#e39898" stroke="#000" stroke-width="10" pointer-events="none" d="M86 96h800v250H86z"/>
+  <switch transform="translate(-.5 -.5)">
+    <foreignObject style="overflow:visible;text-align:left" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="display:flex;align-items:unsafe center;justify-content:unsafe center;width:798px;height:1px;padding-top:221px;margin-left:87px">
+        <div style="box-sizing:border-box;font-size:0;text-align:center" data-drawio-colors="color: rgb(0, 0, 0);">
+          <div style="display:inline-block;font-size:12px;font-family:Helvetica;color:#000;line-height:1.2;pointer-events:none;white-space:normal;overflow-wrap:normal">
+            <b style="font-size:20px">
+              BUILDING 2
+              <br/>
+            </b>
+          </div>
+        </div>
+      </div>
+    </foreignObject>
+    <text x="486" y="225" font-family="Helvetica" font-size="12" text-anchor="middle">BUILDING 2
+</text>
+  </switch>
+  <path fill="#e39898" stroke="#000" stroke-width="10" pointer-events="none" d="M86 546h800v250H86z"/>
+  <switch transform="translate(-.5 -.5)">
+    <foreignObject style="overflow:visible;text-align:left" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="display:flex;align-items:unsafe center;justify-content:unsafe center;width:798px;height:1px;padding-top:671px;margin-left:87px">
+        <div style="box-sizing:border-box;font-size:0;text-align:center" data-drawio-colors="color: rgb(0, 0, 0);">
+          <div style="display:inline-block;font-size:12px;font-family:Helvetica;color:#000;line-height:1.2;pointer-events:none;white-space:normal;overflow-wrap:normal">
+            <font style="font-size:20px">
+              <b>
+                BUILDING 1
+              </b>
+            </font>
+          </div>
+        </div>
+      </div>
+    </foreignObject>
+    <text x="486" y="675" font-family="Helvetica" font-size="12" text-anchor="middle">BUILDING 1</text>
+  </switch>
+  <switch>
+    <a transform="translate(0 -5)" xlink:href="https://www.diagrams.net/doc/faq/svg-export-text-problems" target="_blank">
+      <text text-anchor="middle" font-size="10" x="50%" y="100%">Text is not SVG - cannot display</text>
+    </a>
+  </switch>
+</svg>

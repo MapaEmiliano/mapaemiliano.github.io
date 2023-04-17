@@ -1,0 +1,201 @@
+            <li class="sidebar-menu-item has-dropdown ">
+                <a href="#">
+                    <i class="ri-building-line sidebar-menu-item-icon"></i>
+                    Buildings
+                    <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
+                </a>
+                <ul class="sidebar-dropdown-menu">
+                    <li class="sidebar-dropdown-menu-item">
+                        <a href="#" class="locate">
+                           Building 1
+                        </a>
+                    </li>
+                    <li class="sidebar-dropdown-menu-item">
+                        <a href="#" class="locate">
+                            Building 2
+                        </a>
+                    </li>
+                    <li class="sidebar-dropdown-menu-item">
+                        <a href="#" class="locate">
+                            Building 3
+                        </a>
+                    </li>
+                    <li class="sidebar-dropdown-menu-item">
+                        <a href="#" class="locate">
+                            Building 4
+                        </a>
+                    </li>
+                    <li class="sidebar-dropdown-menu-item ">
+                        <a href="#" class="locate">
+                            Building 5
+                        </a>
+                    </li>
+                    <li class="sidebar-dropdown-menu-item">
+                        <a href="#" class="locate">
+                            Building 6
+                        </a>
+                    </li>
+                    <li class="sidebar-dropdown-menu-item">
+                        <a href="#" class="locate">
+                            Building 7
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="sidebar-menu-item has-dropdown ">
+                <a href="#">
+                    <i class="ri-building-line sidebar-menu-item-icon"></i>
+                    Gates
+                    <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
+                </a>
+                <ul class="sidebar-dropdown-menu">
+                    <li class="sidebar-dropdown-menu-item">
+                        <a href="#" class="locate">
+                           North Gate(Entrance)
+                        </a>
+                    </li>
+                    <li class="sidebar-dropdown-menu-item">
+                        <a href="#" class="locate">
+                           East Gate(Exit)
+                        </a>
+                    </li>
+                    <li class="sidebar-dropdown-menu-item">
+                        <a href="#" class="locate">
+                            West Gate
+                        </a>
+                    </li>
+                    <li class="sidebar-dropdown-menu-item">
+                        <a href="#" class="locate">
+                            South Gate
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="sidebar-menu-item has-dropdown ">
+                <a href="#">
+                    <i class="ri-building-line sidebar-menu-item-icon"></i>
+                    Lobby
+                    <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
+                </a>
+                <ul class="sidebar-dropdown-menu">
+                    <li class="sidebar-dropdown-menu-item">
+                        <a href="#" class="locate">
+                          Lobby 1(Activity Center)
+                        </a>
+                    </li>
+                    <li class="sidebar-dropdown-menu-item">
+                        <a href="#" class="locate">
+                          Lobby 2(Parking)
+                        </a>
+                    </li>
+                    <li class="sidebar-dropdown-menu-item">
+                        <a href="#" class="locate">
+                           Lobby 3
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="sidebar-menu-item has-dropdown ">
+                <a href="#">
+                    <i class="ri-building-line sidebar-menu-item-icon"></i>
+                    Parkings
+                    <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
+                </a>
+                <ul class="sidebar-dropdown-menu">
+                    <li class="sidebar-dropdown-menu-item">
+                        <a href="#" class="locate">
+                           Parking Area 1(Lobby 2)
+                        </a>
+                    </li>
+                    <li class="sidebar-dropdown-menu-item">
+                        <a href="#" class="locate">
+                            Parking Area 2
+                        </a>
+                    </li>
+                    <li class="sidebar-dropdown-menu-item">
+                        <a href="#" class="locate">
+                            Parking Area 3
+                        </a>
+                    </li>
+                    <li class="sidebar-dropdown-menu-item">
+                        <a href="#" class="locate">
+                            Parking Area (Motorcycles)
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="sidebar-menu-item">
+                <a href="#" class="locate">
+                <i class="sidebar-menu-item-icon"></i>
+                    Football Field
+                </a>
+            </li>
+            
+            <li class="sidebar-menu-item">
+                <a href="#" class="locate">
+                <i class="sidebar-menu-item-icon"></i>
+                    Old Canteen
+                </a>
+            </li>
+              <li class="sidebar-menu-item">
+                <a href="#" class="locate">
+                <i class="sidebar-menu-item-icon"></i>
+                    Property/Central Warehouse Office 
+                </a>
+            </li>
+             <li class="sidebar-menu-item">
+                <a href="#" class="locate">
+                <i class="sidebar-menu-item-icon"></i>
+                    Engineering & Maintenance Dept. 
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
+                <a href="#" class="locate">
+                <i class="sidebar-menu-item-icon"></i>
+                   Carpentry
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
+                <a href="#" class="locate">
+                <i class="sidebar-menu-item-icon"></i>
+                   Covered Court
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
+                <a href="#" class="locate">
+                <i class="sidebar-menu-item-icon"></i>
+                   Social Hall <br>
+                   Central Student <br>
+                   council Board Magdalo <br>
+                   Cuture & Arts Production <br>
+                   NSTP/ROTC
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
+                <a href="#" class="locate">
+                <i class="sidebar-menu-item-icon"></i>
+                  Animal House
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
+                <a href="#" class="locate">
+                <i class="sidebar-menu-item-icon"></i>
+                   Gymnasium
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
+                <a href="#" class="locate">
+                <i class="sidebar-menu-item-icon"></i>
+                   Warehouse
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
+                <a href="#" class="locate">
+                <i class="sidebar-menu-item-icon"></i>
+                   Friendship Oval
+                </a>
+            </li>

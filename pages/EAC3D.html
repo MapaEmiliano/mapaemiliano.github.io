@@ -5,89 +5,106 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/assets/css/style.css">
   <title>Document</title>
+  <style> 
+  .rectangles {
+    opacity: 0;
+    cursor: pointer;
+  }
+  #pin {
+    width: 200px;
+    height: 260px;
+  }
+  </style>
 </head>
-<body style="width:100%; height: 100%; padding: 0; margin: 0; overflow: auto;" >
-  <svg id="my-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 8170 4489"  >
 
+
+<body style="width:100%; height: 100%; padding: 0; margin: 0; overflow: auto; background-color: aqua;" >
+  <svg class="SVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 8170 4489" >
     <g>
-    <image width="8170" height="4489" xlink:href="../imgs/EAC3D.png" />
-  
-    <path class="cls-1" d="M350.3,2760.4l752.576,383.48-198.6,109.54-693.9-369.95Z" opacity="0" cursor="pointer" /> 
-    <rect class="cls-2" x="906" y="2630" width="151" height="159" opacity="0" cursor="pointer"/>
-    <rect class="cls-2" x="1122" y="2747" width="156" height="132" opacity="0" cursor="pointer"/>
-    <path class="cls-1" d="M2016.39,2128.71l977.23-487.24,640.97,339.74-990.78,487.25Z" opacity="0" cursor="pointer"/>
-    <rect class="cls-2" x="4702" y="1506" width="187" height="186" opacity="0" cursor="pointer"/>
-    <rect class="cls-2" x="4011" y="1998" width="413" height="123" opacity="0" cursor="pointer"/>
-    <path class="cls-1" d="M3410.16,2084l448.87,306.79L3701.97,2734.7,3185.39,2464Z" opacity="0" cursor="pointer"/>
-    <path class="cls-1" d="M2918.03,2498.16l534.76,261.68-189.01,91.74-417.4-279.72Z" opacity="0" cursor="pointer"/>
-    <path class="cls-1" d="M2697.57,2624.98l503.28,239.11-153.47,82.47-449.11-234.6Z" opacity="0" cursor="pointer"/>
-    <path class="cls-1" d="M2422.49,2778.14l146.7-58.65,446.87,268.16-137.68,40.6Z" opacity="0" cursor="pointer"/>
-    <path class="cls-1" d="M2381.68,2801.02l435.51,243.63-103.81,82.4L2277.86,2874.4Z" opacity="0" cursor="pointer"/>
-    <path class="cls-1" d="M2151.08,2891.44l548.82,252.65L2514.83,3235l-463.05-234.6Z" opacity="0" cursor="pointer"/>
-    <rect class="cls-2" x="2373" y="3275" width="110" height="154" opacity="0" cursor="pointer"/>
-    <path class="cls-1" d="M1804.29,3022.18L1905.52,2950l492,271.75-119.28,81.2Z" opacity="0" cursor="pointer"/>
-    <path class="cls-1" d="M1578.61,3112.53l181.78-90.23,464.92,266.91-177.26,94.74Z" opacity="0" cursor="pointer"/>
-    <path class="cls-1" d="M1528.6,3121.42l462.76,270.69-135.42,253.73-444.7-203.02Z" opacity="0" cursor="pointer"/>
-    <path class="cls-1" d="M5516.03,1191.07L5766,1358l-439.61,207.65-186.78-157.9Z" opacity="0" cursor="pointer"/>
-    <path class="cls-1" d="M5631.89,1176.6l282.14-14.27-37.42,267.11-97.07-94Z" opacity="0" cursor="pointer"/>
-    <path class="cls-1" d="M6633.3,1587.52l404.03,207.53L5787,2464l-444.65-230.09Z" opacity="0" cursor="pointer"/>
-    <path class="cls-1" d="M4616,2404l652.07,311.3-243.75,64.21L4534.75,2540.4Z" opacity="0" cursor="pointer"/>
-    <rect class="cls-2" x="1335" y="2828" width="187" height="182" opacity="0" cursor="pointer"/>
-  
-    <image id="pin" x="1646" y="3050" width="100vw" height="160" href="../imgs/pin.png"/>
-    <!-- <image id="image" width="100" height="160" href="../imgs/pin.png"/> -->
-    <image id="pin-2" data-name="pin" x="1942" y="3125" width="100" height="160" href="../imgs/pin.png"/>
-    <image id="pin-3" data-name="pin" x="2022" y="2900" width="100" height="160" href="../imgs/pin.png"/>
-    <image id="pin-4" data-name="pin" x="2300" y="2875" width="100" height="160" href="../imgs/pin.png"/>
-    <image id="pin-5" data-name="pin" x="2456" y="2749" width="100" height="160" href="../imgs/pin.png"/>
-    <image id="pin-6" data-name="pin" x="2760" y="2800" width="100" height="160" href="../imgs/pin.png"/>
-    <image id="pin-7" data-name="pin" x="2790" y="2589" width="100" height="160" href="../imgs/pin.png"/>
-    <image id="pin-8" data-name="pin" x="3030" y="2469" width="100" height="160" href="../imgs/pin.png"/>
-    <image id="pin-9" data-name="pin" x="3427" y="2004" width="100" height="160" href="../imgs/pin.png"/>
-    <image id="pin-10" data-name="pin" x="4073" y="1844" width="100" height="160" href="../imgs/pin.png"/>
-    <image id="pin-11" data-name="pin" x="4849" y="2429" width="100" height="160" href="../imgs/pin.png"/>
-    <image id="pin-12" data-name="pin" x="4746" y="1372" width="100" height="160" href="../imgs/pin.png"/>
-    <image id="pin-13" data-name="pin" x="5305" y="1198" width="100" height="160" href="../imgs/pin.png"/>
-    <image id="pin-14" data-name="pin" x="5666" y="1075" width="100" height="160" href="../imgs/pin.png"/>
-    <image id="pin-15" data-name="pin" x="6226" y="1844" width="100" height="160" href="../imgs/pin.png"/>
-    <image id="pin-16" data-name="pin" x="967" y="2469" width="100" height="160" href="../imgs/pin.png"/>
-    <image id="pin-17" data-name="pin" x="1200" y="2560" width="100" height="160" href="../imgs/pin.png"/>
-    <image id="pin-18" data-name="pin" x="1390" y="2670" width="100" height="160" href="../imgs/pin.png"/>
-    <image id="pin-19" data-name="pin" x="561" y="2830" width="100" height="160" href="../imgs/pin.png"/>
-    <image id="pin-20" data-name="pin" x="2760" y="1884" width="100" height="160" href="../imgs/pin.png"/>
-    <image id="pin-21" data-name="pin" x="2376" y="3210" width="100" height="160" href="../imgs/pin.png"/>
-    <image id="pin-22" data-name="pin" x="3457" y="2670" width="100" height="160" href="../imgs/pin.png"/>
-    <image id="pin-23" data-name="pin" x="3820" y="2207" width="100" height="160" href="../imgs/pin.png"/>
-    <image id="pin-24" data-name="pin" x="1298" y="3173" width="100" height="160" href="../imgs/pin.png"/>
-    <image id="pin-25" data-name="pin" x="1950" y="3486" width="100" height="160" href="../imgs/pin.png"/>
-    <image id="pin-26" data-name="pin" x="5098" y="2750" width="100" height="160" href="../imgs/pin.png"/>
-    <image id="pin-27" data-name="pin" x="7151" y="775" width="100" height="160" href="../imgs/pin.png"/>
+    <!-- <image width="8170" height="4489" xlink:href="../imgs/EAC3D.png"/>  -->    
+     <image xlink:href="../imgs/EAC3D.png" style="height:100%"/> 
+
+    <path class="cls-1 motorparking rectangles" d="M350.3,2760.4l752.576,383.48-198.6,109.54-693.9-369.95Z"  /> 
+    <rect class="cls-2 rectangles" x="906" y="2630" width="151" height="159" />
+    <rect class="cls-2 rectangles" x="1122" y="2747" width="156" height="132" />
+    <path class="cls-1 footbalfield rectangles" d="M2016.39,2128.71l977.23-487.24,640.97,339.74-990.78,487.25Z" />
+    <rect class="cls-2 animalHouse rectangles" x="4702" y="1506" width="187" height="186" />
+    <rect class="cls-2 covered court rectangles" x="4011" y="1998" width="413" height="123" />
+
+    <g><a href="B7.html" target="_top">
+        <path class="cls-1 B7 rectangles" d="M3410.16,2084l448.87,306.79L3701.97,2734.7,3185.39,2464Z" />
+    </a></g>
+    <g><a href="B6.html" target="_top">
+        <path class="cls-1 B6 rectangles" d="M2918.03,2498.16l534.76,261.68-189.01,91.74-417.4-279.72Z" />
+    </a></g>
+    <g><a href="B5.html" target="_top">
+        <path class="cls-1 B5 rectangles" d="M2697.57,2624.98l503.28,239.11-153.47,82.47-449.11-234.6Z" />
+    </a></g>
+    <g><a href="B4.html" target="_top">
+        <path class="cls-1 B4 rectangles" d="M2381.68,2801.02l435.51,243.63-103.81,82.4L2277.86,2874.4Z" />
+    </a></g>
+    <g><a href="B3.html" target="_top">
+        <path class="cls-1 B3 rectangles" d="M2151.08,2891.44l548.82,252.65L2514.83,3235l-463.05-234.6Z" />
+    </a></g>
+    <g><a href="B2.html" target="_top">
+        <path class="cls-1 B2 rectangles" d="M1804.29,3022.18L1905.52,2950l492,271.75-119.28,81.2Z" />
+    </a></g>
+    <g><a href="B1.html" target="_top">
+        <path class="cls-1 B1 rectangles" d="M1528.6,3121.42l462.76,270.69-135.42,253.73-444.7-203.02Z" />
+    </a></g>
+    
+    
+    <path class="cls-1 L3 rectangles" d="M2422.49,2778.14l146.7-58.65,446.87,268.16-137.68,40.6Z" />
+    <rect class="cls-2 P1 rectangles" x="2373" y="3275" width="110" height="154" />
+    <path class="cls-1 L1 rectangles" d="M1578.61,3112.53l181.78-90.23,464.92,266.91-177.26,94.74Z" />
+    <path class="cls-1 gym rectangles" d="M5516.03,1191.07L5766,1358l-439.61,207.65-186.78-157.9Z" />
+    <path class="cls-1 warehouse rectangles" d="M5631.89,1176.6l282.14-14.27-37.42,267.11-97.07-94Z" />
+    <path class="cls-1 oval rectangles" d="M6633.3,1587.52l404.03,207.53L5787,2464l-444.65-230.09Z" />
+    <path class="cls-1 sochall rectangles" d="M4616,2404l652.07,311.3-243.75,64.21L4534.75,2540.4Z" />
+    <rect class="cls-2 rectangles" x="1335" y="2828" width="187" height="182" />
+        
+    <image id="pin" x="1575" y="3050"  href="../imgs/pin.png" />
+    <image id="pin" x="1950" y="2880"  href="../imgs/pin.png" />
+    <image id="pin" x="2300" y="2875"  href="../imgs/pin.png" />
+    <image id="pin" x="2200" y="2745"  href="../imgs/pin.png" />
+    <image id="pin" x="2420" y="2740"  href="../imgs/pin.png" />
+    <image id="pin" x="2790" y="2589"  href="../imgs/pin.png" />
+    <image id="pin" x="3030" y="2469"  href="../imgs/pin.png" />
+    <image id="pin" x="3427" y="2004"  href="../imgs/pin.png" />
+
+    <image id="pin" x="1900" y="3450"  href="../imgs/pin.png" />
+    <image id="pin" x="1250" y="3150"  href="../imgs/pin.png" />
+    <image id="pin" x="5050" y="2700"  href="../imgs/pin.png" />
+    <image id="pin" x="7090" y="720"  href="../imgs/pin.png" />
+
+    <image id="pin" x="1842" y="3025"  href="../imgs/pin.png" />
+    <image id="pin" x="2300" y="3150"  href="../imgs/pin.png" />
+    <image id="pin" x="2700" y="2700"  href="../imgs/pin.png" />
+
+    <image id="pin" x="2300" y="3150"  href="../imgs/pin.png" />
+    <image id="pin" x="3410" y="2600"  href="../imgs/pin.png" />
+    <image id="pin" x="3790" y="2300"  href="../imgs/pin.png" />   
+    <image id="pin" x="561" y="2750"  href="../imgs/pin.png" />
+
+    <image id="pin" x="2700" y="1830"  href="../imgs/pin.png" />
+
+    <image id="pin" x="1345" y="2630"  href="../imgs/pin.png" />
+    <image id="pin" x="1150" y="2600"  href="../imgs/pin.png" />
+    <image id="pin" x="1050" y="2550"  href="../imgs/pin.png"/>
+    <image id="pin" x="920" y="2420"  href="../imgs/pin.png" />
+
+    <image id="pin" x="4040" y="1800"  href="../imgs/pin.png"/>
+    <image id="pin" x="4800" y="2350"  href="../imgs/pin.png" />
+    <image id="pin" x="4700" y="1350"  href="../imgs/pin.png" />
+    <image id="pin" x="5300" y="1150"  href="../imgs/pin.png" />
+    <image id="pin" x="5650" y="1000"  href="../imgs/pin.png" />
+    <image id="pin" x="6100" y="1800"  href="../imgs/pin.png" />
+
     </g>
   </svg>
-  <script>
-    const svg = d3.select("#my-svg");
 
-    const zoom = d3.zoom()
-      .on("zoom", function() {
-        svg.attr("transform", d3.event.transform);
-      });
-
-    svg.call(zoom);
-
-    const drag = d3.drag()
-      .on("drag", function(event) {
-        d3.select(this)
-          .attr("x", event.x)
-          .attr("y", event.y);
-      });
-
-    const draggableElement = d3.select("#draggable-element");
-    draggableElement.call(drag);
-  </script>
-  
 </body>
-
-<script src="https://d3js.org/d3.v7.min.js"></script>
 
 </html>

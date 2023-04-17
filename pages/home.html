@@ -24,9 +24,9 @@
     <div class="sidebar position-fixed top-0 bottom-0 bg-main border-end ">
         <div class="d-flex align-items-center p-3">
             <a href="#" class="sidebar-logo text-uppercase fw-bold text-decoration-none text-light fs-4">Mapa-Emilano</a>
-            <i class="sidebar-toggle bi-map-fill ms-auto fs-5 d-none d-md-block text-light"></i>
+            <i class="sidebar-toggle bi-map-fill ms-auto fs-5 d-none d-md-block text-light toggleInside"></i>
         </div>
-        <ul class="sidebar-menu p-3 mb-5">
+        <ul class="sidebar-menu p-3 mb-5" id="sidebarList">
             <li class="sidebar-menu-item active">
                 <a href="#" class="fw-bold">
                     <i class="bi-house sidebar-menu-item-icon"></i>
@@ -45,51 +45,63 @@
                     About Us
                 </a>
             </li>
-            <li class="sidebar-menu-item has-dropdown ">
-                <a href="#">
-                    <i class="ri-building-line sidebar-menu-item-icon"></i>
-                    Buildings
-                    <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
+            <li class="sidebar-menu-item">
+                <a href="" id="signOut">
+                    <i class="fa-solid fa-right-from-bracket sidebar-menu-item-icon"></i>
+                    Sign Out
                 </a>
-                <ul class="sidebar-dropdown-menu">
-                    <li class="sidebar-dropdown-menu-item">
-                        <a href="#" class="locate">
-                           Building 1
-                        </a>
-                    </li>
-                    <li class="sidebar-dropdown-menu-item">
-                        <a href="#" class="locate">
-                            Building 2
-                        </a>
-                    </li>
-                    <li class="sidebar-dropdown-menu-item">
-                        <a href="#" class="locate">
-                            Building 3
-                        </a>
-                    </li>
-                    <li class="sidebar-dropdown-menu-item">
-                        <a href="#" class="locate">
-                            Building 4
-                        </a>
-                    </li>
-                    <li class="sidebar-dropdown-menu-item ">
-                        <a href="#" class="locate">
-                            Building 5
-                        </a>
-                    </li>
-                    <li class="sidebar-dropdown-menu-item">
-                        <a href="#" class="locate">
-                            Building 6
-                        </a>
-                    </li>
-                    <li class="sidebar-dropdown-menu-item">
-                        <a href="#" class="locate">
-                            Building 7
-                        </a>
-                    </li>
-                </ul>
             </li>
-
+            <ul id="sideItem3D" style="display: block;">
+                <li class="sidebar-menu-item has-dropdown ">
+                    <a href="#">
+                        <i class="ri-building-line sidebar-menu-item-icon"></i>
+                        Buildings
+                        <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
+                    </a>
+                    <ul class="sidebar-dropdown-menu">
+                        <li class="sidebar-dropdown-menu-item">
+                            <a href="#" class="locate">
+                               Building 1
+                            </a>
+                        </li>
+                        <li class="sidebar-dropdown-menu-item">
+                            <a href="#" class="locate">
+                                Building 2
+                            </a>
+                        </li>
+                        <li class="sidebar-dropdown-menu-item">
+                            <a href="#" class="locate">
+                                Building 3
+                            </a>
+                        </li>
+                        <li class="sidebar-dropdown-menu-item">
+                            <a href="#" class="locate">
+                                Building 3 Extension
+                            </a>
+                        </li>
+                        <li class="sidebar-dropdown-menu-item">
+                            <a href="#" class="locate">
+                                Building 4
+                            </a>
+                        </li>
+                        <li class="sidebar-dropdown-menu-item ">
+                            <a href="#" class="locate">
+                                Building 5
+                            </a>
+                        </li>
+                        <li class="sidebar-dropdown-menu-item">
+                            <a href="#" class="locate">
+                                Building 6
+                            </a>
+                        </li>
+                        <li class="sidebar-dropdown-menu-item">
+                            <a href="#" class="locate">
+                                Building 7
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                
             <li class="sidebar-menu-item has-dropdown ">
                 <a href="#">
                     <i class="ri-building-line sidebar-menu-item-icon"></i>
@@ -191,7 +203,7 @@
               <li class="sidebar-menu-item">
                 <a href="#" class="locate">
                 <i class="sidebar-menu-item-icon"></i>
-                    Property/Central Warehouse Office 
+                    Property/Central Property Office 
                 </a>
             </li>
              <li class="sidebar-menu-item">
@@ -246,14 +258,9 @@
                    Friendship Oval
                 </a>
             </li>
+            </ul>
 
-            <li class="sidebar-menu-item">
-                <a href="/index.html" id="signout">
-                    <i class="fa-solid fa-right-from-bracket sidebar-menu-item-icon"></i>
-                    Sign Out
-                </a>
-            </li>
-    </div>
+    </div>  
     <div class="sidebar-overlay"></div>
     <!-- end: Sidebar -->
 
@@ -261,7 +268,7 @@
     <main class="bg-light">
         <div class="p-2">
             <!-- start: Navbar -->
-            <nav class="px-3 py-2 bg-main rounded shadow">
+            <nav class="px-3 py-2 bg-main rounded shadow topBar">
                 <i class="ri-menu-line sidebar-toggle me-3 d-block d-md-none"></i>
                 <h5 class="fw-bold mb-0 me-auto text-light">Interactive School Map</h5>
 
@@ -271,7 +278,7 @@
                 </div>
 
                 <div class="d-flex mode ">
-                    <button type="button" class="btn btn-sm ms-2 me-2 text-light active" data-bs-target="iframe" id="show-btn">
+                    <button type="button" class="btn btn-sm ms-2 me-2 text-light" data-bs-target="iframe" id="show-btn">
                         <i class="fa-solid">3D</i>
                     </button>
                     <button type="button" class="btn btn-sm me-2 text-light" data-bs-target="iframe" id="show-btn">
@@ -288,153 +295,66 @@
             </nav>
             <!-- end: Navbar -->
         </div>
-        <div class="mainCont gx-0" >
-            <!-- <iframe src="https://jzhmrtn.github.io/" frameborder="0" allowfullscreen width="100%" height="100%"></iframe> -->
-                <div class="embed-responsive embed-responsive-16by9" id="3d-container">
-                    <svg class="container3D" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 8170 4489" >
-                        <g>
-                        <!-- <image width="8170" height="4489" xlink:href="../imgs/EAC3D.png"/>  -->    
-                         <image xlink:href="../imgs/EAC3D.png"/> 
+        <div class="mainCont px-1 py-1 bg-main rounded shadow" >
 
-                        <path class="cls-1 motorparking" d="M350.3,2760.4l752.576,383.48-198.6,109.54-693.9-369.95Z" opacity="0" cursor="pointer" /> 
-                        <rect class="cls-2" x="906" y="2630" width="151" height="159" opacity="0" cursor="pointer"/>
-                        <rect class="cls-2" x="1122" y="2747" width="156" height="132" opacity="0" cursor="pointer"/>
-                        <path class="cls-1 footbalfield" d="M2016.39,2128.71l977.23-487.24,640.97,339.74-990.78,487.25Z" opacity="0" cursor="pointer"/>
-                        <rect class="cls-2 animalHouse" x="4702" y="1506" width="187" height="186" opacity="0" cursor="pointer"/>
-                        <rect class="cls-2 covered court" x="4011" y="1998" width="413" height="123" opacity="0" cursor="pointer"/>
-
-                        <g><a href="B7.html" target="_top">
-                            <path class="cls-1 B7" d="M3410.16,2084l448.87,306.79L3701.97,2734.7,3185.39,2464Z" opacity="0" cursor="pointer"/>
-                        </a></g>
-                        <g><a href="B6.html" target="_top">
-                            <path class="cls-1 B6" d="M2918.03,2498.16l534.76,261.68-189.01,91.74-417.4-279.72Z" opacity="0" cursor="pointer"/>
-                        </a></g>
-                        <g><a href="B5.html" target="_top">
-                            <path class="cls-1 B5" d="M2697.57,2624.98l503.28,239.11-153.47,82.47-449.11-234.6Z" opacity="0" cursor="pointer"/>
-                        </a></g>
-                        <g><a href="B4.html" target="_top">
-                            <path class="cls-1 B4" d="M2381.68,2801.02l435.51,243.63-103.81,82.4L2277.86,2874.4Z" opacity="0" cursor="pointer"/>
-                        </a></g>
-                        <g><a href="B3.html" target="_top">
-                            <path class="cls-1 B3" d="M2151.08,2891.44l548.82,252.65L2514.83,3235l-463.05-234.6Z" opacity="0" cursor="pointer"/>
-                        </a></g>
-                        <g><a href="B2.html" target="_top">
-                            <path class="cls-1 B2" d="M1804.29,3022.18L1905.52,2950l492,271.75-119.28,81.2Z" opacity="0" cursor="pointer"/>
-                        </a></g>
-                        <g><a href="B1.html" target="_top">
-                            <path class="cls-1 B1" d="M1528.6,3121.42l462.76,270.69-135.42,253.73-444.7-203.02Z" opacity="0" cursor="pointer"/>
-                        </a></g>
-                        
-                        <path class="cls-1 L3" d="M2422.49,2778.14l146.7-58.65,446.87,268.16-137.68,40.6Z" opacity="0" cursor="pointer"/>
-                        <rect class="cls-2 P1" x="2373" y="3275" width="110" height="154" opacity="0" cursor="pointer"/>
-                        <path class="cls-1 L1" d="M1578.61,3112.53l181.78-90.23,464.92,266.91-177.26,94.74Z" opacity="0" cursor="pointer"/>
-                        <path class="cls-1 gym" d="M5516.03,1191.07L5766,1358l-439.61,207.65-186.78-157.9Z" opacity="0" cursor="pointer"/>
-                        <path class="cls-1 warehouse" d="M5631.89,1176.6l282.14-14.27-37.42,267.11-97.07-94Z" opacity="0" cursor="pointer"/>
-                        <path class="cls-1 oval" d="M6633.3,1587.52l404.03,207.53L5787,2464l-444.65-230.09Z" opacity="0" cursor="pointer"/>
-                        <path class="cls-1 sochall" d="M4616,2404l652.07,311.3-243.75,64.21L4534.75,2540.4Z" opacity="0" cursor="pointer"/>
-                        <rect class="cls-2" x="1335" y="2828" width="187" height="182" opacity="0" cursor="pointer"/>
-                            
-                        <image id="pin" x="1646" y="3100" width="100" height="160" href="../imgs/pin.png" class="pin B1"/>
-                        <image id="pin-3" data-name="pin" x="2022" y="2900" width="100" height="160" href="../imgs/pin.png" class="pin b2"/>
-                        <image id="pin-4" data-name="pin" x="2300" y="2875" width="100" height="160" href="../imgs/pin.png" class="pin b3"/>
-                        <image id="pin-5" data-name="pin" x="2456" y="2749" width="100" height="160" href="../imgs/pin.png" class="pin b4"/>
-                        <image id="pin-7" data-name="pin" x="2790" y="2589" width="100" height="160" href="../imgs/pin.png" class="pin B5"/>
-                        <image id="pin-8" data-name="pin" x="3030" y="2469" width="100" height="160" href="../imgs/pin.png" class="pin B6"/>
-                        <image id="pin-9" data-name="pin" x="3427" y="2004" width="100" height="160" href="../imgs/pin.png" class="pin B7"/>
-
-                        <image id="pin-25" data-name="pin" x="1950" y="3486" width="100" height="160" href="../imgs/pin.png" class="pin northG"/>
-                        <image id="pin-24" data-name="pin" x="1298" y="3173" width="100" height="160" href="../imgs/pin.png" class="pin eastG"/>
-                        <image id="pin-26" data-name="pin" x="5098" y="2750" width="100" height="160" href="../imgs/pin.png" class="pin westG"/>
-                        <image id="pin-27" data-name="pin" x="7151" y="775" width="100" height="160" href="../imgs/pin.png" class="pin southG"/>
-
-                        <image id="pin-2" data-name="pin" x="1942" y="3125" width="100" height="160" href="../imgs/pin.png" class="pin L1"/>
-                        <image id="pin-21" data-name="pin" x="2376" y="3210" width="100" height="160" href="../imgs/pin.png" class="pin L2P2"/>
-                        <image id="pin-6" data-name="pin" x="2760" y="2800" width="100" height="160" href="../imgs/pin.png" class="pin L3"/>
-
-                        <image id="pin-21" data-name="pin" x="2376" y="3210" width="100" height="160" href="../imgs/pin.png" class="pin L2P2"/>
-                        <image id="pin-22" data-name="pin" x="3457" y="2670" width="100" height="160" href="../imgs/pin.png" class="pin P2"/>
-                        <image id="pin-23" data-name="pin" x="3820" y="2207" width="100" height="160" href="../imgs/pin.png" class="pin P3"/>   
-                        <image id="pin-19" data-name="pin" x="561" y="2830" width="100" height="160" href="../imgs/pin.png" class="pin motorcycleP"/>
-
-                        <image id="pin-20" data-name="pin" x="2760" y="1884" width="100" height="160" href="../imgs/pin.png" class="pin fooball"/>
-
-                        <image id="pin-18" data-name="pin" x="1390" y="2670" width="100" height="160" href="../imgs/pin.png" class="pin Oldcanteen"/>
-                        <image id="pin-17" data-name="pin" x="1200" y="2700" width="100" height="160" href="../imgs/pin.png" class="pin property"/>
-                        <image id="pin-17" data-name="pin" x="1100" y="2650" width="100" height="160" href="../imgs/pin.png" class="pin eng and maintenance"/>
-                        <image id="pin-16" data-name="pin" x="967" y="2469" width="100" height="160" href="../imgs/pin.png" class="pin carpentry"/>
-
-
-                        <image id="pin-10" data-name="pin" x="4073" y="1844" width="100" height="160" href="../imgs/pin.png" class="pin coveredC."/>
-                        <image id="pin-11" data-name="pin" x="4849" y="2429" width="100" height="160" href="../imgs/pin.png" class="pin sochall"/>
-                        <image id="pin-12" data-name="pin" x="4746" y="1372" width="100" height="160" href="../imgs/pin.png" class="pin animalH"/>
-                        <image id="pin-13" data-name="pin" x="5305" y="1198" width="100" height="160" href="../imgs/pin.png" class="pin gym"/>
-                        <image id="pin-14" data-name="pin" x="5666" y="1075" width="100" height="160" href="../imgs/pin.png" class="pin warehouse"/>
-                        <image id="pin-15" data-name="pin" x="6226" y="1844" width="100" height="160" href="../imgs/pin.png" class="pin oval"/>
-   
-                        </g>
-                      </svg>
-                </div>
+            <div class="embed-responsive embed-responsive-16by9" id="cont3D" style="height:100%; width:100%;" class="active">
+                <iframe src="../pages/EAC3D.html" allowfullscreen id="eac3DFrame" height="100%" width="100%" frameborder="0"></iframe>
+            </div>
             
-            <div class="embed-responsive embed-responsive-16by9" id="2d-container"style="display:none; height: 100%;">
-                <iframe src="" width="100%" style="height: 100vh;"></iframe>             
+            <div class="embed-responsive embed-responsive-16by9" id="cont2D" style="display:none; height:100%; width:100%;">
+                <iframe src="../pages/NavTemplateNew/2DEac.html" id="navFrame" allowfullscreen width="100%" height="100%" frameborder="0"></iframe>
+                <!-- ../pages/NavTemplateNew/2DEac.html -->
             </div>
 
-            <div class="embed-responsive embed-responsive-16by9" id="vt-container" style="display:none; height:95vh; width:100%;">
-                <iframe src="https://jzhmrtn.github.io/" id="VTFrame" frameborder="0" allowfullscreen width="100%" height="100%" sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals"></iframe> 
-<!--                 <iframe src="../pages/Mapa 3.30.3/index.html" id="VTFrame" frameborder="0" allowfullscreen width="100%" height="100%"></iframe> -->
-            </div>
-
-            <div class="embed-responsive embed-responsive-16by9" id="vt-container" style="display:none;">
-                
+            <div class="embed-responsive embed-responsive-16by9" id="contVT" style="display:none; height:100%; width:100%;">
+                <iframe src="" id="vtFrame" frameborder="0" allowfullscreen sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals"></iframe> 
+                <!-- ../pages/Mapa 3.30.3/index.html -->
+                <!-- https://jzhmrtn.github.io/ -->
             </div>
 
             <div class="embed-responsive embed-responsive-16by9" id="About" style="display:none;">
                 <iframe src="About/index.html" frameborder="0"></iframe>
-            </div>
+            </div>       
 
         </div>
     </main>
-    <!-- end: Main -->
 
+    <!-- Modal for 2D Navigation -->
+    <div class="modal vw-100" id="navModal"> 
+        <div class="modal-dialog modal-dialog-centered" >
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 id="modalTitle"></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body d-flex justify-content-center gap-5 flex-wrap">
+              <img src="" alt="" class="img-fluid">
+
+                <h5 id="startPoint"></h5>
+
+                <select name="" id="endPoint">
+                </select>
+
+                <button type="button" class="btn btn-primary" id="navBtn">Start Navigation</button>
+                <button type="button" class="btn btn-primary" id="locBtn">Locate</button>
+                <button type="button" class="btn btn-primary" id="vtBtn">Virtual Tour</button>
+                    
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    <!-- end: Main -->
     <!-- start: JS -->
     <script src="../assets/js/jquery.min.js"></script>
-    <script src="../assets/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/bootstrap.bundle.js"></script>
     <script src="../assets/js/script.js"></script>
     <script src="../assets/js/mode.js"></script>
-    <script src="../assets/js/Home.js"></script>
+    <!-- <script src="../assets/js/Home.js"></script> -->
     <!-- end: JS -->
 </body>
 
-    <script type="module" src="../js/firebase.js"></script>
-    <script type="module" src="../assets/js/script.js"></script>
-
-    <script>
-
-        const textbox = document.getElementById("inpSrch");
-
-        function call_button_inside_frame() {
-            document.getElementById('VTFrame').contentWindow.postMessage(textbox.value ,'*');
-        }
-     
-        textbox.addEventListener("keypress", function onEvent(event) {
-            if (event.key === "Enter") {
-
-                call_button_inside_frame()
-
-            }
-        });
-
-    </script>
-                <!-- var el = document.getElementById('VTFrame');
-
-                if(el.contentWindow)
-                {
-                console.log("1");
-                el.contentWindow.searchScene(textbox.value);
-                }
-                else if(el.contentDocument)
-                {
-                console.log("2");
-                // el.contentDocument.targetFunction();
-                } -->
+    <script type="module" src="../assets/js/firebase.js"></script>
 </html>

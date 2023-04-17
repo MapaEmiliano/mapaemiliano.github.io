@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pathfinding Visualization</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> -->
+</head>
+<body>
+
+  <img src="B3.png" id="pngMap" alt="">
+        <div id="matrix" class="matrix">
+
+        </div>
+
+        <!-- <div class="embed-responsive embed-responsive-16by9" id="vt-container" style="display:none;height:100vh; width:100%;">
+          <iframe src="https://jzhmrtn.github.io/" frameborder="0" allowfullscreen width="100%" height="100%" ></iframe>
+        </div> -->
+
+</body>
+  <script src="raphael.js"></script>
+  <script src="path/pathfinding-browser.min.js"></script>
+  <script defer src="walkers.js"></script>
+  <script defer src="scriptNav.js"></script>
+  <script>
+
+    window.onload = () => {
+      setWalkables(data.WalkableGrids);
+      drawGrid(data.startPoints);   
+      // drawGrid(data.WalkableGrids);   
+      checkElement('rect').then(() => {
+        console.log("Grid ready!");
+      });
+    }
+    // requestAnimationFrame(() => {
+    //       pin.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' }, false)
+    //     })
+  </script>
+</html>

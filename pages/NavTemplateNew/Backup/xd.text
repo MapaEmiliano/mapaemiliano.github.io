@@ -1,0 +1,138 @@
+
+costMatrix = window.matrix; 
+
+var $matrix = $('.matrix'),
+    grid = new PF.Grid(costMatrix),
+  aStarFinder = new PF.AStarFinder({
+        heuristic: PF.Heuristic.octile,
+        diagonalMovement : PF.DiagonalMovement.Always
+    }),
+    startPos = false,
+  matrixWidth = costMatrix[0].length;
+
+$matrix.css('width', (matrixWidth * 27.07) + 'px');
+costMatrix.forEach(function(line, x){
+    line.forEach(function(cost, y){
+            
+    if(x == 139 && y == 26 || x == 127 && y == 26 || x == 115 && y == 26 || x == 105 && y == 26 || x == 94 && y == 26 || x == 87 && y == 26 || x == 78 && y == 26 || x == 58 && y == 28 || x == 58 && y == 35 || x == 41 && y == 28 || x == 28 && y == 36 || x == 14 && y == 36 || x == 63 && y == 47 || x == 134  && y == 5 || x == 134 && y == 11 || x == 134 && y == 15 || x == 134 && y == 20 || x == 143 && y == 35){
+
+      var $square = $('<div class="square Entrance"><span id="num">'+y+','+x+'</span></div>').appendTo( $matrix );
+
+    } else if(x == 139 && y == 43 || x == 78 && y == 43 || x == 87 && y == 43 || x == 94 && y == 43 || x == 105 && y == 43 || x == 115 && y == 43 || x == 127 && y == 43 ){
+
+      var $square = $('<div class="square Exit"><span id="num">'+y+','+x+'</span></div>').appendTo( $matrix );
+
+    } else {
+
+      var $square = $('<div class="square"><span id="num">'+y+','+x+'</span></div>').appendTo( $matrix );
+
+    }
+
+    if( cost === 1 ){
+        $square.addClass('blocker');
+    }
+  });
+});
+
+posToCords = function(pos){
+    return [
+      pos % matrixWidth,
+    ~~(pos / matrixWidth),
+    ];
+}
+cordsToPos = function(cords){ //array
+    return (cords[1] * matrixWidth) + cords[0] ;
+}
+
+
+window.addEventListener('load', function() {
+
+  console.log('All assets are loaded');
+  navigate([26, 139], [20, 134]);
+
+});
+
+// $matrix.on('click', '.square', function(){
+//   var $this = $(this);
+//   var thisIndex = $this.index();
+//   $('.square').removeClass('path');
+//   if( startPos ){
+//     var startCords = posToCords(startPos);
+//     var endCords = posToCords(thisIndex);
+//     var path = aStarFinder.findPath(startCords[0], startCords[1], endCords[0], endCords[1], grid.clone());
+//     console.log('from:', startCords, 'to:', endCords, 'path:', path);
+//     console.log(startCords[0], startCords[1]);
+
+//     animatePath(path); // Call the function to animate the path
+//     $('.output').text('from:'+ JSON.stringify(startCords)+ ' to:'+ JSON.stringify(endCords) + ' path:'+ JSON.stringify(path));
+//     startPos = false;
+//   } else { 
+//     $('.square').removeClass('start');
+//     $this.addClass('start');
+//     startPos = thisIndex;
+//   }
+//   });
+function navigate(posEnt, posExit) {
+
+  if( startPos ){
+    var startCords = posToCords(posEnt);
+    var endCords = posToCords(posExit);
+    var path = aStarFinder.findPath(startCords[0], startCords[1], endCords[0], endCords[1], grid.clone());
+    console.log('from:', startCords, 'to:', endCords, 'path:', path);
+    console.log(startCords[0], startCords[1]);
+
+    animatePath(path); // Call the function to animate the path
+    $('.output').text('from:'+ JSON.stringify(startCords)+ ' to:'+ JSON.stringify(endCords) + ' path:'+ JSON.stringify(path));
+    startPos = false;
+  } 
+  
+  // else { 
+  //   $('.square').removeClass('start');
+  //   $this.addClass('start');
+  //   startPos = thisIndex;
+  // }
+
+}
+
+  var squareSize = 27.07; 
+
+  function animatePath(path) {
+    $('.route').remove();
+  
+    // Iterate through each coordinate in the path
+    path.forEach(function(cord, index) {
+      setTimeout(function() {
+
+        // Add 'path' class to the corresponding square
+        $('.square:eq('+cordsToPos(cord)+')').addClass('path');
+        
+
+        // If not the last coordinate, calculate the position of the next square
+        if (index < path.length - 1) {
+          var nextCord = path[index + 1];
+          var startX = cord[0] * squareSize + squareSize / 2;
+          var startY = cord[1] * squareSize + squareSize / 2;
+          var endX = nextCord[0] * squareSize + squareSize / 2;
+          var endY = nextCord[1] * squareSize + squareSize / 2;
+  
+          // Create a line element with CSS properties
+          var $route = $('<div class="route"></div>');
+          $route.css({
+            'position': 'absolute',
+            'left': (startX + 6) + 'px',
+            'top': (startY + 6) + 'px',
+            'width': Math.sqrt(Math.pow(endX - startX, 2) + Math.pow(endY - startY, 2)) + 'px',
+            'transform-origin': 'top left',
+            'transform': 'rotate(' + (Math.atan2(endY - startY, endX - startX) * 180 / Math.PI) + 'deg)',
+            'background-color': 'red',
+            'height': '2px'
+          });
+  
+          // Append the line element to the DOM
+          $('body').append($route);
+        }
+      }, 50 * index); // Add a delay of 50ms for each step of the path
+    });
+  }
+
+

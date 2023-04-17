@@ -1,0 +1,6 @@
+
+State (WIP or DONE) - Date - anong page ginawa/ginawan 
+(ilagay niyo sa loob nitong parenthesis kung anong file rin 
+ginalaw) - short summary
+
+(WIP) - 4/4/23 - login/signup page (firebase.js, login/signup.html) - 

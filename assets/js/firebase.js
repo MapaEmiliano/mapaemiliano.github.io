@@ -28,25 +28,64 @@
     console.log(curPage)
 
     if(curPage == "/index.html" || curPage == "/") {
-    const loginBtn = document.getElementById("loginBtn");
 
-    loginBtn.addEventListener("click", (e) => {
-      login();
-    }); 
+      const loginBtn = document.getElementById("loginBtn");
+      const inputs = document.querySelectorAll("input");
+
+      inputs.forEach(input => {
+        input.addEventListener("keyup", handler);
+      })
+
+      loginBtn.addEventListener("click", handler); 
+      loginBtn.addEventListener("keyup", handler); 
+
+      function handler(e) {
+        
+        if ((e.type === 'keyup' && e.which === 13) || e.type == 'click') {
+          console.log(e.type)
+          login();
+        }
+    
+    }
 
     } else if (curPage == "/pages/signup.html") {
+
         const signUp = document.getElementById("createAcc");
-    
-        signUp.addEventListener("click", (e) => {
-          register();
-        }); 
-    
-    } else {
+        signUp.addEventListener("click", handler);
+        const inputs = document.querySelectorAll("input");
+
+        inputs.forEach(input => {
+          input.addEventListener("keyup", handler);
+        })
+
+        function handler(e) {
+        
+          if ((e.type === 'keyup' && e.which === 13) || e.type == 'click') {
+            register();
+          }
       
+      }
+    
+    } else { //User is logged in
+
+      $(document).ready(function () {
+
       auth.onAuthStateChanged(user => {
+
         if(user) {
 
           // console.log(auth.currentUser.displayName) Get username of user
+
+            window.setTimeout(function () {
+              signOut(auth).then(() => {
+                // Sign-out successful.
+                alert("You have been logged out due to inactivity!");
+                window.location = '../' ;
+              }).catch((error) => {
+                // An error happened.
+              });
+                
+            }, 1000 * 300); // 1000 * 60 * 5 = 5 minutes   
 
           const logoutBtn = document.getElementById("signOut");
     
@@ -54,18 +93,23 @@
 
             signOut(auth).then(() => {
               // Sign-out successful.
-              window.location = '../' ;
+              window.location = '../';
             }).catch((error) => {
               // An error happened.
             });
             
           }); 
+
+        } else {
+
+          console.log("User is not logged in!");
+          // window.location = '../';
+
         }
       });
-
-
+    });
   } 
-  }
+}
 
   //Creating user accounts
   function register() {
@@ -92,13 +136,12 @@
 
         updateProfile(auth.currentUser, { displayName: username.value })
 
-        window.location = 'pages/home.html';
+        window.location = '../pages/home.html';
         // ...
         })
         .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        alert(errorMessage);
+          const errorMessage = error.message;
+          alert(errorMessage);
         // ..
         });  
 
@@ -116,7 +159,7 @@
     let password = document.getElementById('password');
 
     signInWithEmailAndPassword(auth, email.value, password.value)
-  .then((userCredential) => {
+      .then((userCredential) => {
     // Signed in 
     const user = userCredential.user;
     set(ref(database, 'users/' + user.uid), {
@@ -136,8 +179,4 @@
     alert(errorMessage);
   });
 
-
-
   }
-
-  
