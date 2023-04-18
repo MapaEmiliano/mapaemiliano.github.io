@@ -9,6 +9,8 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <!-- start: Icons -->
     <!-- start: CSS -->
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
@@ -272,25 +274,44 @@
                 <i class="ri-menu-line sidebar-toggle me-3 d-block d-md-none"></i>
                 <h5 class="fw-bold mb-0 me-auto text-light">Interactive School Map</h5>
 
-                <div class="search-box">
+                <!-- <div class="search-box">
                     <button class="btn btn-search"><i class="fas fa-search"></i></button>
-                    <input type="text" id="inpSrch" class="input-search" placeholder="Search...">
+                    <input type="text" id="inpSrch" required list="suggestions" class="input-search" placeholder="Search...">
+                </div> -->
+
+                <div class="search-box">
+                    <fieldset>
+                        <button class="btn btn-search"><i class="fas fa-search"></i></button>
+                        <input type="text" id="inpSrch" required list="suggestions" class="input-search" placeholder="Search...">
+                    <datalist id="suggestions">
+                        <option value="">BLUE</option>
+                        <option value="">red</option>
+                        <option value="">pink</option>
+                        <option value="">green</option>
+                        <option value="">penk</option>
+                        <option value="">orends</option>
+                    </datalist>
+                    </fieldset>
                 </div>
 
-                <div class="d-flex mode ">
-                    <button type="button" class="btn btn-sm ms-2 me-2 text-light" data-bs-target="iframe" id="show-btn">
+                <div class="d-flex mode">
+                    
+                    <button type="button" class="btn btn-sm text-light btn3D" data-bs-target="iframe" id="show-btn">
                         <i class="fa-solid">3D</i>
                     </button>
-                    <button type="button" class="btn btn-sm me-2 text-light" data-bs-target="iframe" id="show-btn">
+
+                    <button type="button" class="btn btn-sm text-light btn2D" data-bs-target="iframe" id="show-btn">
                         <i class="fa-solid">2D</i>
                     </button>
 
-                    <button type="button" class="btn btn-sm ms-2 text-light me-2" data-bs-target="iframe" id="show-btn">
+                    <button type="button" class="btn btn-sm text-light btnVT" data-bs-target="iframe" id="show-btn">
                         <i class="fa-solid">VT</i>
                     </button>
-                    <button type="button" class="btn btn-sm text-light" data-bs-target="iframe" id="show-vt-btn">
+                    
+                    <button type="button" class="btn btn-sm text-light" data-bs-target="iframe" id="show-btn">
                         <i class="fa-sharp fa-solid fa-robot"></i>
                     </button>
+
                 </div>
             </nav>
             <!-- end: Navbar -->
@@ -307,9 +328,8 @@
             </div>
 
             <div class="embed-responsive embed-responsive-16by9" id="contVT" style="display:none; height:100%; width:100%;">
-                <iframe src="" id="vtFrame" frameborder="0" allowfullscreen sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals"></iframe> 
-                <!-- ../pages/Mapa 3.30.3/index.html -->
-                <!-- https://jzhmrtn.github.io/ -->
+                <iframe src="https://jzhmrtn.github.io/" id="vtFrame" frameborder="0" width="100%" height="100%" allowfullscreen sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals"></iframe> 
+                <!--  -->
             </div>
 
             <div class="embed-responsive embed-responsive-16by9" id="About" style="display:none;">
@@ -348,11 +368,10 @@
 
     <!-- end: Main -->
     <!-- start: JS -->
-    <script src="../assets/js/jquery.min.js"></script>
+    <!-- <script src="../assets/js/jquery.min.js"></script> -->
     <script src="../assets/js/bootstrap.bundle.js"></script>
     <script src="../assets/js/script.js"></script>
     <script src="../assets/js/mode.js"></script>
-    <!-- <script src="../assets/js/Home.js"></script> -->
     <!-- end: JS -->
 </body>
 

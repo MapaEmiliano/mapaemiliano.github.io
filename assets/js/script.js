@@ -1,6 +1,10 @@
 $(document).ready(function() {
 
-    $('.mainCont').width($('.topBar').width()); 
+    checkIframe("eac3DFrame");
+
+    $(".mainCont").css({
+        "width": "calc(" + $(".topBar").width() + "px + 30px)"
+      });
 
     $('.sidebar-dropdown-menu').slideUp('fast')
 
@@ -105,11 +109,10 @@ function sideFunc() {
 
     if(window.innerWidth < 768) {
         $('.sidebar').addClass('collapsed')
+        $('.mainCont').width($('.topBar').width()); 
     }
-    $('.mainCont').width($('.topBar').width()); 
 }
 
-   
 // End Generate modal for room vt's //
 
 // Element exists checker //
@@ -142,7 +145,6 @@ for (let i = 0; i < btns.length; i++) {
         } else {
           iframeDivs[j].style.display = "block";
           btns[i].classList.add("active");
-
           if($('.mainCont').hasClass('collapsed')) {
             setTimeout(() => {
                 $(".mainCont").css({
@@ -150,19 +152,15 @@ for (let i = 0; i < btns.length; i++) {
                   });
             }, 200);
         } else {
-
             setTimeout(() => {
                 $(".mainCont").css({
                     "width": "calc(" + $(".topBar").width() + "px + 30px)"
                   });
             }, 200);
-
         }
-
           let activeDiv = iframeDivs[j].getAttribute("id");
-          this.activeFrame = document.getElementById(activeDiv).childNodes[1].id;      
-          checkIframe(this.activeFrame);
-
+          activeFrame = document.getElementById(activeDiv).childNodes[1].id;      
+          checkIframe(activeFrame);
         }
 
       } else {
@@ -183,9 +181,10 @@ let floors = {};
 
 const floorGetter = (result) => floors[result] || "Not found!";
 
-function checkIframe(frame) {
+function checkIframe(frame, bldng2D) {
     const sideItem3D = document.getElementById("sideItem3D");
     sideItem3D.style.display="none"
+    const dataSrch = document.getElementById("suggestions");
 
     if(floors) {
         Object.keys(floors).forEach(k => delete floors[k])
@@ -199,7 +198,7 @@ function checkIframe(frame) {
     
     const curFrame = (frame) => iframes[frame] || "Not found!";
 
-    const selectedFrame = curFrame(frame);
+    let selectedFrame = curFrame(frame);
 
     let newLists = document.querySelectorAll(".Added");
     let newOpts = document.querySelectorAll("option");
@@ -214,11 +213,11 @@ function checkIframe(frame) {
 
     if(frame === "vtFrame") {
 
-        selectedFrame.style.height = "94%";
+        selectedFrame.style.height = "100%";
 
         function searchFromFrame() {
-            // selectedFrame.contentWindow.postMessage("Search || " + searchBox.value ,'*');
-            selectedFrame.contentWindow.postMessage("vtNav || " + searchBox.value ,'*');
+            selectedFrame.contentWindow.postMessage("Search || " + searchBox.value ,'*');
+            // selectedFrame.contentWindow.postMessage("vtNav || " + searchBox.value ,'*');
         }
 
         searchBox.addEventListener("keypress", function onEvent(event) {
@@ -231,13 +230,18 @@ function checkIframe(frame) {
 
         selectedFrame.style.height = "100%";
 
-        console.log(selectedFrame.contentDocument.readyState);
-
         const navModal = new bootstrap.Modal(document.getElementById("navModal"), {keyboard: true});
 
         let areaList = document.getElementById("sidebarList")
+       
+        let selectVals;
 
-        const selectVals = selectedFrame.contentWindow.data;
+        if(bldng2D){
+            console.log(bldng2D);
+            selectVals = selectedFrame.contentWindow[bldng2D];
+        } else {
+            selectVals = selectedFrame.contentWindow.data;
+        }
 
         const selectOpts = document.getElementById("endPoint");
 
@@ -293,6 +297,12 @@ function checkIframe(frame) {
             opt.innerHTML = name;
             opt.setAttribute("id", name);
             selectOpts.appendChild(opt);
+
+            let suggOpt = document.createElement("option");
+            suggOpt.value = name;
+            suggOpt.innerHTML = name;
+            suggOpt.setAttribute("id", name);
+            dataSrch.appendChild(suggOpt);
          
             let li = document.createElement("li");
             li.classList.add("sidebar-menu-item");
@@ -320,7 +330,6 @@ function checkIframe(frame) {
             } else {
                 areaList.appendChild(li);
             }
-            
         }
 
         let id;
@@ -365,6 +374,12 @@ function checkIframe(frame) {
             });
         }
 
+        searchBox.addEventListener("keypress", function onEvent(event) {
+            if (event.key === "Enter") {
+                selectedFrame.contentWindow.addPin(searchBox.value);
+            }
+        });
+
         navBtn.addEventListener("click", function(e) {  
                 selectedFrame.contentWindow.navigateTo(id, selected.value); 
                 navModal.hide();
@@ -379,24 +394,97 @@ function checkIframe(frame) {
             
             console.log("vtId: " + vtId);
 
-            function searchFromFrame() {
-                selectedFrame.contentWindow.postMessage("vtNav || " + vtId ,'*'); //vtName not set yet
-            }
-    
-            searchBox.addEventListener("keypress", function onEvent(event) {
-                if (event.key === "Enter") {
-                    searchFromFrame()
+            const btn2D = document.querySelector(".btn2D");
+            const btnVT = document.querySelector(".btnVT");
+            const div2D = document.getElementById("cont2D");
+            const divVT = document.getElementById("contVT");
+
+            div2D.style.display = "none";
+            divVT.style.display = "block";
+
+            btn2D.classList.remove("active");
+            btnVT.classList.add("active");
+            
+            checkIframe("vtFrame"); 
+            selectedFrame = curFrame("vtFrame");
+            navModal.hide();
+            
+            setTimeout(function() {
+                
+                function searchFromFrame() {
+                    selectedFrame.contentWindow.postMessage("vtNav || " + vtId ,'*'); //vtName not set yet
                 }
-            });
+        
+                searchFromFrame();
+
+            }, 500);
 
         });
 
         sideFunc();    
 
     } else if (frame === "eac3DFrame") {
+
+        const pinNames = [];
+
+        const data3D = document.querySelectorAll(".locate");
+
+        data3D.forEach(d => { // Set data
+        
+            let name = d.innerHTML.trim();
+
+            let suggOpt = document.createElement("option");
+            
+            let insertSugg = function(val) {
+                suggOpt.value = val;
+                suggOpt.innerHTML = val;
+                suggOpt.setAttribute("id", val);
+                d.setAttribute("id", val);
+                dataSrch.appendChild(suggOpt);
+            }
+
+            if(d.innerHTML.trim().includes("<i")) {
+
+                name = name.split('<i class="sidebar-menu-item-icon"></i>')[1].trim();
+            
+                if(name.trim().includes("<br>")) {
+                    name = "Social Hall/Central Student Council/Board Magdalo Culture & Arts Production / NSTP/ROTC";
+                    pinNames.push(name);
+                    insertSugg(name);
+                } else {
+                    pinNames.push(name);
+                    insertSugg(name);
+                }
+
+            } else {
+                insertSugg(name);
+                pinNames.push(name);
+            }
+
+        });
+
+        data3D.forEach(k => { // add event listener
+            k.addEventListener("click", function(e) {
+                let id = this.getAttribute("id");
+                selectedFrame.contentWindow.mapPin(id);
+                
+            });
+        });
+
         sideItem3D.style.display="block";
         clearFunc();  
         sideFunc();
+
+        searchBox.addEventListener("keypress", function onEvent(event) {
+            if (event.key === "Enter") {
+                pinFromSearch();
+            }
+        });
+
+        function pinFromSearch() {
+            selectedFrame.contentWindow.mapPin(searchBox.value) 
+        }
+
     }
 
 }
@@ -433,25 +521,3 @@ function createList(floor, areaList) {
     dropList.appendChild(dropDown);
 
 }
-
-// eac 3D LOCATE
-document.addEventListener("DOMContentLoaded", function() {
-    const buildingBtns = document.querySelectorAll(".locate");
-    const eac3dIframe = document.getElementById("eac3DFrame");
-    const pinLoc = eac3dIframe.contentDocument.querySelectorAll("#pin");
-     for (let i = 0; i < buildingBtns.length; i++) {
-        buildingBtns[i].addEventListener("click", function(e) {
-          e.preventDefault();
-          console.log("clicked")
-          for (let j = 0; j < pinLoc.length; j++) {
-            pinLoc[i].setAttribute("tabindex", i + 1);  
-            if (i === j) {
-              pinLoc[j].style.display = "block";      
-              pinLoc[j].scrollIntoView({behaviour: "smooth", block: "center", inline: "center"}); 
-            } else {
-            pinLoc[j].style.display = "none";
-            }
-          }
-        });
-     }
-});
