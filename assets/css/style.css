@@ -280,17 +280,18 @@ fieldset {
     justify-content: center;
 }
 
-.search-box {    
+.search-box{
+    max-width: 245px; 
     display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
+    /* align-items: center; */
+    /* justify-content: center; */
+    height: fit-content;
+    /* position: relative; */
   }
 
 .input-search {
-    
     height: 50px;
-    width: 50px;
+    width: 30px;
     border-style: none;
     padding: 10px;
     font-size: 18px;
@@ -332,19 +333,25 @@ fieldset {
 }
 
 .btn-search:focus ~ .input-search {
-    width: 300px;
+    width: 245px;
     border-radius: 20px;
     background-color: rgb(153, 58, 58);
     border-bottom:1px solid rgba(255,255,255,.5);
-    transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+    transition: all 500ms ;
+    /* cubic-bezier(0, 0.110, 0.35, 2) */
+    /* margin-bottom:2%; */
+
 }
 
 .input-search:focus {
-    width: 300px;
+    width: 245px;
     border-radius: 20px;
     background-color: rgb(153, 58, 58);
     border-bottom:1px solid rgb(255, 255, 255);
-    transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+    transition: all 500ms cubic-bezier;
+    /* margin-bottom:2%; */
+
+    /* (0, 0.110, 0.35, 2) */
 }
 
 
@@ -440,8 +447,6 @@ fieldset {
         visibility: hidden;
     }
     /* end: Sidebar */
-
-
 
     /* start: Main */
     main {

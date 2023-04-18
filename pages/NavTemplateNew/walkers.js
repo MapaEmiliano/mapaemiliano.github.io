@@ -5099,7 +5099,7 @@ var eac2D = {
       Name: "South Gate",
       Coordinates: [23, 2],
     },
-    sp66: {
+    sp6: {
       Name: "Building 1 Entrance",
       Coordinates: [24, 79],
       VTName: "B1EntranceWest"

@@ -1,6 +1,7 @@
 $(document).ready(function() {
 
     checkIframe("eac3DFrame");
+    clearFunc();
 
     $(".mainCont").css({
         "width": "calc(" + $(".topBar").width() + "px + 30px)"
@@ -23,9 +24,10 @@ $(document).ready(function() {
     $('.sidebar-toggle').click(function() {
         
         $('.sidebar').toggleClass('collapsed')
-        $('.mainCont').toggleClass('collapsed')
+        $('.mainCont').addClass('collapsed')
 
-        if($('.mainCont').hasClass('collapsed')) {
+        if($('.mainCont').hasClass('collapsed') && !$('.mainCont').hasClass('lowRes')) {
+
             setTimeout(() => {
                 $(".mainCont").css({
                     "width": "calc(" + $(".topBar").width() + "px + 30px)"
@@ -50,14 +52,13 @@ $(document).ready(function() {
 
     $('.sidebar-overlay').click(function() {
         $('.sidebar').addClass('collapsed')
-        // $('.mainCont').width($('.topBar').width()); 
         $('.sidebar-dropdown-menu').slideUp('fast')
         $('.sidebar-menu-item.has-dropdown, .sidebar-dropdown-menu-item.has-dropdown').removeClass('focused')
     })
 
     if(window.innerWidth < 768) {
-        // $('.mainCont').width($('.topBar').width()); 
         $('.sidebar').addClass('collapsed')
+        $('.mainCont').addClass('lowRes')
     }
 
 });
@@ -76,7 +77,6 @@ $(window).resize(function() {
                 "width": "calc(" + $(".topBar").width() + "px + 30px)"
               });
         }, 100);
-
     }
   });
   
@@ -102,14 +102,18 @@ function sideFunc() {
 
     $('.sidebar-overlay').click(function() {
         $('.sidebar').addClass('collapsed')
-        $('.mainCont').width($('.topBar').width()); 
+        setTimeout(() => {
+            $(".mainCont").css({
+                "width": "calc(" + $(".topBar").width() + "px + 30px)"
+              });
+        }, 100);
         $('.sidebar-dropdown-menu').slideUp('fast')
         $('.sidebar-menu-item.has-dropdown, .sidebar-dropdown-menu-item.has-dropdown').removeClass('focused')
     })
 
     if(window.innerWidth < 768) {
         $('.sidebar').addClass('collapsed')
-        $('.mainCont').width($('.topBar').width()); 
+        $('.mainCont').addClass('lowRes')
     }
 }
 
@@ -185,7 +189,7 @@ function checkIframe(frame, bldng2D) {
     const sideItem3D = document.getElementById("sideItem3D");
     sideItem3D.style.display="none"
     const dataSrch = document.getElementById("suggestions");
-
+    console.log(frame);
     if(floors) {
         Object.keys(floors).forEach(k => delete floors[k])
     }

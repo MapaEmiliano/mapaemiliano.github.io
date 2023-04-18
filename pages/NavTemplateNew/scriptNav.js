@@ -1,8 +1,8 @@
 const svgMap = document.getElementById("pngMap"); // get the map image
 var curArea = svgMap.getAttribute("src").split('.png')[0]; // split the image name to get the area name
 
-const gridWidth = svgMap.naturalWidth; // get the width of the map image
-const gridHeight = svgMap.naturalHeight; // get the height of the map image
+let gridWidth = svgMap.naturalWidth; // get the width of the map image
+let gridHeight = svgMap.naturalHeight; // get the height of the map image
 
 const gridNodeSize = { // list of areas and their respective node sizes
   eac2D: 47,
@@ -25,6 +25,50 @@ var paper = Raphael("matrix", gridWidth, gridHeight); // initialize Raphael (Gri
 
 var numRows = Math.ceil(gridHeight / nodeSize), // get the number of rows and columns of the grid
     numCols = Math.ceil(gridWidth / nodeSize); 
+
+function refreshGrid(area) {
+
+  $("#matrix").empty(); // clear the grid canvas
+  paper.clear(); // clear the grid canvas
+  gridObjs = []; // clear the grid objects array
+  svgMap.setAttribute("src", area + ".png"); // set the map image according to the area
+  data = window[area];
+  curArea = area;
+  nodeSize = gridDataSetter(curArea);
+ 
+  $('#pngMap').bind({
+    load: function() {
+
+        // $('#matrix').css({width: $('#pngMap').width(), height: $('#pngMap').height()});
+        gridWidth = $('#pngMap').width();
+        gridHeight = $('#pngMap').height();
+        
+        paper = Raphael("matrix", gridWidth, gridHeight);
+  
+        console.log(gridHeight, gridWidth, nodeSize);
+        console.log(numRows, numCols)
+        numRows = Math.ceil(gridHeight / nodeSize);
+        numCols = Math.ceil(gridWidth / nodeSize);
+        console.log(numRows, numCols)
+      
+        grid = new PF.Grid(numCols, numRows), //Initialize grid and Pathfinder using pathfinding.js
+        finder = new PF.AStarFinder({
+          heuristic: PF.Heuristic.octile,
+          diagonalMovement: PF.DiagonalMovement.Always,
+          dontCrossCorners: true,
+        }); 
+      
+        drawGrid(data.startPoints); // draw the grid
+        setWalkables(data.WalkableGrids); // set the walkable nodes of the grid
+
+    },
+    error: function() {
+        alert('There was an error loading the new image. Please refresh the page.');
+    }
+    });
+
+}
+
 
 var grid = new PF.Grid(numCols, numRows), //Initialize grid and Pathfinder using pathfinding.js
   finder = new PF.AStarFinder({
@@ -132,20 +176,22 @@ function drawGrid(arrEnt) { // arrEnt = array of entrances, arrClicks = array of
   }
 
   for (obj in data.startPoints) {
-    if(data.startPoints[obj].Floor == 2 && !(data.startPoints[obj].Coordinates[1] in bldngStairs)) {
-      bldngStairs[data.startPoints[obj].Coordinates[1]] = "F1";
-    } else if(data.startPoints[obj].Floor == 3 && !(data.startPoints[obj].Coordinates[1] in bldngStairs)) {
-      bldngStairs[data.startPoints[obj].Coordinates[1]] = "F2";
-    } else if(data.startPoints[obj].Floor == 4 && !(data.startPoints[obj].Coordinates[1] in bldngStairs)) {
-      bldngStairs[data.startPoints[obj].Coordinates[1]] = "F3";
-    } else if(data.startPoints[obj].Floor == 5 && !(data.startPoints[obj].Coordinates[1] in bldngStairs)) {
-      bldngStairs[data.startPoints[obj].Coordinates[1]] = "F4";
+    if(data.startPoints[obj].Floor) {
+      if(data.startPoints[obj].Floor == 2 && !(data.startPoints[obj].Coordinates[1] in bldngStairs)) {
+        bldngStairs[data.startPoints[obj].Coordinates[1]] = "F1";
+      } else if(data.startPoints[obj].Floor == 3 && !(data.startPoints[obj].Coordinates[1] in bldngStairs)) {
+        bldngStairs[data.startPoints[obj].Coordinates[1]] = "F2";
+      } else if(data.startPoints[obj].Floor == 4 && !(data.startPoints[obj].Coordinates[1] in bldngStairs)) {
+        bldngStairs[data.startPoints[obj].Coordinates[1]] = "F3";
+      } else if(data.startPoints[obj].Floor == 5 && !(data.startPoints[obj].Coordinates[1] in bldngStairs)) {
+        bldngStairs[data.startPoints[obj].Coordinates[1]] = "F4";
+      }
     }
   }
-  
-  console.log(bldngStairs);
 
-  data.stairsDisplay(gridObjs, bldngStairs);
+  if(data.stairsDisplay) {
+    data.stairsDisplay(gridObjs, bldngStairs);
+  }
 
   var focusObj = paper.rect(0, 0, nodeSize, nodeSize);
   focusObj.attr("fill", "#fff");

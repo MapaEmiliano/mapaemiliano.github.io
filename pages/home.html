@@ -271,47 +271,42 @@
         <div class="p-2">
             <!-- start: Navbar -->
             <nav class="px-3 py-2 bg-main rounded shadow topBar">
-                <i class="ri-menu-line sidebar-toggle me-3 d-block d-md-none"></i>
-                <h5 class="fw-bold mb-0 me-auto text-light">Interactive School Map</h5>
+                <i class="ri-menu-line sidebar-toggle me-3 d-block d-md-none  text-light"></i>
+                <h5 class="fw-bold mb-0 me-auto text-light d-md-block d-none ">Interactive School Map</h5>
 
                 <!-- <div class="search-box">
                     <button class="btn btn-search"><i class="fas fa-search"></i></button>
                     <input type="text" id="inpSrch" required list="suggestions" class="input-search" placeholder="Search...">
                 </div> -->
+                <div class="d-flex mode flex-wrap justify-content-center align-items-center">
+                    <div class="search-box d-flex align-items-center justify-content-center position-relative me-1">
+                        <fieldset>
+                            <button class="btn btn-search"><i class="fas fa-search"></i></button>
+                            <input type="text" id="inpSrch" required list="suggestions" class="input-search" placeholder="Search...">
+                        <datalist id="suggestions">
+                        </datalist>
+                        </fieldset>
+                    </div>
 
-                <div class="search-box">
-                    <fieldset>
-                        <button class="btn btn-search"><i class="fas fa-search"></i></button>
-                        <input type="text" id="inpSrch" required list="suggestions" class="input-search" placeholder="Search...">
-                    <datalist id="suggestions">
-                        <option value="">BLUE</option>
-                        <option value="">red</option>
-                        <option value="">pink</option>
-                        <option value="">green</option>
-                        <option value="">penk</option>
-                        <option value="">orends</option>
-                    </datalist>
-                    </fieldset>
-                </div>
+                    <div class="d-flex mode">
+                        
+                        <button type="button" class="btn btn-sm text-light btn3D" data-bs-target="iframe" id="show-btn">
+                            <i class="fa-solid">3D</i>
+                        </button>
 
-                <div class="d-flex mode">
-                    
-                    <button type="button" class="btn btn-sm text-light btn3D" data-bs-target="iframe" id="show-btn">
-                        <i class="fa-solid">3D</i>
-                    </button>
+                        <button type="button" class="btn btn-sm text-light btn2D" data-bs-target="iframe" id="show-btn">
+                            <i class="fa-solid">2D</i>
+                        </button>
 
-                    <button type="button" class="btn btn-sm text-light btn2D" data-bs-target="iframe" id="show-btn">
-                        <i class="fa-solid">2D</i>
-                    </button>
+                        <button type="button" class="btn btn-sm text-light btnVT" data-bs-target="iframe" id="show-btn">
+                            <i class="fa-solid">VT</i>
+                        </button>
+                        
+                        <button type="button" class="btn btn-sm text-light" data-bs-target="iframe" id="show-btn">
+                            <i class="fa-sharp fa-solid fa-robot"></i>
+                        </button>
 
-                    <button type="button" class="btn btn-sm text-light btnVT" data-bs-target="iframe" id="show-btn">
-                        <i class="fa-solid">VT</i>
-                    </button>
-                    
-                    <button type="button" class="btn btn-sm text-light" data-bs-target="iframe" id="show-btn">
-                        <i class="fa-sharp fa-solid fa-robot"></i>
-                    </button>
-
+                    </div>
                 </div>
             </nav>
             <!-- end: Navbar -->
@@ -328,8 +323,8 @@
             </div>
 
             <div class="embed-responsive embed-responsive-16by9" id="contVT" style="display:none; height:100%; width:100%;">
-                <iframe src="https://jzhmrtn.github.io/" id="vtFrame" frameborder="0" width="100%" height="100%" allowfullscreen sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals"></iframe> 
                 <!--  -->
+                <!-- <iframe src="https://jzhmrtn.github.io/" id="vtFrame" frameborder="0" width="100%" height="100%" allowfullscreen sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals"></iframe>  -->
             </div>
 
             <div class="embed-responsive embed-responsive-16by9" id="About" style="display:none;">
