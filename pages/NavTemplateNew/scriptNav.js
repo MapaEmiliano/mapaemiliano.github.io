@@ -393,7 +393,7 @@ checkElement('rect').then(() => { // waits for the grid objects to finish drawin
       var curX = this.getAttribute("cx"); // gets the x coordinate of the clicked circle
       var curY = this.getAttribute("cy"); // gets the y coordinate of the clicked circle
 
-      // var clicked = toGridCoordinate(curX, curY); // converts the coordinate of the clicked node to the grid coordinate
+      var clicked = toGridCoordinate(curX, curY); // converts the coordinate of the clicked node to the grid coordinate
       // console.log(clicked);
 
       if(data.CustomFunction){
