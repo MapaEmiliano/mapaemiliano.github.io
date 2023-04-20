@@ -588,6 +588,12 @@ var B1 = {
           Coordinates: [29, 72],
           PinLoc: [1200, 3120], 
       },
+      sp69: {
+        Floor: 1,
+        Name: "Exit",
+        Coordinates: [4, 80],
+        PinLoc: [160, 3160],
+      },
       sp6: {
           Floor: 1,
           Name: "SBAA Business Simulation Room",
@@ -976,12 +982,6 @@ var B1 = {
           Name: "1518 & 1520: Nursing Lecture Room",
           Coordinates: [9, 6],
          PinLoc: [400, 160], 
-      },
-      sp69: {
-        Floor: 1,
-        Name: "Exit",
-        Coordinates: [4, 80],
-        PinLoc: [160, 3160],
       }
     },
 
@@ -1056,7 +1056,22 @@ var B1 = {
     
     }
   
-  }
+    },
+
+    GridChanges: (gridCopy, gridStart, gridEnd) => {
+
+      let copyGrid = gridCopy;
+
+      if(gridStart[1] > 70 && gridEnd[1] > 70) {
+
+        remGrid = [[44, 81], [4, 79]];
+        addGrid = [[45, 82], [46, 82], [45,70], [46, 70], [46, 71], [46, 72], [46, 73], [46, 74], [46, 75], [46, 76], [46, 77], [46, 78], [46, 79], [46, 80], [46, 81], [2, 80], [3, 80], [2, 70], [2, 71], [2, 72], [2, 73], [2, 74], [2, 75], [2, 76], [2, 77], [2, 78], [2, 79], [3, 70]];
+
+        changeGrids(copyGrid, remGrid, addGrid);
+
+      }
+
+    }
 
   };
   
@@ -1845,70 +1860,68 @@ var B2 = {
   
       if(steyrs[hagdan] == "F1" && !(gridParam.includes(stair1Left, stair1Right))) {
     
-        var stair1Left = paper.image("Stairs.png", 138, 2250, 100, 910)
+        var stair1Left = paper.image("smallStairs.png", 155, 2425, 75, 540)
         .attr("class", "stairs F1L")
         .attr("opacity", 0);
     
-        var stair1Right = paper.image("Stairs.png", 1715, 2250, 100, 910)
+        var stair1Right = paper.image("smallStairs.png", 1705, 2425, 75, 540)
         .attr("class", "stairs F1R")
         .attr("opacity", 0);
 
         gridParam.push(stair1Right);
         gridParam.push(stair1Left);
     
-      } 
-      
-      // else if(steyrs[hagdan] == "F2" && !(gridParam.includes(stair2Left, stair2Right))) {
+      } else if(steyrs[hagdan] == "F2" && !(gridParam.includes(stair2Left, stair2Right))) {
     
-      //   var stair2Left = paper.image("smallStairs.png", 138, 1650, 100, 457)
-      //   .attr("class", "stairs F2L")
-      //   .attr("opacity", 0);
+        var stair2Left = paper.image("smallStairs.png", 155, 1775, 75, 500)
+        .attr("class", "stairs F2L")
+        .attr("opacity", 0);
     
-      //   var stair2Right = paper.image("smallStairs.png", 1715, 1650, 100, 457)
-      //   .attr("class", "stairs F2R")
-      //   .attr("opacity", 0);
+        var stair2Right = paper.image("smallStairs.png", 1705, 1775, 75, 500)
+        .attr("class", "stairs F2R")
+        .attr("opacity", 0);
     
-      //   gridParam.push(stair2Left);
-      //   gridParam.push(stair2Right);
+        gridParam.push(stair2Left);
+        gridParam.push(stair2Right);
     
-      // } else if(steyrs[hagdan] == "F3" && !(gridParam.includes(stair3Left, stair3Right))) {
+      } else if(steyrs[hagdan] == "F3" && !(gridParam.includes(stair3Left, stair3Right))) {
     
-      //   var stair3Left = paper.image("smallStairs.png", 138, 1650, 100, 457)
-      //   .attr("class", "stairs F3L")
-      //   .attr("opacity", 0);
+        var stair3Left = paper.image("smallStairs.png", 150, 1120, 75, 500)
+        .attr("class", "stairs F3L")
+        .attr("opacity", 0);
     
-      //   var stair3Right = paper.image("smallStairs.png", 1715, 1650, 100, 457)
-      //   .attr("class", "stairs F3R")
-      //   .attr("opacity", 0);
+        var stair3Right = paper.image("smallStairs.png", 1700, 1120, 75, 500)
+        .attr("class", "stairs F3R")
+        .attr("opacity", 0);
     
-      //   gridParam.push(stair3Left);
-      //   gridParam.push(stair3Right);
+        gridParam.push(stair3Left);
+        gridParam.push(stair3Right);
     
-      // } else if(steyrs[hagdan] == "F4" && !(gridParam.includes(stair4Left, stair4Right))) {
+      } else if(steyrs[hagdan] == "F4" && !(gridParam.includes(stair4Left, stair4Right))) {
     
-      //   var stair4Left = paper.image("smallStairs.png", 138, 1060, 100, 457)
-      //   .attr("class", "stairs F4L")
-      //   .attr("opacity", 0);
+        var stair4Left = paper.image("smallStairs.png", 148, 480, 75, 500)
+        .attr("class", "stairs F4L")
+        .attr("opacity", 0);
     
-      //   var stair4Right = paper.image("smallStairs.png", 1715, 1060, 100, 457)
-      //   .attr("class", "stairs F4R")
-      //   .attr("opacity", 0);
+        var stair4Right = paper.image("smallStairs.png", 1695, 480, 75, 500)
+        .attr("class", "stairs F4R")
+        .attr("opacity", 0);
     
-      //   gridParam.push(stair4Left);
-      //   gridParam.push(stair4Right);
+        gridParam.push(stair4Left);
+        gridParam.push(stair4Right);
 
-      //   var stair5Left = paper.image("smallStairs.png", 138, 450, 100, 457)
-      //   .attr("class", "stairs F5L")
-      //   .attr("opacity", 0);
+        var stair5Left = paper.image("smallStairs.png", -138, 450, 100, 457)
+        .attr("class", "stairs F5L")
+        .attr("opacity", 0);
     
-      //   var stair5Right = paper.image("smallStairs.png", 1715, 450, 100, 457)
-      //   .attr("class", "stairs F5R")
-      //   .attr("opacity", 0);
+        var stair5Right = paper.image("smallStairs.png", -1715, 450, 100, 457)
+        .attr("class", "stairs F5R")
+        .attr("opacity", 0);
     
-      //   gridParam.push(stair5Left);
-      //   gridParam.push(stair5Right);
+        gridParam.push(stair5Left);
+        gridParam.push(stair5Right);
     
-      // }
+      }
     
     }
   
@@ -2405,172 +2418,145 @@ var B3 = {
           
     let gridAdd = [];
     let gridRem = [];
-    let floor1 = [11,7,18,24,9,21];
-    let flrExt = [7,11,9];
-    let floor2 = [32,37];
     let tempStart;
     let tempEnd;
     let copy = grid.clone();
 
-    if (startPos) {
+    if(coord1[1] > 28 && coord2[1] > 28) {
+     
+      let path = finder.findPath(
+        coord1[0],
+        coord1[1],
+        coord2[0],
+        coord2[1],
+        copy
+      );
+      drawPath(path);
 
-      startPos = coord1;
-      let endPos = coord2;
-      
-      setWalkables(data.WalkableGrids);
-      
-      clearPath();
-      
-      if(floor2.includes(startPos[1]) && floor1.includes(endPos[1])) {
-        console.log("floor 2");           
+    } else if(coord1[1] > 28 && coord2[1] < 28) {
 
-        if((startPos[0] && endPos[0]) || (startPos[0] || endPos[0]) >= Math.ceil(numCols/2)) {
-          console.log("right side");
-          
-          if (!flrExt.includes(endPos[1])) {
+      if(coord1[0] > Math.ceil(numCols/2)) {
 
-            tempStart = [39,21];
-            tempEnd = [40, 21];
+          tempStart = [39,21];
+          tempEnd = [40, 21];
 
-            gridRem = [[39,21]];
-            changeGrids(copy, gridRem, gridAdd);
-
-            let path = finder.findPath(
-              startPos[0],
-              startPos[1],
-              tempEnd[0],
-              tempEnd[1],
-              copy
-            );
-              
-            let path2 = finder.findPath(
-              tempStart[0],
-              tempStart[1],
-              endPos[0],
-              endPos[1],
-              grid.clone()
-            );
-          
-          drawPath(path,path2);
-
-          } else {
-            
-            gridRem = [[36,21]];
-            changeGrids(copy, gridRem, gridAdd);
-
-            let path = finder.findPath(
-              startPos[0],
-              startPos[1],
-              endPos[0],
-              endPos[1],
-              copy
-            );
-            drawPath(path);
-          }
-        } else {
-
-          let path = finder.findPath(
-          startPos[0],
-          startPos[1],
-          endPos[0],
-          endPos[1],
-          grid.clone()
-          );
-
-        drawPath(path);
-
-        }
-      
-      } else if(floor1.includes(startPos[1]) && floor2.includes(endPos[1])) {
-        console.log("floor 1");           
-
-        if((startPos[0] && endPos[0]) || (startPos[0] || endPos[0]) >= Math.ceil(numCols/2)) {
-          console.log("right side F1");
-          tempStart = [38,20];
-          tempEnd = [38,19];
-
-          gridRem = [[38,20], [38, 22]];
+          gridRem = [[39,21]];
           changeGrids(copy, gridRem, gridAdd);
+ 
+          let pathRight = pathFinder(coord1, tempEnd, copy);
 
-          let path = finder.findPath(
-          startPos[0],
-          startPos[1],
-          tempEnd[0],
-          tempEnd[1],
-          copy
-          );
-
-          let path2 = finder.findPath(
-            tempStart[0],
-            tempStart[1],
-            endPos[0],
-            endPos[1],
-            grid.clone()
-          );
-        
-        drawPath(path,path2);
-
-        } else {
-
-          let path = finder.findPath(
-          startPos[0],
-          startPos[1],
-          endPos[0],
-          endPos[1],
-          grid.clone()
-          );
-
-        drawPath(path);
-
-        }
-      
-      } else if(floor1.includes(startPos[1]) && floor1.includes(endPos[1])){
-
-        if((startPos[0] && endPos[0]) || (startPos[0] || endPos[0]) >= Math.ceil(numCols/2)) {
-
-          gridRem = [[38,10], [39, 14]];
-          changeGrids(copy, gridRem, gridAdd);
-
-          let path = finder.findPath(
-          startPos[0],
-          startPos[1],
-          endPos[0],
-          endPos[1],
-          copy
-          );
-        
-        drawPath(path);
-
-        } else {
-
-          let path = finder.findPath(
-            startPos[0],
-            startPos[1],
-            endPos[0],
-            endPos[1],
-            copy
-            );
+          let pathRight2 = pathFinder(tempStart, coord2, grid.clone());
           
-          drawPath(path);
-
-        }
-
+          drawPath(pathRight,pathRight2);
+    
       } else {
-        console.log("else");
-        let path = finder.findPath(
-          startPos[0],
-          startPos[1],
-          endPos[0],
-          endPos[1],
-          grid.clone()
-          );
 
-        drawPath(path);
+        if(coord2[0] >= Math.ceil(numCols/2) && coord2[1] > 13) {
+
+          tempStart = [39,21];
+          tempEnd = [40, 21];
+
+          gridRem = [[39,21]];
+          changeGrids(copy, gridRem, gridAdd);
+ 
+          let pathRight = pathFinder(coord1, tempEnd, copy);
+
+          let pathRight2 = pathFinder(tempStart, coord2, grid.clone());
+          
+          drawPath(pathRight,pathRight2);
+    
+      } else {
+
+        drawPath(pathFinder(coord1, coord2, copy));
 
       }
 
-      startPos = false;
+        
 
+      }
+        
+    } else if(coord1[1] < 28 && coord2[1] > 28) {
+      
+      if(coord2[0] > Math.ceil(numCols/2)){
+
+        tempStart = [38,20];
+        tempEnd = [38, 19];
+
+        gridRem = [[38,20]];
+        gridAdd = [[40, 21], [40, 20], [40, 19], [40, 18], [40, 17], [40, 16], [40, 15], [40, 14]];
+        changeGrids(copy, gridRem, gridAdd);
+
+        let pathRight = pathFinder(coord1, tempEnd, copy);
+
+        let pathRight2 = pathFinder(tempStart, coord2, grid.clone());
+        
+        drawPath(pathRight,pathRight2);
+
+      } else {
+
+        drawPath(pathFinder(coord1, coord2, grid.clone()));
+
+      }
+
+    } else if(coord1[1] < 12 && coord2[1] > 12) {
+      if(coord1[0] >= Math.ceil(numRows/2) || coord2[0] >= Math.ceil(numRows/2)){
+
+        tempStart = [38,21];
+        tempEnd = [39, 21];
+
+        gridRem = [[38,10]];
+        gridAdd = [[40, 21], [40, 20], [40, 19], [40, 18], [40, 17], [40, 16], [40, 15], [40, 14]];
+        changeGrids(copy, gridRem, gridAdd);
+
+        let pathRight = pathFinder(coord1, tempEnd, copy);
+
+        let pathRight2 = pathFinder(tempStart, coord2, grid.clone());
+        
+        drawPath(pathRight,pathRight2);
+
+      } else {
+
+        drawPath(pathFinder(coord1, coord2, grid.clone()));
+
+      }
+
+    } else if(coord1[1] > 12 && coord2[1] < 12){
+
+      if(coord1[0] >= Math.ceil(numRows/2)){
+
+        tempStart = [38,9];
+        tempEnd = [39, 9];
+
+        gridRem = [[38,19]];
+        gridAdd = [[40, 21], [40, 20], [40, 19], [40, 18], [40, 17], [40, 16], [40, 15], [40, 14]];
+        changeGrids(copy, gridRem, gridAdd);
+
+        let pathRight = pathFinder(coord1, tempEnd, copy);
+
+        let pathRight2 = pathFinder(tempStart, coord2, grid.clone());
+        
+        drawPath(pathRight,pathRight2);
+
+      } else {
+
+        drawPath(pathFinder(coord1, coord2, grid.clone()));
+
+      }
+
+    } else {
+      drawPath(pathFinder(coord1, coord2, grid.clone()));
+
+    }
+
+    function pathFinder(start, end, grid) {
+      let path = finder.findPath(
+        start[0],
+        start[1],
+        end[0],
+        end[1],
+        grid
+      );
+      return path;
     }
 
   },
@@ -2817,19 +2803,16 @@ var B4 = {
       clearPath();
       
       if(floor2.includes(startPos[1])){
-        console.log("floor 2");
         gridRem = [[3,7], [5,7], [43,7], [41,7]];       
         changeGrids(copy, gridRem, gridAdd);    
 
         if((startPos[0] && endPos[0]) < Math.ceil(numCols/2)) {
 
-          console.log("left side");
           tempStart = [3,7];
           tempEnd = [2,7];
           
         } else {
   
-          console.log("right side");
           tempStart = [43,7];
           tempEnd = [44,7];
   
@@ -2837,19 +2820,16 @@ var B4 = {
 
       } else {
 
-        console.log("floor 1");
         gridRem = [[4,6], [4,8], [42,6], [42,8]];
         changeGrids(copy, gridRem, gridAdd);
 
         if((startPos[0] && endPos[0]) < Math.ceil(numCols/2)) {
 
-          console.log("left side");
           tempStart = [4,6];
           tempEnd = [4,5];
           
         } else {
   
-          console.log("right side");
           tempStart = [42,6];
           tempEnd = [42,5];
   
@@ -3799,7 +3779,6 @@ var B6 = {
         changeGrids(copy, remGrid, addGrid);
       } else if (gridStart[0] == 34 && gridStart[1] == 20) {
         // check if startPos is alfresco
-        console.log("alfresco entrance");
         addGrid = [
           [31, 14],
           [31, 15],
@@ -4714,6 +4693,17 @@ var B7 = {
     
         gridParam.push(stair4Left);
         gridParam.push(stair4Right);
+
+        var stair5Left = paper.image("smallStairs.png", -138, 450, 100, 457)
+        .attr("class", "stairs F5L")
+        .attr("opacity", 1);
+    
+        var stair5Right = paper.image("smallStairs.png", -1715, 450, 100, 457)
+        .attr("class", "stairs F5R")
+        .attr("opacity", 1);
+    
+        gridParam.push(stair5Left);
+        gridParam.push(stair5Right);
 
       }
     

@@ -44,12 +44,9 @@ function refreshGrid(area) {
         gridHeight = $('#pngMap').height();
         
         paper = Raphael("matrix", gridWidth, gridHeight);
-  
-        console.log(gridHeight, gridWidth, nodeSize);
-        console.log(numRows, numCols)
+
         numRows = Math.ceil(gridHeight / nodeSize);
         numCols = Math.ceil(gridWidth / nodeSize);
-        console.log(numRows, numCols)
       
         grid = new PF.Grid(numCols, numRows), //Initialize grid and Pathfinder using pathfinding.js
         finder = new PF.AStarFinder({
@@ -60,6 +57,92 @@ function refreshGrid(area) {
       
         drawGrid(data.startPoints); // draw the grid
         setWalkables(data.WalkableGrids); // set the walkable nodes of the grid
+
+        checkElement('rect').then(() => { // waits for the grid objects to finish drawing then add event listeners to the grid objects.
+
+          const gridCircles = document.querySelectorAll(".circlers"); // selects all the circles or entrances
+        
+          gridCircles.forEach((item) => {
+        
+            item.addEventListener("click", function (e) {
+        
+              var curX = this.getAttribute("cx"); // gets the x coordinate of the clicked circle
+              var curY = this.getAttribute("cy"); // gets the y coordinate of the clicked circle
+        
+              var clicked = toGridCoordinate(curX, curY); // converts the coordinate of the clicked node to the grid coordinate
+              // console.log(clicked);
+        
+              if(data.CustomFunction){
+        
+                if(startPos){
+                  var endPos = toGridCoordinate(curX, curY);
+          
+                  data.CustomFunction(startPos, endPos);
+          
+                  startPos = false;
+                } else {
+                  clearPath();
+                  clearStairs();
+                  startPos = toGridCoordinate(curX, curY);
+                }
+        
+              } else {
+        
+                if (startPos) { // if the start position is set, wait for the end position to be set then find the shortest possible path between the two positions using the A* algorithm provided by the pathfinding library.
+                
+                  if((clicked[0] == startPos[0]) && (clicked[1] == startPos[1])){ // if the start position is clicked again, reset the start position allowing user to click on another node to set the start position
+                    startPos = false;
+                    console.log("Start position reset");
+                    checkElement('.focus').then((focusObj) => { 
+          
+                      focusObj.setAttribute("x", -20); // removes focus object on screen
+                      focusObj.setAttribute("y", -20);
+                      
+                    });
+                    return;
+                  }
+          
+                  setWalkables(data.WalkableGrids); // resets the walkables for the current area
+          
+                  let endPos = toGridCoordinate(curX, curY); // if the start position is set, the next clicked node will be the end position
+                  
+                  let clonedGrid = grid.clone(); // clones the grid to prevent the original grid from being modified
+        
+                  if(!data.GridChanges){
+                    
+                      console.log("No grid changes for this area");
+                    
+                  } else {
+                    console.log("Grid changes for this area");
+                    data.GridChanges(clonedGrid, startPos, endPos); // calls the function that changes the grid for the current area if exists
+                    
+                  }
+                  
+                  let path = finder.findPath( // finds the shortest possible path between the two positions using the A* algorithm provided by the pathfinding library.
+                    startPos[0],
+                    startPos[1],
+                    endPos[0],
+                    endPos[1],
+                    clonedGrid
+                  );
+          
+                  drawPath(path); // calls drawPath function to draw the route.
+                  startPos = false; // resets the start position to false
+          
+                } else {
+                  clearStairs(); // clears the stairs if they exist
+                  clearPath(); // clears the path if it exists
+                  startPos = toGridCoordinate(curX, curY); // sets the start position to the clicked node
+          
+                }
+        
+              }
+        
+        
+            });
+          });
+        
+        });
 
     },
     error: function() {
@@ -310,7 +393,7 @@ checkElement('rect').then(() => { // waits for the grid objects to finish drawin
       var curX = this.getAttribute("cx"); // gets the x coordinate of the clicked circle
       var curY = this.getAttribute("cy"); // gets the y coordinate of the clicked circle
 
-      var clicked = toGridCoordinate(curX, curY); // converts the coordinate of the clicked node to the grid coordinate
+      // var clicked = toGridCoordinate(curX, curY); // converts the coordinate of the clicked node to the grid coordinate
       // console.log(clicked);
 
       if(data.CustomFunction){
@@ -381,90 +464,6 @@ checkElement('rect').then(() => { // waits for the grid objects to finish drawin
 
 
     });
-  });
-
-  const gridItem = document.querySelectorAll(".recters, .walkers"); // needed for development - can be removed.
-
-  gridItem.forEach((item) => {
-
-      item.addEventListener("click", function (e) {
-
-        var curX = this.getAttribute("x");
-        var curY = this.getAttribute("y");
-        console.log("Pin Location:",toGridCoordinate(curX * nodeSize, curY * nodeSize));
-        console.log("Pin Location:",toGridCoordinate(curX * nodeSize / nodeSize, curY * nodeSize / nodeSize));
-
-        let clicked = toGridCoordinate(curX, curY);
-        console.log(clicked);
-        
-        
-        // if(data.CustomFunction){
-
-        //   if(startPos){
-        //     var endPos = toGridCoordinate(curX, curY);
-    
-        //     data.CustomFunction(startPos, endPos);
-    
-        //     startPos = false;
-        //   } else {
-        //     clearPath();
-        //     startPos = toGridCoordinate(curX, curY);
-        //   }
-  
-        // } else {
-  
-        //   if (startPos) { // if the start position is set, wait for the end position to be set then find the shortest possible path between the two positions using the A* algorithm provided by the pathfinding library.
-          
-        //     if((clicked[0] == startPos[0]) && (clicked[1] == startPos[1])){ // if the start position is clicked again, reset the start position allowing user to click on another node to set the start position
-        //       startPos = false;
-        //       console.log("Start position reset");
-        //       checkElement('.focus').then((focusObj) => { 
-    
-        //         focusObj.setAttribute("x", -20); // removes focus object on screen
-        //         focusObj.setAttribute("y", -20);
-                
-        //       });
-        //       return;
-        //     }
-    
-        //     setWalkables(data.WalkableGrids); // resets the walkables for the current area
-    
-        //     let endPos = toGridCoordinate(curX, curY); // if the start position is set, the next clicked node will be the end position
-            
-        //     let clonedGrid = grid.clone(); // clones the grid to prevent the original grid from being modified
-  
-        //     if(!data.GridChanges){
-              
-        //         console.log("No grid changes for this area");
-              
-        //     } else {
-        //       console.log("Grid changes for this area");
-        //       data.GridChanges(clonedGrid, startPos, endPos); // calls the function that changes the grid for the current area if exists
-              
-        //     }
-            
-        //     let path = finder.findPath( // finds the shortest possible path between the two positions using the A* algorithm provided by the pathfinding library.
-        //       startPos[0],
-        //       startPos[1],
-        //       endPos[0],
-        //       endPos[1],
-        //       clonedGrid
-        //     );
-    
-        //     drawPath(path); // calls drawPath function to draw the route.
-        //     startPos = false; // resets the start position to false
-    
-        //   } else {
-    
-        //     clearPath(); // clears the path if it exists
-        //     startPos = toGridCoordinate(curX, curY); // sets the start position to the clicked node
-    
-        //   }
-  
-        // }
-        
-      });
-
   });
 
 });

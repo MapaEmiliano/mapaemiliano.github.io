@@ -72,13 +72,14 @@
                             </a>
                         </li>
                         <li class="sidebar-dropdown-menu-item">
-                            <a href="#" class="locate">
-                                Building 3
+                            <a href="#" class="locate text-wrap">
+                                Building 3: Engineering Building
                             </a>
                         </li>
                         <li class="sidebar-dropdown-menu-item">
-                            <a href="#" class="locate">
-                                Building 3 Extension
+                            <a href="#" class="locate ">
+                                <a href="#" class="locate text-wrap ">
+                                Building 3 Extension: Engineering Building
                             </a>
                         </li>
                         <li class="sidebar-dropdown-menu-item">
@@ -98,7 +99,7 @@
                         </li>
                         <li class="sidebar-dropdown-menu-item">
                             <a href="#" class="locate">
-                                Building 7
+                                Building 7: Law Buillding
                             </a>
                         </li>
                     </ul>
@@ -203,13 +204,13 @@
                 </a>
             </li>
               <li class="sidebar-menu-item">
-                <a href="#" class="locate">
+                <a href="#" class="locate text-wrap">
                 <i class="sidebar-menu-item-icon"></i>
                     Property/Central Property Office 
                 </a>
             </li>
              <li class="sidebar-menu-item">
-                <a href="#" class="locate">
+                <a href="#" class="locate text-wrap">
                 <i class="sidebar-menu-item-icon"></i>
                     Engineering & Maintenance Dept. 
                 </a>
@@ -339,21 +340,23 @@
         <div class="modal-dialog modal-dialog-centered" >
           <div class="modal-content">
             <div class="modal-header">
-              <h5 id="modalTitle"></h5>
+              <h5 id="startPoint"></h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <div class="modal-body d-flex justify-content-center gap-5 flex-wrap">
+            <div class="modal-body d-flex justify-content-center flex-wrap">
               <img src="" alt="" class="img-fluid">
 
-                <h5 id="startPoint"></h5>
-
-                <select name="" id="endPoint">
+     
+                <select name="" id="endPoint" class="form-select mb-3">
                 </select>
-
-                <button type="button" class="btn btn-primary" id="navBtn">Start Navigation</button>
-                <button type="button" class="btn btn-primary" id="locBtn">Locate</button>
-                <button type="button" class="btn btn-primary" id="vtBtn">Virtual Tour</button>
+            
+                
+                <div class="w-100 justify-content-evenly d-flex">
+                    <button type="button" class="btn btn-color" id="navBtn">Start Navigation</button>
+                    <button type="button" class="btn btn-color" id="locBtn">Locate</button>
+                    <button type="button" class="btn btn-color" id="vtBtn">Virtual Tour</button>
+                </div>
                     
             </div>
 

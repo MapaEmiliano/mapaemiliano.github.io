@@ -7,7 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/assets/css/style.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <title>Document</title>
+  <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+
+  <title>EAC-C</title>
   <style> 
   .rectangles {
     opacity: 0;
@@ -31,12 +33,15 @@ body::-webkit-scrollbar-thumb {
   border-radius: 20px;       /* roundness of the scroll thumb */
   border: 3px solid rgb(223, 0, 0);  /* creates padding around scroll thumb */
 }
+
+
   </style>
 </head>
 
 <body style="width:100%; height: 100%; padding: 0; margin: 0; overflow: auto; background-color: aqua;" >
   <svg class="SVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 8170 4489" >
     <g> 
+
      <image xlink:href="../imgs/EAC3D.png" style="height:100%"/> 
 
     <path class="cls-1 motorparking rectangles" d="M350.3,2760.4l752.576,383.48-198.6,109.54-693.9-369.95Z"  /> 
@@ -78,6 +83,12 @@ body::-webkit-scrollbar-thumb {
     <rect class="cls-2 rectangles" x="1335" y="2828" width="187" height="182" />
         
     <image id="pin" href="../imgs/pin.png" /> 
+    <!-- width="2500px" height="1500px -->
+    <foreignobject class="node" x="300" y="400" width="25%" height="20%" style="background-color: aqua;">
+      
+    </foreignobject>
+
+    <rect id="focus3D" opacity="0" x="1435" y="3628" width="187" height="182" />
 
     </g>
   </svg>
@@ -85,6 +96,13 @@ body::-webkit-scrollbar-thumb {
 </body>
 
 <script>
+
+
+  window.onload = function() {
+
+    document.getElementById('focus3D').scrollIntoView({behavior: "smooth", block: "center", inline: "center"});
+
+  }
 
   const pinXY = {
 
