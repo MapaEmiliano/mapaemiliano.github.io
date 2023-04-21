@@ -1,12 +1,13 @@
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
-  import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
+  import { getDatabase, set, child, ref, get, remove, push, update} from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
   import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
+
   // TODO: Add SDKs for Firebase products that you want to use
   // https://firebase.google.com/docs/web/setup#available-libraries
 
   // Your web app's Firebase configuration
-  const firebaseConfig = {
+  var firebaseConfig = {
     apiKey: "AIzaSyCapXE73R8f0zJammjBV3L1Or_Fac9KJFw",
     authDomain: "mapaemiliano-31b83.firebaseapp.com",
     databaseURL: "https://mapaemiliano-31b83-default-rtdb.asia-southeast1.firebasedatabase.app",
@@ -20,6 +21,8 @@
   const app = initializeApp(firebaseConfig);
   const database = getDatabase(app);
   const auth = getAuth();
+
+  var userData = {};
 
   //Check current page (CAN BE REMOVED!!!!!!!!!!!!!)
   window.onload = function pageChecker(){
@@ -42,7 +45,7 @@
       function handler(e) {
         
         if ((e.type === 'keyup' && e.which === 13) || e.type == 'click') {
-          console.log(e.type)
+
           login();
         }
     
@@ -74,7 +77,18 @@
 
         if(user) {
 
-          // console.log(auth.currentUser.displayName) Get username of user
+          let data = ref(getDatabase(app));
+          get(child(data, `users/${user.uid}`)).then((snapshot) => {
+            if (snapshot.exists()) {
+              userData.Role = snapshot.val().Role;
+              userData.Name = snapshot.val().username;
+              userData.user = user;
+            } else {
+              console.log("No data available");
+            }
+          }).catch((error) => {
+            console.error(error);
+          });
 
             window.setTimeout(function () {
               signOut(auth).then(() => {
@@ -87,30 +101,33 @@
                 
             }, 1000 * 300); // 1000 * 60 * 5 = 5 minutes   
 
-          const logoutBtn = document.getElementById("signOut");
+          if(window.location.pathname == "/pages/home.html") {
+            const logoutBtn = document.getElementById("signOut");
     
           logoutBtn.addEventListener("click", (e) => {
 
-            signOut(auth).then(() => {
-              // Sign-out successful.
+            auth.signOut(auth).then(() => {
+              // Sign-out successful
+              console.log("User has been logged out!");
               window.location = '../';
             }).catch((error) => {
               // An error happened.
             });
             
           }); 
+          }
 
         } else {
 
-          console.log("User is not logged in!");
-          // window.location = '../';
+          alert("User is not logged in!");
+          window.location = '../';
 
         }
       });
     });
   } 
 }
-
+  
   //Creating user accounts
   function register() {
 
@@ -131,12 +148,14 @@
         set(ref(database, 'users/' + user.uid), {
             username: username.value,
             email: email.value,
-            LastLogin: Date.now()
+            LastLogin: Date.now(),
+            Role: "User"
         })
 
-        updateProfile(auth.currentUser, { displayName: username.value })
+        updateProfile(auth.currentUser, { displayName: username.value, 
+                                          Role: "User" })
 
-        window.location = '../pages/home.html';
+        // window.location = '../pages/home.html';
         // ...
         })
         .catch((error) => {
@@ -180,3 +199,5 @@
   });
 
   }
+  
+  export { database, auth, userData, app, getDatabase, child, ref, get, remove, push, update };
