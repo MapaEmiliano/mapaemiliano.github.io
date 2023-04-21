@@ -267,7 +267,7 @@ main {
   transition: ease-in-out 0.1s;
   width: fit-content;
   position: fixed;
-  height: 90%;
+  height: 91%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -412,20 +412,30 @@ fieldset {
   visibility: hidden;
 }
 
-#endPoint option{
-    background-color: #0a58ca;
+#endPoint .floorOpt{
+    background-color: #8e0000de;
     word-wrap: break-word;
     white-space: break-spaces;
+}
+
+.counter {
+  background-color: #fa3e3e;
+  border-radius: 0.8em;
+  color: white;
+  height: 1.6em;
+  min-width: 1.6em;
+  text-align: center;
+  font-size: 10px;
+  /* top: 5px; */
+  right:10px;
+  position: relative;
+  z-index: 1;
+
 }
 
 /* start: Breakpoints */
 /* X-Small devices (portrait phones, less than 576px) */
 /* No media query for `xs` since this is the default in Bootstrap */
-
-/* Small devices (landscape phones, 576px and up) */
-@media (max-width: 576px) {
-
-}
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
@@ -459,6 +469,7 @@ fieldset {
     opacity: 1;
     visibility: visible;
   }
+
   .sidebar.collapsed .sidebar-menu-divider {
     opacity: 0;
     visibility: hidden;
@@ -482,7 +493,6 @@ fieldset {
   svg {
     height: 95vh;
   }
-
   .SVG {
     height: 200vh;  
   }
@@ -490,9 +500,3 @@ fieldset {
     height: 400vh;
   }
 }
-
-/* @media (max-width: 2418px) {
-    
-    } */
-
-/* end: Breakpoints */

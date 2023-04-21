@@ -8,6 +8,8 @@ $(document).ready(function () {
 
   $(".sidebar-dropdown-menu").slideUp("fast");
 
+  console.log($(".sidebar-dropdown-menu").hasClass("fast"));
+
   $(
     ".sidebar-menu-item.has-dropdown > a, .sidebar-dropdown-menu-item.has-dropdown > a"
   ).click(function (e) {
@@ -89,6 +91,7 @@ function clearFunc() {
 
 function sideFunc() {
   $(".mainCont").width($(".topBar").width());
+
   $(".sidebar-dropdown-menu").slideUp("fast");
 
   $(
@@ -182,10 +185,6 @@ for (let i = 0; i < btns.length; i++) {
     }
   });
 }
-
-
-
-
 
 const searchBox = document.getElementById("inpSrch");
 
@@ -428,8 +427,10 @@ function checkIframe(frame, bldng2D) {
         searchFromFrame();
       }, 500);
     });
-
+    
+    clearFunc();
     sideFunc();
+
   } else if (frame === "eac3DFrame") {
     const pinNames = [];
 

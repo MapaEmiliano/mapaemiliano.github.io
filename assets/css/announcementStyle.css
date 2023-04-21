@@ -5,7 +5,8 @@ body {
   padding: 0;
   font-size: 16px;
   line-height: 1;
-  overflow: none;
+  
+  overflow-y: scroll;
   background: url("/imgs/3047223.jpg")no-repeat center center fixed;
   background-size: cover;
   backdrop-filter: blur(3px);
@@ -13,30 +14,18 @@ body {
   background-blend-mode: multiply;
 }
 
-
-
 #announcements {
-  /* background-color: #666; */
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1000px)); 
-  /* grid-template-columns: repeat( auto-fit, minmax(20%, 1fr) ); */
-  grid-gap: 2%;
-  grid-auto-columns: 1fr;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  overflow-y: auto;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  align-content: normal;
   height: 100%;
-  width: 95%;
+  width: 100%;
 }
-
-#announcements > .card:nth-child(even) {
-  background-color: #f2f2f2;
-    
-}
-
-#announcements > .card:nth-child(odd) {
-  /* background-color: #ff6969;
-  color: white; */
-}
-
-
 
 .container h1{
   margin-top: 0;
@@ -94,44 +83,27 @@ p{
 }
 
 .card {
-  width: 100%;
-  height: 45vh;
+  width: 20%;
+  height: 50%;
   transition: all 0.6s;
 }
+
 .card:hover{
   transform: scale(1.1);
   transition: all 0.6s;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   z-index: 1;
-  
 }
 
 .card-header{
-  height: 7vh;  
+  height: 20%;  
   font-size: 20px;
-  overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   background: linear-gradient(110deg, #8e0000de 60%,#fdcd3b 60%);
-  /* background: url("/imgs/3047223.jpg");
-  background-size: cover; */
+
 } 
-
-
-/* .createBtn{
-  font-size: 3rem;
-  position: fixed;
-    z-index: 999;
-    left: 92%;
-  bottom: 8%;
-  border: none;
-  background-color: transparent;
-  float: right;
-  transition: transform 0.3s ease-out;
-  color: rgb(173, 0, 0);
-
-} */
 
 .createBtn {
   right: 75px;
@@ -342,19 +314,31 @@ img{
 }
 
 .imgCont {
-  background-color: red;
   height: 300px ;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  
 }
 
 .imgCont img {
   height: 100%;
-  width: 100%;
+  width: 40%;
 }
 
 @media screen and (max-width: 767px) {
   .container {
     padding: 20px;
+  }
+
+  #announcements {
+    row-gap: .3rem;
+  }
+
+  .card {
+    width: 40%;
+    height: 40%;
+    transition: all 0.6s;
   }
 
   .createBtn {
@@ -379,15 +363,9 @@ img{
     white-space: nowrap;
     text-overflow: ellipsis;
   }
+
   .card-footer {
-    font-size: 1.2em;
+    font-size: .8em;
   }
 
-  #announcements {
-    display: block;
-  }
-
-  .userRole{
-    display: none;
-  }
 }

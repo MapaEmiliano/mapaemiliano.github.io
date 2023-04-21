@@ -76,10 +76,10 @@
       auth.onAuthStateChanged(user => {
 
         if(user) {
-
           let data = ref(getDatabase(app));
           get(child(data, `users/${user.uid}`)).then((snapshot) => {
             if (snapshot.exists()) {
+              
               userData.Role = snapshot.val().Role;
               userData.Name = snapshot.val().username;
               userData.user = user;
@@ -158,8 +158,6 @@
     } else {
         alert('An input is incorrect! Check if the passwords are the same or if the email is valid!');
     }
-
-
   }
 
   //Logging in 
