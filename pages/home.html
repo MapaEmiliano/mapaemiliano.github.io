@@ -29,13 +29,13 @@
             <i class="sidebar-toggle bi-map-fill ms-auto fs-5 d-none d-md-block text-light toggleInside"></i>
         </div>
         <ul class="sidebar-menu p-3 mb-5" id="sidebarList">
-            <li class="sidebar-menu-item active">
+            <li class="sidebar-menu-item active" >
                 <a href="#" class="fw-bold">
                     <i class="bi-house sidebar-menu-item-icon"></i>
                     HOME
                 </a>
             </li>
-            <li class="sidebar-menu-item">
+            <li class="sidebar-menu-item btnAnnounce" id="sideBtn" data-bs-target="iframe" id="show-btn">
                 <a href="../pages/announce.html">
                     <i class="fa-solid fa-bullhorn sidebar-menu-item-icon"></i>
                     Announcements
@@ -325,12 +325,16 @@
 
             <div class="embed-responsive embed-responsive-16by9" id="contVT" style="display:none; height:100%; width:100%;">
                 <!-- https://jzhmrtn.github.io/ -->
-                <iframe src="https://jzhmrtn.github.io/" id="vtFrame" frameborder="0" width="100%" height="100%" allowfullscreen sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals"></iframe>
+                <iframe src="" id="vtFrame" frameborder="0" width="100%" height="100%" allowfullscreen sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals"></iframe>
+            </div>
+
+            <div class="embed-responsive embed-responsive-16by9" id="contAnnounce" style="display:none; height:100%; width:100%;">
+                <iframe src="../pages/announce.html" frameborder="0" width="100%" height="100%"></iframe>
             </div>
 
             <div class="embed-responsive embed-responsive-16by9" id="About" style="display:none; height:100%; width:100%;">
                 <iframe src="../pages/announce.html" frameborder="0" width="100%" height="100%"></iframe>
-            </div>       
+            </div>
 
         </div>
     </main>

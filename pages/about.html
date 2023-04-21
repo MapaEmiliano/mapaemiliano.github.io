@@ -6,10 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css" integrity="sha384-QYIZto+st3yW+o8+5OHfT6S482Zsvz2WfOzpFSXMF9zqeLcFV0/wlZpMtyFcZALm" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
   <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 
-  <link rel="stylesheet" href="../assets/css/aboutStyle.css">
+  <link rel="stylesheet" href="/assets/css/aboutStyle.css">
 
   <title>About</title>
 </head>
@@ -20,30 +21,29 @@
       <button type="button" data-bs-target="#hero-carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
       <button type="button" data-bs-target="#hero-carousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
     </div>
-
     <div class="carousel-inner">
       <div class="carousel-item active c-item">
-        <img src="../imgs/eacbg.jpg" class="d-block w-100 c-img" alt="Slide 1">
+        <img src="/imgs/eacbg.jpg" class="d-block w-100 c-img" alt="Slide 1">
         <div class="carousel-caption top-0 mt-4">
-          <p class="mt-5 fs-3 text-uppercase">Emilio Aguinaldo College-Cavite</p>
+          <p class="mt-5 fs-5 text-uppercase">Emilio Aguinaldo College-Cavite</p>
           <h1 class="display-1 fw-bolder text-capitalize">Be an Emilian</h1>
-          <button class="btn btn-danger px-4 py-2 fs-5 mt-5">Course Offerings</button>
+          <a class="btn btn-danger px-4 py-2 fs-5 mt-5" href="#courseoffers">Course Offerings</a>
         </div>
       </div>
       <div class="carousel-item c-item">
-        <img src="../imgs/3Dshits.png" class="d-block w-100 c-img" alt="Slide 2">
+        <img src="/imgs/EAC3D.png" class="d-block w-100 c-img" alt="Slide 2">
         <div class="carousel-caption top-0 mt-4">
-          <p class="text-uppercase fs-3 mt-5">Explore the Campus</p>
+          <p class="text-uppercase fs-5 mt-5">Explore the Campus</p>
           <p class="display-1 fw-bolder">Locate and Navigate</p>
-          <button class="btn btn-danger px-4 py-2 fs-5 mt-5">Go to our Map</button>
+          <a class="btn btn-danger px-4 py-2 fs-5 mt-5" href="#aboutapp">Go to our Map</a>
         </div>
       </div>
       <div class="carousel-item c-item">
-        <img src="../imgs/Labi1.png" class="d-block w-100 c-img" alt="Slide 3">
+        <img src="/imgs/img1.png" class="d-block w-100 c-img" alt="Slide 3">
         <div class="carousel-caption top-0 mt-4">
-          <p class="text-uppercase fs-3 mt-5">Emilio Aguinaldo College-Cavite</p>
-          <p class="display-1 fw-bolder text-capitalize">Portal</p>
-          <button class="btn btn-danger px-4 py-2 fs-5 mt-5">AIMS</button>
+          <p class="text-uppercase fs-5 mt-5">MAPA-EMILIANO</p>
+          <p class="display-1 fw-bolder text-capitalize">Our Team</p>
+          <a class="btn btn-danger px-4 py-2 fs-5 mt-5" href="#ourteam">Profiles</a>
         </div>
       </div>
     </div>
@@ -56,69 +56,287 @@
       <span class="visually-hidden">Next</span>
     </button>
   </div>
-  <section class="about section-padding" id="about">
+  <section class="about mt-5" id="courseoffers"> 
     <div class="container">
-        <div class="row">
-            <div class="col-lg-4 col-md-12 col-12">
-                <div class="img-fluid about-img mt-4"><img alt="" src="../imgs/EAC_Emblem.png"></div>
+      
+        <div class="row justify-content-center">
+          <div class="col-lg-4 col-md-10 col-12 d-flex">
+            <div class="img-fluid mt-5 mx-5 mb-5 ">
+              <img class="eacLogo" alt="" src="/imgs/EACLogo.png">
             </div>
-            <div class="top-3 px-5 py-2 col-lg-8 col-md-12 col-12 ps-lg-5 mt-md-5">
+          </div>
+          
+            <div class="col-lg-8 col-md-12 col-12 ps-lg-5 mt-md-5">
                 <div class="about-text">
-                    <h2>Providing the Best Quality
-                    Education Ever</h2>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Totam, labore reiciendis. Assumenda eos quod animi! Soluta nesciunt inventore dolores excepturi provident, culpa beatae tempora, explicabo corporis quibusdam corrupti. Autem, quaerat. Assumenda quo aliquam vel, nostrum explicabo ipsum dolor, ipsa perferendis porro doloribus obcaecati placeat natus iste odio est non earum?</p>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos neque, nemo esse nobis vel eum fuga dignissimos magnam maiores, sequi et quasi magni asperiores quo, voluptate eligendi reprehenderit quaerat iste.</p>
-                    <a class="btn btn-danger text-light" href="#">Academic Programs</a>
+                    <h2 class="text-center">Providing the Best Quality
+                    Education</h2>
+                    <p class="text-center fs-5" >EAC nurtures a diverse student body and cultivates partnerships with various training institutions for authentic, advanced learning experiences rarely matched by other learning institutions.</p>
+                    <p class="text-center fs-5">From its foundation in 1957 as a midwifery school, EAC has since evolved to offer a wide array of degree programs – from doctorate, master’s, undergraduate, to certificate and diploma courses.</p>
+                    <p class="text-center fs-5">Incorporating interdisciplinary, hands-on approach in developing skills in students, our close-knit community makes it what one college guide calls an “urban oasis.”</p>
+                    <div class="d-grid gap-2 col-4 mx-auto">
+                    <a class="btn btn-danger text-light" href="https://www.eac.edu.ph/admissions-eacc/">Academic Programs</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
   </section>
-  <section class="services section-padding" id="services">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="section-header text-center pb-5 py-5">
-                    <h2>About our Application</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur<br>
-                    adipisicing elit. Non, quo.</p>
-                </div>
-            </div>
+<section class="philosophy mt-5" id="philosophy">
+  <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="text-center pb-5">
+            <h2 class="">PHILOSOPHY</h2>
+            <p class="philosophy-text fs-5 top-3 px-5 py-2">Emilio Aguinaldo College is a private, non-sectarian, co-educational institution of learning that fosters equal and fair opportunities of education, the total development of our students, conscious of their national identity and their role in the global community.</p>
+          </div>
         </div>
-        <div class="row">
-            <div class="col-12 col-md-12 col-lg-4">
-                <div class="card text-dark text-center bg-white pb-2">
-                    <div class="card-body">
-                        <i class="bi bi-geo-alt-fill"></i>
-                        <h3 class="card-title">Locate Facilities</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat eligendi numquam sed maxime soluta totam, natus maiores est sit amet fugiat facere reiciendis velit quam ut nobis repudiandae accusamus adipisci ipsa, quos minus odit fugit vero? Doloremque provident doloribus accusantium natus quidem inventore consectetur voluptatem nisi. Quidem repudiandae recusandae aperiam!</p>
-                        <button class="btn bg-danger text-light">3D Map</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-12 col-lg-4">
-                <div class="card text-dark text-center bg-white pb-2">
-                    <div class="card-body">
-                        <i class="bi bi-map-fill"></i>
-                        <h3 class="card-title">Navigating Facilities</h3>
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos a doloribus distinctio maxime eaque, inventore earum illum facilis adipisci. Debitis nihil minus atque at reiciendis animi aut praesentium, amet doloremque beatae, officia illum! Veritatis quod cumque commodi? Odit libero est doloremque, amet quos fugiat, provident aperiam reiciendis eaque quis inventore!</p>
-                        <button class="btn bg-danger text-light">2D Map</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-12 col-lg-4">
-                <div class="card text-dark text-center bg-white pb-2">
-                    <div class="card-body">
-                        <i class="bi bi-eye-fill"></i>
-                        <h3 class="card-title">Campus Tour</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, officiis, saepe accusamus eaque eum doloribus ea pariatur odio consectetur aspernatur blanditiis cum corrupti nemo distinctio nulla placeat ex sint! Qui sed modi ullam excepturi repellendus aspernatur distinctio voluptate deleniti expedita dignissimos repudiandae, corporis quo totam aliquid praesentium ipsa. Fugiat, quibusdam.</p>
-                        <button class="btn bg-danger text-light">Virtual Tour</button>
-                    </div>
-                </div>
-            </div>
+        <div class="col-md-12">
+          <div class="text-center pb-5">
+            <h2 class="" >VISION</h2>
+            <p class="philosophy-text fs-5 top-3 px-5 py-2">Emilio Aguinaldo College envisions itself as an internationally recognized private non-sectarian academic institution rooted in the Filipino nationalist tradition that consistently pursues the advancement and welfare of humanity.</p>
+          </div>
         </div>
-    </div>
+        <div class="col-md-12">
+          <div class="text-center pb-5">
+            <h2 class="">MISSION</h2>
+            <p class="philosophy-text fs-5 top-3 px-5 py-2">Emilio Aguinaldo College provides a learner-centered, inquiry-based, and socially relevant academic community.</p>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="text-center pb-5">
+            <h2 class="">CORE VALUES</h2>
+            <p class="philosophy-text fs-5 top-3 px-5 py-2">VIRTUE</p>
+            <p class="philosophy-text fs-5 top-3 px-5 py-2">EXCELLENCE</p>
+            <p class="philosophy-text fs-5 top-3 px-5 py-2">SERVICE</p>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="text-center pb-5">
+            <h2>QUALITY POLICY</h2>
+            <p class="philosophy-text fs-5 top-3 px-5 py-2">We, the employees of Emilio Aguinaldo College are committed to:</p>
+            <p class="philosophy-text fs-5 top-3 px-5 py-2">Provide our students an exceptional educational experience delivered within all statutory and regulatory standards;</p>
+            <p class="philosophy-text fs-5 top-3 px-5 py-2">Provide consistent quality service to our students, parents, and other stakeholders;</p>
+            <p class="philosophy-text fs-5 top-3 px-5 py-2">Develop responsible students through relevant and quality education, able to independently fs-5 and enhance their lives, and contribute to the development of our country and humanity;</p>
+            <p class="philosophy-text fs-5 top-3 px-5 py-2">Continuously improve the educational experience of our students and other stakeholders by communicating the needs of our students and stakeholders to the entire organization, standardizing our institutions’ processes, enhancing our employees’ competence, periodically reviewing and continually improving the institutions’ systems, and providing our students an exceptional educational experience.</p>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="pb-2">
+            <h2 class="text-center">QUALITY OBJECTIVES</h2>
+            <ul class="list-unstyled fs-5">
+              <p class="philosophy-text fs-5 top-3 px-5 py-2">The objectives of Emilio Aguinaldo College are to:</p>
+                <ul>
+                  <li>Offer opportunities for quality and relevant education to all qualified students;</li>
+                  <li>Cultivate the intellectual, spiritual, moral, social, and physical aspects of our students;</li>
+                  <li>Instill an appreciation and pride in our students of their national identity; and</li>
+                  <li>Prepare graduates of global quality equipped with world class competencies in their fields of expertise.</li>
+                </ul>
+            </ul>
+          </div>
+        </div>
+      </div>
+  </div>
 </section>
+<section class="orgTree mt-5" id="org-tree">
+  <div class="container pt-5">
+    <div class="section-header text-center pb-5">
+      <h1 class="admin">Administration - Cavite Campus</h1>
+    </div>
+    <div class="img-fluid d-flex d-block mx-auto img-thumbnail img">
+      <img src="/imgs/OrgTree.png" alt="">        
+    </div>
+</div>
+</section>
+<section class="abouts mt-5" id="aboutapp">
+  <div class="container">
+      <div class="row">
+          <div class="col-md-12">
+              <div class="section-header text-center pb-5 py-5">
+                  <h2>MAPA-EMILIANO</h2>
+                  <p class="top-3 px-5 py-2 fs-5">An Interactive School Map will assist members in becoming intimately familiar with facilities located inside the campus. It also allows you to learn more about the school.</p>
+              </div>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-12 col-md-12 col-lg-4 pb-4">
+              <div class="card text-dark text-center bg-white pb-2">
+                  <div class="card-body">
+                      <i class="bi bi-geo-alt-fill text-danger"></i>
+                      <h3 class="card-title pb-4">Locate Facilities</h3>
+                      <p>Locating is the process of determining the precise location of something. A map is a visual representation of details about an area, usually drawn on a flat surface. This map presents information about the campus in an easy-to-understand visual format. Locating facilities in this application will be a helpful tool that helps you identify unfamiliar places within the campus.</p>
+                      <button class="btn btn-danger text-light ">3D Map</button>
+                  </div>
+              </div>
+          </div>
+          <div class="col-12 col-md-12 col-lg-4 pb-4">
+              <div class="card text-dark text-center bg-white pb-2">
+                  <div class="card-body">
+                      <i class="bi bi-map-fill text-primary"></i>
+                      <h3 class="card-title pb-4">Navigating Facilities</h3>
+                      <p class="pb-4">The term "navigating" refers to how users move from one location to another. The phrase "navigating facilities on map" refers to the route instructions that appear on the campus map. The navigation in this map demonstrates "routes" that the user can take through the layout to perform and complete all of the steps needed for getting to the desired location.</p>
+                      <button class="btn btn-danger text-light">2D Map</button>
+                  </div>
+              </div>
+          </div>
+          <div class="col-12 col-md-12 col-lg-4 pb-4">
+              <div class="card text-dark text-center bg-white pb-2">
+                  <div class="card-body">
+                      <i class="bi bi-eye-fill text-success"></i>
+                      <h3 class="card-title pb-4">Virtual Tour</h3>
+                      <p>This is a simulation of the campus using 360-degree images and create a realistic representation of the school. The virtual tour helps in the presentation of views to inaccessible areas and provide an exciting and great alternative platform for people that wants to explore the campus and users has complete control over the virtual tour and can zoom in and out to enhance the scene.</p>
+                      <button class="btn btn-danger text-light">Virtual Tour</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+<section class="team mt-5" id="ourteam">
+  <div class="container pt-5">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="section-header text-center pb-5">
+          <h2>Our Team</h2>
+          <p class="top-3 px-5 py-2 fs-5">This team are innovative, diverse, multidisciplinary and collaborative, taking technology into the future and bringing the world with it.</p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-6 col-lg-3 pb-4">
+        <div class="card text-center">
+          <div class="card-body">
+            <img alt="" class="img-fluid rounded-circle profile" src="">
+            <h3 class="card-title py-2">Jozhua Martin Simeon</h3>
+            <p class="card-text">fs-5 Full Stack Programmer/Project Manager</p>
+            <p class="card-text">The PROBLEM is not the PROBLEM; The PROBLEM is your ATTITUDE about the PROBLEM.</p>
+            <p class="socials"><i class="bi bi-twitter text-dark mx-1"></i> <i class="bi bi-facebook text-dark mx-1"></i> <i class="bi bi-instagram text-dark mx-1"></i></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-3 pb-4">
+        <div class="card text-center">
+          <div class="card-body">
+            <img alt="" class="img-fluid rounded-circle profile" src="">
+            <h3 class="card-title py-2">Jean Maica del Remedio</h3>
+            <p class="card-text">Front & Back-end Programmer/Document Manager</p>
+            <p class="card-text">Success is not final, failure is not fatal: It is the courage to continue that counts.</p>
+            <p class="socials"><i class="bi bi-twitter text-dark mx-1"></i> <i class="bi bi-facebook text-dark mx-1"></i> <i class="bi bi-instagram text-dark mx-1"></i></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-3 pb-4">
+        <div class="card text-center">
+          <div class="card-body">
+            <img alt="" class="img-fluid rounded-circle profile" src="">
+            <h3 class="card-title py-2">Aris Christian Dionela</h3>
+            <p class="card-text">Assistant Front-end Programmer</p>
+            <p class="card-texts pt-4">There are no secrets in SUCCESS. It is the result of preparation, hard work, and learning from failure.</p>
+            <p class="socials"><i class="bi bi-twitter text-dark mx-1"></i> <i class="bi bi-facebook text-dark mx-1"></i> <i class="bi bi-instagram text-dark mx-1"></i></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-3 pb-4">
+        <div class="card text-center">
+          <div class="card-body">
+            <img alt="" class="img-fluid rounded-circle profile" src="/imgs/Pat_Profile.jpg">
+            <h3 class="card-title py-2">John Patrick Baguioro</h3>
+            <p class="card-text">Front-end Programmer/Assistant Document Manager</p>
+            <p class="card-text">TEAMWORK coming together is a beginning, keeping together is progress, working together is success.</p>
+            <p class="socials"><i class="bi bi-twitter text-dark mx-1"></i> <i class="bi bi-facebook text-dark mx-1"></i> <i class="bi bi-instagram text-dark mx-1"></i></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="visitpages mt-5" id="visitpages">
+  <div class="container">
+      <div class="row">
+          <div class="col-md-12">
+              <div class="section-header text-center pb-5 py-5">
+                  <h2>Visit EAC related Websites</h2>
+              </div>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-12 col-md-12 col-lg-4 pb-4">
+              <div class="card text-dark text-center bg-white pb-2">
+                  <div class="card-body">
+                      <i class="bi bi-buildings fa-5x text-danger"></i>
+                      <h3 class="card-title pb-4">EAC Official Website</h3>
+                      <a href="https://www.eac.edu.ph/" class="btn btn-danger text-light">Visit EAC Website</a>
+                  </div>
+              </div>
+          </div>
+          <div class="col-12 col-md-12 col-lg-4 pb-4">
+              <div class="card text-dark text-center bg-white pb-2">
+                  <div class="card-body">
+                      <i class="bi bi-facebook fa-5x text-primary"></i>
+                      <h3 class="card-title pb-4 ">Facebook</h3>
+                      <a href="https://www.facebook.com/EACCaviteOfficial" class="btn btn-danger text-light">Visit our FB page</a>
+                  </div>
+              </div>
+          </div>
+          <div class="col-12 col-md-12 col-lg-4 pb-4">
+              <div class="card text-dark text-center bg-white pb-2">
+                  <div class="card-body">
+                      <i class="bi bi-globe fa-5x text-success"></i>
+                      <h3 class="card-title pb-4">EAC-Cavite AIMS</h3>
+                      <a href="https://aims1.eac.edu.ph/eaccvt/students/" class="btn btn-danger text-light">AIMS for Students</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+<section class="contact mt-5" id="contact">
+  <div class="container mt-5 mb-5 pt-4">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="section-header text-center pb-5">
+          <h2>Contact Us</h2>
+          <p class="top-3 px-5 py-2">We are going to answer the most frequently asked questions with just one click away.</p>
+        </div>
+      </div>
+    </div>
+    <div class="row m-0 justify-content-center">
+      <div class="col-md-6 p-0 pt-4 pb-4">
+        <form action="#" class="bg-light border border-2 rounded p-3 m-auto">
+          <div class="row justify-content-md-center">
+            <div class="w-100 p-2 justify-content-center">
+              <div class="mb-3">
+                <input class="form-control" placeholder="Full Name" required="" type="text">
+              </div>
+            </div>
+            <div class="w-100 p-2 justify-content-center">
+              <div class="mb-3">
+                <input class="form-control" placeholder="Email" required="" type="email">
+              </div>
+            </div>
+            <div class="w-100 p-2 justify-content-center">
+              <div class="mb-3">
+                <textarea class="form-control" placeholder="Message" required="" rows="3"></textarea>
+              </div>
+            </div>
+            <div class="d-grid gap-2 col-3 mx-auto"><button class="btn btn-danger btn-md mt-3" type="button">Send Now</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row m-0">
+      <div class="col-md-12 p-0 pt-4 pb-4">
+      </div>
+    </div>
+  </div>
+</section>
+<footer class="bg-dark p-2 text-center">
+  <div class="container">
+    <p class="text-white bi bi-map-fill"> All Right Reserved By @Mapa-Emiliano </p>
+  </div>
+</footer>
 
+    <script src="/assets/js/bootstrap.bundle.js"></script>
+    <script src="/assets/js/script.js"></script>
 </body>
 </html>

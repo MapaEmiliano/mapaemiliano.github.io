@@ -52,6 +52,12 @@ svg {
 .circlers {
   opacity: .6;
   z-index: 99;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.circlers:hover {
+  opacity: 1;
 }
 
 .focus{

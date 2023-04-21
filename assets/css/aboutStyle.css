@@ -1,9 +1,110 @@
+
+
+body {
+  /* background: #ffffff; */
+  background: url("/imgs/3047223.jpg")no-repeat center center fixed;
+  background-size: cover;
+  backdrop-filter: blur(3px);
+  background-color: rgba(128, 128, 128, 0.249);
+  background-blend-mode: multiply;
+}
+
+
+
 .c-item {
-    height: 480px;
+  height: 480px;
+}
+  
+.c-img {
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.6);
+}
+
+
+.section-padding {
+  padding: 100px 0;
+}
+
+.abouts .card-body i {
+	font-size: 50px;
+}
+
+.team .card {
+	box-shadow: 15px 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.team .card-body i {
+	font-size: 20px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+ul {
+  list-style: none;
+}
+
+ul li::before {
+  content: "•";
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+  display: inline-block;
+  width: 40px;
+}
+
+
+.btn {
+  background-color: #8e0000de;
+}
+
+.eacLogo {
+  max-width: 100%;
+  animation: animate 5s linear infinite;
+}
+
+
+
+@keyframes animate {
+  0% {
+      transform: rotateY(0deg);
+  }
+  100% {
+      transform: rotateY(360deg);
+  }
+}
+
+h2, .admin {
+  width: 100%;
+  /* background-color: #8e0000de; */
+  background: linear-gradient(110deg, #8e0000de 60%,#fdcd3b 60%);
+  color: white;
+}
+
+
+.carousel-inner {
+ border-bottom: 10px solid #8e0000;
+}
+
+@media screen and (max-width: 990px) {
+
+  .eacLogo {
+    width: 50%;
+    
   }
   
-  .c-img {
-    height: 100%;
-    object-fit: cover;
-    filter: brightness(0.6);
+  .profile{
+    width: 50%;
   }
+
+
+  .about {
+    padding-top: 5%;
+
+  }
+
+ }

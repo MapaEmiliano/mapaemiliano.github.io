@@ -90,16 +90,7 @@
             console.error(error);
           });
 
-            window.setTimeout(function () {
-              signOut(auth).then(() => {
-                // Sign-out successful.
-                alert("You have been logged out due to inactivity!");
-                window.location = '../' ;
-              }).catch((error) => {
-                // An error happened.
-              });
-                
-            }, 1000 * 300); // 1000 * 60 * 5 = 5 minutes   
+          inactivityTime();
 
           if(window.location.pathname == "/pages/home.html") {
             const logoutBtn = document.getElementById("signOut");
@@ -199,5 +190,40 @@
   });
 
   }
+
+  window.setTimeout(function () {
+    signOut(auth).then(() => {
+      // Sign-out successful.
+      alert("You have been logged out due to inactivity!");
+      window.location = '../' ;
+    }).catch((error) => {
+      // An error happened.
+    });
+      
+  }, 1000 * 300); // 1000 * 60 * 5 = 5 minutes   
+
+  var inactivityTime = function () {
+    var time;
+    window.onload = resetTimer;
+    // DOM Events
+    document.onmousemove = resetTimer;
+    document.onkeydown = resetTimer;
+
+    function logout() {
+      alert("You have been logged out due to inactivity!");
+      signOut(auth).then(() => {
+        // Sign-out successful.
+        window.location = '../' ;
+      }).catch((error) => {
+        // An error happened.
+      });
+    }
+
+    function resetTimer() {
+        clearTimeout(time);
+        time = setTimeout(logout, 1000 * 300)
+        
+    }
+};
   
   export { database, auth, userData, app, getDatabase, child, ref, get, remove, push, update };

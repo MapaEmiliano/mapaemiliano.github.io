@@ -1,11 +1,14 @@
 import {app, userData, auth, database, get, child, ref, getDatabase, remove, push, update } from './firebase.js';
-    
-import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL } from "https://cdnjs.cloudflare.com/ajax/libs/firebase/9.17.2/firebase-storage.min.js";
+// import firebase from './firebase.js';
+import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL, deleteObject } from "https://cdnjs.cloudflare.com/ajax/libs/firebase/9.17.2/firebase-storage.min.js";
 
 
 let data = ref(getDatabase(app));
-
-let storage = getStorage();
+let curUserRole;
+setTimeout(function() {
+  curUserRole = userData.Role;
+  displayAnnouncementsFromDB(curUserRole);
+}, 1500);
 
 const db = getDatabase();
 
@@ -21,7 +24,7 @@ const saveMessages = (title, content, imgUrl) => {
   })
 };
 
-function displayAnnouncementsFromDB() {
+function displayAnnouncementsFromDB(role) {
 
   get(child(data, `AnnouncementCont`)).then((snapshot) => {
     const data = snapshot.val();
@@ -33,9 +36,9 @@ function displayAnnouncementsFromDB() {
 
     for (let i = childData.length - 1; i >= 0; i--) { // loop backwards (display latest announcement first)
 
-      const { key, title, content, timestamp} = childData[i];
+      const { key, title, content, timestamp, imageURL} = childData[i];
 
-      displayAnnouncement(key, title, content, timestamp);
+      displayAnnouncement(key, title, content, timestamp, imageURL, role);
 
     }
 
@@ -43,8 +46,6 @@ function displayAnnouncementsFromDB() {
     console.error(error);
   });
 }
-
-setTimeout(displayAnnouncementsFromDB, 1000);
 
 // Listen for form submission and save announcement to Firebase Realtime Database
 document.getElementById('announcementModal').addEventListener("submit", submitForm);
@@ -55,25 +56,19 @@ function submitForm(e) {
   var title = document.getElementById("title").value;
   var content = document.getElementById("content").value;
   var image = document.getElementById("image");
-  // const storageRef = sRef(getStorage(app), 'AnnouncementImgs/');
-  // var name = 
-  // console.log(image.split('\\')[2].split('.')[0]);
   
   const uploadFiles = (file) => {
     if(!file){
         console.log('no file exists')
         return;
     }
+    const metadata = {
+          contentType: 'image/jpeg',
+        };
 
-    const blob = URL.createObjectURL(file.files[0])
+    const storageRef = sRef(getStorage(app), `AnnouncementImgs/${title}`);
 
-    console.log(blob)
-
-    URL.revokeObjectURL(blob)
-    // const fileName = file.split('\\')[2].split('.')[0];
-    const storageRef = sRef(getStorage(app), `AnnouncementImgs/${file.value.split('\\')[2].split('.')[0]}`);
-
-    const uploadTask = uploadBytesResumable(storageRef, blob);
+    const uploadTask = uploadBytesResumable(storageRef, file.files[0], metadata);
     uploadTask.on('state_changed', null,
       (error) => {
           alert(error);
@@ -82,10 +77,8 @@ function submitForm(e) {
           getDownloadURL(uploadTask.snapshot.ref)
           .then((URL) => {
               saveMessages(title, content, URL)
-              console.log('url registered')
                 // Clear the form
               document.getElementById("announcement-form").reset();
-
                 // Hide the modal
               var modal = document.getElementById("announcementModal");
               modal.style.display = "none";
@@ -95,9 +88,7 @@ function submitForm(e) {
   )
     
 }
-
   uploadFiles(image);
-  // saveMessages(title, content);
 
 }
 
@@ -105,31 +96,28 @@ function submitForm(e) {
 function clearAnnouncementContainer() {
   const announcementsContainer = document.getElementById('announcements');
   announcementsContainer.innerHTML = '';
-
 }
 
-$(window).scroll(function() {
-  if ($(this).scrollTop() > 100) {
-      $('#picture-button').fadeOut();
-  } else {
-      $('#picture-button').fadeIn();
-  }
-});
+function displayAnnouncement(key, title, content, timestamp, imageURL, role) {
 
-function displayAnnouncement(key, title, content, timestamp) {
   const announcements = document.getElementById('announcements');
   
   const announcement = document.createElement('div');
   announcement.classList.add('card', 'my-3');
-  announcement.setAttribute('data-aos', 'fade-up');
-  announcement.setAttribute('data-aos-duration', '700');
   announcement.setAttribute('data-key', key);
 
 
   // Add hover effect
   announcement.addEventListener('mouseover', () => {
-    editButton.style.display = 'inline-block';
-    deleteButton.style.display = 'inline-block';
+    if(role === "Admin"){
+      console.log("admin");
+      editButton.style.display = 'inline-block';
+      deleteButton.style.display = 'inline-block';
+    } else {
+      console.log("not admin");
+      editButton.style.display = 'none';
+      deleteButton.style.display = 'none';
+    }
   });
 
   announcement.addEventListener('mouseout', () => {
@@ -138,16 +126,30 @@ function displayAnnouncement(key, title, content, timestamp) {
   });
 
   const cardBody = document.createElement('div');
-  cardBody.classList.add('card-body');
+  cardBody.classList.add('card-body', 'w-100');
 
+  // card-title to card-header
   const cardTitle = document.createElement('h5');
-  cardTitle.classList.add('card-title', 'text-uppercase');
+  cardTitle.classList.add('card-header', 'text-uppercase', 'fw-bold', 'text-white', );
   cardTitle.textContent = title;
+  cardTitle.setAttribute('data-title', title)
+
+  const cardImg = document.createElement('img');
+  cardImg.classList.add('card-img-top', 'w-100', 'h-100',);
+  cardImg.setAttribute('src', imageURL);
+  cardBody.appendChild(cardImg);
 
   const cardContent = document.createElement('p');
-  cardContent.classList.add('card-text', 'text-uppercase', 'mx-2');
+  cardContent.classList.add('card-text', 'lead', 'mx-3', 'h-100', 'text-black');
   cardContent.textContent = content;
   cardContent.setAttribute('data-content', content);
+  
+  const cardFooter = document.createElement('div');
+  cardFooter.classList.add('card-footer' , 'text-muted', 'lead');
+
+  const footerText = document.createElement('small');
+  footerText.classList.add('text-muted');
+
 
   // Display time since posted
   const currentTime = new Date();
@@ -178,6 +180,8 @@ function displayAnnouncement(key, title, content, timestamp) {
     // Set the title and content of the View Announcement modal to the clicked announcement
     const viewAnnouncementModalTitle = document.getElementById('viewAnnouncementModalLabel');
     const viewAnnouncementModalContent = document.getElementById('viewAnnouncementContent');
+    const viewModalImg = document.querySelector('.imgCont > img')
+    viewModalImg.setAttribute('src', imageURL);
     viewAnnouncementModalTitle.textContent = title;
     viewAnnouncementModalContent.textContent = content;
 
@@ -263,10 +267,9 @@ notificationButton.addEventListener('click', () => {
   }
 });
 
-  const editButton = document.createElement('img');
-  editButton.setAttribute('src', '../imgs/edit.png');
-  editButton.classList.add('btn', 'mx-2', 'editbtn');
-  editButton.textContent = 'Edit';
+const editButton = document.createElement('btn');
+editButton.classList.add('mx-2', 'editBtn', 'bi', 'bi-pencil-square', );
+  // editButton.textContent = 'Edit';
   editButton.style.display = 'none'; // Set default display to none
   editButton.addEventListener('click', (e) => {
     e.stopPropagation();
@@ -277,7 +280,8 @@ notificationButton.addEventListener('click', () => {
   const originalContent = cardContent.getAttribute('data-content');
   titleInput.value = originalTitle;
   contentInput.value = originalContent;
-  const announcementKey = cardContent.getAttribute('data-key');
+  console.log(cardTitle.getAttribute('data-title'), "gsdgsdg");
+  const announcementKey = e.target.closest('.card').getAttribute('data-key');
 
   // Show the edit-announcement-form modal
   $('#editAnnouncementModal').modal('show');
@@ -285,25 +289,97 @@ notificationButton.addEventListener('click', () => {
   // Modify the submit event listener for the edit-announcement-form modal to update the existing announcement
   const editAnnouncementForm = document.getElementById('edit-announcement-form');
   editAnnouncementForm.addEventListener('submit', (e) => {
-
+    e.preventDefault();
+    const imgInput = document.getElementById('imageEdit');
     const newTitle = titleInput.value;
     const newContent = contentInput.value;
+    let delImage;
+    if(imgInput.files[0] != null){
+      
+      console.log("file exists")
+      console.log(cardTitle.getAttribute('data-title'));
+
+      const uploadFiles = async (file) => {
+        
+        const result = await delObject();
+        const metadata = {
+          contentType: 'image/jpeg',
+        };
+      
+      const storageRef = sRef(getStorage(app), `AnnouncementImgs/${newTitle}`);
+      let delImage;
+      
+      const uploadTask = uploadBytesResumable(storageRef, file.files[0], metadata);
+      
+      uploadTask.on('state_changed', null,
+      (error) => {
+          alert(error);
+      },
+      () => {
+          getDownloadURL(uploadTask.snapshot.ref)
+          .then((URL) => {
+            console.log(URL);                
+            
+            setTimeout(function(){
+              updatePost(newTitle, newContent, announcementKey, URL);
+              window.location.reload();
+            }, 1000);
+      
+          });
+      }
+      )
+
+    }
+
+      const delObject = () => {
+
+        if(!newTitle == cardTitle.getAttribute('data-title')){
+
+          delImage = sRef(getStorage(app), `AnnouncementImgs/${newTitle}`);
+          
+        } else {
+        
+          delImage = sRef(getStorage(app), `AnnouncementImgs/${cardTitle.getAttribute('data-title')}`);
+        
+        }
+        
+        deleteObject(delImage).then(() => {
+          
+        }).catch((error) => {
+          // Uh-oh, an error occurred!
+        }); 
+        return;
+      }
+
+      uploadFiles(imgInput);
+
+    } else {
+      
+      updatePost(newTitle, newContent, announcementKey);
+      window.location.reload();
+
+    }
     
-    updatePost(newTitle, newContent, announcementKey);
 
     });
 
   });
 
-  const deleteButton = document.createElement('img');
-  deleteButton.setAttribute('src', '../imgs/trash.png');
-  deleteButton.classList.add('btn', 'deletebtn');
-  deleteButton.textContent = 'Delete';
+  const deleteButton = document.createElement('btn');
+  deleteButton.classList.add('deleteBtn', 'bi', 'bi-trash3', 'mx-2');
+  // deleteButton.textContent = 'Delete';
   deleteButton.style.display = 'none'; // Set default display to none
   deleteButton.addEventListener('click', (e) => {
     const announcementKey = e.target.closest('.card').getAttribute('data-key');
-
+    const title = document.querySelector("[data-key='" + announcementKey + "'] .card-header").textContent;
     const delKey = ref(db, `AnnouncementCont/${announcementKey}`);
+    const delImage = sRef(getStorage(app), `AnnouncementImgs/${title}`);
+
+    deleteObject(delImage).then(() => {
+      // File deleted successfully
+    }).catch((error) => {
+      // Uh-oh, an error occurred!
+    });
 
     remove(delKey).then(() => {
 
@@ -321,32 +397,43 @@ notificationButton.addEventListener('click', () => {
 
   cardBody.appendChild(cardTitle);
   cardBody.appendChild(cardContent);
-  cardBody.appendChild(editButton);
-  cardBody.appendChild(deleteButton);
+  cardBody.appendChild(cardFooter);
+  cardFooter.appendChild(cardTimestamp);
+  cardFooter.appendChild(editButton);
+  cardFooter.appendChild(deleteButton);
   announcement.appendChild(cardBody);
-  cardBody.appendChild(cardTimestamp);
+  // cardBody.appendChild(cardTimestamp);
   announcements.appendChild(announcement);
 
-  AOS.init();
 
 }
 
-function updatePost(newTitle, newContent, announcementKey) {
-  const db = getDatabase();
+function updatePost(newTitle, newContent, announcementKey, imgURL) {
+  
+  let postData;
 
-  // A post entry.
-  const postData = {
-    title: newTitle,
-    content: newContent,
-    timestamp: Date.now()
-  };
+  if(imgURL){
+    postData = {
+      title: newTitle,
+      content: newContent,
+      imageURL: imgURL,
+      timestamp: Date.now()
+    };
+  } else {
+    postData = {
+      title: newTitle,
+      content: newContent,
+      timestamp: Date.now()
+    };
+  }
 
-  // Get a key for a new Post.
-  const newPostKey = push(child(ref(db), 'AnnouncementCont')).key;
-
-  // Write the new post's data simultaneously in the posts list and the user's post list.
-  const updates = {};
-  updates['/AnnouncementCont/' + newPostKey] = postData;
-
-  return update(ref(db), updates);
+  const db = getDatabase(app)
+  
+  const dbRef = ref(db, `AnnouncementCont/${announcementKey}`)
+  update(dbRef, postData).then(() => {
+    console.log("Data updated");
+  }).catch((e) => {
+    console.log(e);
+  })
+  
 }

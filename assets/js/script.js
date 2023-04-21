@@ -183,6 +183,10 @@ for (let i = 0; i < btns.length; i++) {
   });
 }
 
+
+
+
+
 const searchBox = document.getElementById("inpSrch");
 
 let floors = {};
