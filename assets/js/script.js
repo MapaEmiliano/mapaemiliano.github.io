@@ -8,7 +8,7 @@ $(document).ready(function () {
 
   $(".sidebar-dropdown-menu").slideUp("fast");
 
-  console.log($(".sidebar-dropdown-menu").hasClass("fast"));
+  
 
   $(
     ".sidebar-menu-item.has-dropdown > a, .sidebar-dropdown-menu-item.has-dropdown > a"
@@ -188,6 +188,8 @@ for (let i = 0; i < btns.length; i++) {
 
 const searchBox = document.getElementById("inpSrch");
 
+const controller = new AbortController();
+
 let floors = {};
 
 const floorGetter = (result) => floors[result] || "Not found!";
@@ -196,6 +198,7 @@ function checkIframe(frame, bldng2D) {
   const sideItem3D = document.getElementById("sideItem3D");
   sideItem3D.style.display = "none";
   const dataSrch = document.getElementById("suggestions");
+
   if (floors) {
     Object.keys(floors).forEach((k) => delete floors[k]);
   }
@@ -222,21 +225,61 @@ function checkIframe(frame, bldng2D) {
   }
 
   if (frame === "vtFrame") {
+    
+    let placeHolders = {
+      Building1: "B1",
+      Building2: "B2",
+      Building3: "B3",
+      Building3Extension: "B3Ex",
+      Building4: "B4",
+      Building5: "B5",
+      Building6: "B6",
+      Canteen: "B6",
+      Building7: "B7",
+      Lobby1: "L1Hall",
+      Lobby2: "L2",
+      Lobby3: "L3",
+      MainHall: "MainHall",
+      Flr2Hall: "F2MainHall",
+      WestRoad: "WestRoad",
+      EastRoad: "EastRoad",
+      MainRoad: "MainRoad",
+      Field: "Field",
+      Parking: "Parking",
+      WestHall: "WestHall",
+      OpenCourt: "OpenCourt",
+      RoofDeck: "RoofDeck",
+      SocialHall: "SocHall",
+    };
+
+    const placeHoldersGetter = (result) => placeHolders[result] || searchBox.value;
+
+    for(scene in placeHolders) {
+
+      let suggOptWord = document.createElement("option");
+      suggOptWord.innerHTML = scene;
+      suggOptWord.value = scene;
+      suggOptWord.setAttribute("id", scene);
+      dataSrch.appendChild(suggOptWord);
+
+    }
+
     selectedFrame.style.height = "100%";
 
     function searchFromFrame() {
+
       selectedFrame.contentWindow.postMessage(
-        "Search || " + searchBox.value,
+        "Search || " + placeHoldersGetter(searchBox.value),
         "*"
       );
-      // selectedFrame.contentWindow.postMessage("vtNav || " + searchBox.value ,'*');
     }
 
     searchBox.addEventListener("keypress", function onEvent(event) {
       if (event.key === "Enter") {
         searchFromFrame();
       }
-    });
+    }, { signal: controller.signal });
+
   } else if (frame === "navFrame") {
     selectedFrame.style.height = "100%";
 
@@ -390,7 +433,7 @@ function checkIframe(frame, bldng2D) {
       if (event.key === "Enter") {
         selectedFrame.contentWindow.addPin(searchBox.value);
       }
-    });
+    }, { signal: controller.signal });
 
     navBtn.addEventListener("click", function (e) {
       selectedFrame.contentWindow.navigateTo(id, selected.value);
@@ -485,7 +528,7 @@ function checkIframe(frame, bldng2D) {
       if (event.key === "Enter") {
         pinFromSearch();
       }
-    });
+    }, { signal: controller.signal });
 
     function pinFromSearch() {
       selectedFrame.contentWindow.mapPin(searchBox.value);

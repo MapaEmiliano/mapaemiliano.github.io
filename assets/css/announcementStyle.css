@@ -100,6 +100,7 @@ p{
   height: 20%;  
   font-size: 20px;
   white-space: nowrap;
+  overflow: hidden;
   text-overflow: ellipsis;
   background: linear-gradient(110deg, #8e0000de 60%,#fdcd3b 60%);
 

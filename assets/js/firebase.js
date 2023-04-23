@@ -72,9 +72,9 @@
     } else { //User is logged in
 
       $(document).ready(function () {
-
+      inactivityTime();
       auth.onAuthStateChanged(user => {
-
+        
         if(user) {
           let data = ref(getDatabase(app));
           get(child(data, `users/${user.uid}`)).then((snapshot) => {
@@ -89,8 +89,6 @@
           }).catch((error) => {
             console.error(error);
           });
-
-          inactivityTime();
 
           if(window.location.pathname == "/pages/home.html") {
             const logoutBtn = document.getElementById("signOut");
@@ -129,24 +127,27 @@
 
     if (password.value == passConf.value && email.value.includes("@")) {
 
+        let Read = {"Welcome": "Welcome to the website!"};
+        let Unread = {"bye": "adios"};
+        
         createUserWithEmailAndPassword(auth, email.value, password.value)
         .then((userCredential) => {
         // Signed in 
         const user = userCredential.user;
 
         alert("Your account has been created!");
-
+        
         set(ref(database, 'users/' + user.uid), {
             username: username.value,
             email: email.value,
             LastLogin: Date.now(),
-            Role: "User"
+            Role: "Admin"
         })
 
         updateProfile(auth.currentUser, { displayName: username.value, 
-                                          Role: "User" })
+                                          Role: "Admin" })
 
-        // window.location = '../pages/home.html';
+        // setTimeout(function(){ window.location = '../pages/home.html' }, 3000);
         // ...
         })
         .catch((error) => {
@@ -189,23 +190,22 @@
 
   }
 
-  window.setTimeout(function () {
-    signOut(auth).then(() => {
-      // Sign-out successful.
-      alert("You have been logged out due to inactivity!");
-      window.location = '../' ;
-    }).catch((error) => {
-      // An error happened.
-    });
-      
-  }, 1000 * 300); // 1000 * 60 * 5 = 5 minutes   
-
   var inactivityTime = function () {
     var time;
-    window.onload = resetTimer;
-    // DOM Events
-    document.onmousemove = resetTimer;
-    document.onkeydown = resetTimer;
+
+    document.body.addEventListener('touchstart', function(e){
+      resetTimer();
+    });
+    document.body.addEventListener('touchpress', function(e){
+      resetTimer();
+    });
+    
+    document.body.addEventListener('mousemove', function(e){
+      resetTimer();
+    });
+    document.body.addEventListener('keypress', function(e){
+      resetTimer();
+    });
 
     function logout() {
       alert("You have been logged out due to inactivity!");
@@ -219,8 +219,7 @@
 
     function resetTimer() {
         clearTimeout(time);
-        time = setTimeout(logout, 1000 * 300)
-        
+        time = setTimeout(logout, 1000 * 300) // 1000 * 300 = 5 minutes
     }
 };
   

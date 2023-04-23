@@ -22,12 +22,70 @@ import {
 
 let data = ref(getDatabase(app));
 let curUserRole;
+let user;
+
 setTimeout(function () {
   curUserRole = userData.Role;
+  user = auth.currentUser;
+
+  // if (snapshot.exists()) {
+  //   const notifCount = Object.keys(snapshot).length;
+  //   console.log(notifCount);
+  //   const notifBell = parent.document.getElementById("notifCount");
+  //   notifBell.innerHTML = notifCount;
+  // } else {
+  //   console.log("No data available");
+  // }
+  
+  const notifBell = get(child(data, `users/${user.uid}/Notifications`)).then(
+    (snapshot) => {
+      if(snapshot.exists()) {
+        const notifBell = parent.document.getElementById("notifCount");
+        let notifCount = Object.keys(snapshot.val()).length;
+        notifBell.innerHTML = notifCount;
+        const data = snapshot.val();
+
+        for (const key in data) {
+
+          if (data[key].read == true) {
+            notifCount--;
+            console.log(notifCount);
+            
+            if (notifCount == 0) {
+              notifBell.style.display = "none";
+              console.log("empty");
+            } else {
+              notifBell.innerHTML = notifCount;
+              notifBell.style.display = "block";
+            }
+            
+          }
+        }
+
+      } else {
+        
+        get(child(data, `AnnouncementCont`)).then((snapshot) => {
+
+          if(snapshot.exists()) {
+            const data = snapshot.val();
+            for (const key in data) {
+              update(ref(getDatabase(app), `users/${user.uid}/Notifications/${key}`), {
+                read: false
+              })
+            }
+          }
+          
+        });
+
+      }
+    });
+
   displayAnnouncementsFromDB(curUserRole);
 }, 1500);
 
 const db = getDatabase();
+
+
 
 // Save messages to Firebase Realtime Database
 const saveMessages = (title, content, imgUrl) => {
@@ -136,11 +194,9 @@ function displayAnnouncement(key, title, content, timestamp, imageURL, role) {
   // Add hover effect
   announcement.addEventListener("mouseover", () => {
     if (role == "Admin") {
-      console.log("admin");
       editButton.style.display = "inline-block";
       deleteButton.style.display = "inline-block";
     } else {
-      console.log("not admin");
       editButton.style.display = "none";
       deleteButton.style.display = "none";
     }
@@ -209,7 +265,32 @@ function displayAnnouncement(key, title, content, timestamp, imageURL, role) {
   cardTimestamp.textContent = timeSincePosted;
 
   // Make the announcement card clickable
-  announcement.addEventListener("click", () => {
+  announcement.addEventListener("click", (e) => {
+
+    const announcementKey = e.target.parentElement.parentElement.getAttribute("data-key");
+
+    const toRead = get(child(data, `users/${user.uid}/Notifications`)).then((snapshot) => {
+      
+      if(snapshot.exists()) {
+        
+        update(ref(db, `users/${user.uid}/Notifications/${announcementKey}`), {
+          read: true
+        });
+
+        const notifCount = parent.document.getElementById("notifCount");
+        if(notifCount.textContent == Object.keys(snapshot.val()).length) {
+          return;
+        } else {
+          notifCount.textContent = Object.keys(snapshot.val()).length - 1;
+        }
+
+      }
+
+    }).catch((error) => {
+      console.error(error);
+    });
+
+    console.log(announcementKey);
     // Set the title and content of the View Announcement modal to the clicked announcement
     const viewAnnouncementModalTitle = document.getElementById(
       "viewAnnouncementModalLabel"
@@ -232,66 +313,6 @@ function displayAnnouncement(key, title, content, timestamp, imageURL, role) {
     viewAnnouncementModal.show();
   });
 
-  // create notification
-  const notificationPopup = document.querySelector(".notification-popup");
-  const notificationContainer = document.querySelector(
-    ".notification-container"
-  );
-  const notificationButton = notificationContainer.querySelector(
-    ".notification-button"
-  );
-  const notificationPopupBody = notificationContainer.querySelector(
-    ".notification-popup-body"
-  );
-
-  const notificationItem = document.createElement("a");
-  notificationItem.classList.add("notification-item", "clickable");
-  notificationItem.href = "../pages/announce.html";
-
-  const notificationTitle = document.createElement("h6");
-  notificationTitle.classList.add("notification-title");
-  notificationTitle.textContent = title;
-
-  const notificationContent = document.createElement("p");
-  notificationContent.classList.add("notification-content");
-  notificationContent.textContent = content;
-
-  const notificationTimestamp = document.createElement("small");
-  notificationTimestamp.classList.add("notification-timestamp");
-  notificationTimestamp.textContent = timeSincePosted;
-
-  notificationItem.appendChild(notificationTitle);
-  notificationItem.appendChild(notificationContent);
-  notificationItem.appendChild(notificationTimestamp);
-  notificationPopupBody.appendChild(notificationItem);
-
-  notificationItem.addEventListener("click", (event) => {
-    // Prevent the default behavior of the link and stop the event from propagating
-    event.preventDefault();
-    event.stopPropagation();
-
-    // view announcement when click
-    const viewAnnouncementModalTitle = document.getElementById(
-      "viewAnnouncementModalLabel"
-    );
-    const viewAnnouncementModalContent = document.getElementById(
-      "viewAnnouncementContent"
-    );
-    viewAnnouncementModalTitle.textContent = title;
-    viewAnnouncementModalContent.textContent = content;
-
-    // Show the View Announcement modal
-    const viewAnnouncementModal = new bootstrap.Modal(
-      document.getElementById("viewAnnouncementModal"),
-      {
-        keyboard: false,
-      }
-    );
-    viewAnnouncementModal.show();
-
-    notificationPopup.classList.remove("open");
-    notificationPopup.style.display = "none";
-  });
 
   const editButton = document.createElement("btn");
   editButton.classList.add("mx-2", "editBtn", "bi", "bi-pencil-square");
@@ -310,7 +331,13 @@ function displayAnnouncement(key, title, content, timestamp, imageURL, role) {
     const announcementKey = e.target.closest(".card").getAttribute("data-key");
 
     // Show the edit-announcement-form modal
-    $("#editAnnouncementModal").modal("show");
+    const editAnnouncementModal = new bootstrap.Modal(
+      document.getElementById("editAnnouncementModal"),
+      {
+        keyboard: false,
+      }
+    );
+    editAnnouncementModal.show();
 
     // Modify the submit event listener for the edit-announcement-form modal to update the existing announcement
     const editAnnouncementForm = document.getElementById(
