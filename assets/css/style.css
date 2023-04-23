@@ -273,6 +273,39 @@ main {
   align-items: center;
 }
 
+.notifMainCont {
+  position: fixed;
+  top: 3%;
+  right: 3%;
+  height: 50%;
+  min-width: 200px;
+}
+
+.notifMainCont .modal-content {
+  height: 100%;
+  max-width: 100%;
+  background-color: #8e0000c9;
+}
+
+#notification-modal-label {
+  color: white;
+}
+
+.card-header {
+  height: 70px;
+  color: red;
+  font-size: 30px;
+}
+
+.card-text {
+  height: 30%;
+}
+
+.notifContent {
+  height: 100%;
+  /* background-color: #20c997; */
+}
+
 /* start: Navbar */
 nav {
   display: flex;
@@ -500,3 +533,5 @@ fieldset {
     height: 400vh;
   }
 }
+
+

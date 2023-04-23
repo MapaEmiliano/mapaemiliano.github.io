@@ -20,7 +20,6 @@
 </head>
 
 <body style="overflow: hidden;">
-
     <!-- start: Sidebar -->
     <div class="sidebar position-fixed top-0 bottom-0 bg-main border-end ">
         <div class="d-flex align-items-center p-3">
@@ -305,12 +304,32 @@
                             <i class="fa-sharp fa-solid fa-robot"></i>
                         </button>
 
-                        <button type="button" class="btn btn-sm text-light a" data-bs-target="iframe" id="show-btn">
+                        <button type="button" class="btn btn-sm text-light a" data-bs-toggle="modal" data-bs-target="#notification-modal" id="show-notif-btn">
                             <div class="">
                                 <i class="fa-sharp fa-solid fa-bell"></i>
                             </div>
                         </button>
                         <span id="notifCount" class="counter" ></span> 
+                        
+                        <div class="modal fade" id="notification-modal" tabindex="-1" aria-labelledby="notification-modal-label" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable notifMainCont">
+                              <div class="modal-content" id="notModalCont">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="notification-modal-label">Notifications</h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+
+                                </div>
+                                <div class="modal-body">
+                                    <div id="notifCont">
+                                        
+                                    </div>
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
                     </div>
                 </div>
             </nav>

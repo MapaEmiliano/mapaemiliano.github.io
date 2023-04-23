@@ -2,10 +2,13 @@ import {
   app,
   userData,
   auth,
-  database,
+  orderByKey,
+  query, 
+  limitToLast,
   get,
   child,
   ref,
+  set,
   getDatabase,
   remove,
   push,
@@ -26,19 +29,21 @@ let user;
 
 setTimeout(function () {
   curUserRole = userData.Role;
-  user = auth.currentUser;
-
-  // if (snapshot.exists()) {
-  //   const notifCount = Object.keys(snapshot).length;
-  //   console.log(notifCount);
-  //   const notifBell = parent.document.getElementById("notifCount");
-  //   notifBell.innerHTML = notifCount;
-  // } else {
-  //   console.log("No data available");
-  // }
+  user = auth.currentUser; 
   
+  const notifButton = parent.document.getElementById("show-notif-btn");
+  notifButton.addEventListener("click", () => {
+  
+    const notifPanel = parent.document.getElementById("notifCont");
+    notifPanel.innerHTML = "";
+
+    displayNotifFromDB();
+
+  });
+
   const notifBell = get(child(data, `users/${user.uid}/Notifications`)).then(
     (snapshot) => {
+
       if(snapshot.exists()) {
         const notifBell = parent.document.getElementById("notifCount");
         let notifCount = Object.keys(snapshot.val()).length;
@@ -49,7 +54,6 @@ setTimeout(function () {
 
           if (data[key].read == true) {
             notifCount--;
-            console.log(notifCount);
             
             if (notifCount == 0) {
               notifBell.style.display = "none";
@@ -62,6 +66,14 @@ setTimeout(function () {
           }
         }
 
+
+        for (const notif in data) {
+          
+
+
+        }
+
+
       } else {
         
         get(child(data, `AnnouncementCont`)).then((snapshot) => {
@@ -69,9 +81,12 @@ setTimeout(function () {
           if(snapshot.exists()) {
             const data = snapshot.val();
             for (const key in data) {
-              update(ref(getDatabase(app), `users/${user.uid}/Notifications/${key}`), {
+              set(ref(getDatabase(app), `users/${user.uid}/Notifications/${key}`), {
+                key: key,
                 read: false
-              })
+              }).then(() => {
+                window.location.reload();
+              });
             }
           }
           
@@ -85,8 +100,6 @@ setTimeout(function () {
 
 const db = getDatabase();
 
-
-
 // Save messages to Firebase Realtime Database
 const saveMessages = (title, content, imgUrl) => {
   push(ref(getDatabase(app), "AnnouncementCont/"), {
@@ -99,6 +112,37 @@ const saveMessages = (title, content, imgUrl) => {
   });
 };
 
+function displayNotifFromDB(){
+  let childDataNotif = [];
+  get(child(data, `users/${user.uid}/Notifications`)).then((snapshot) => {
+    const data = snapshot.val();
+    for(const key in data) {
+
+      if(data[key].read == false) {
+        childDataNotif.push(key);
+      }
+
+    }
+
+  }).then(() => {
+
+    for(const key in childDataNotif){
+
+      // console.log(childDataNotif[key]);
+
+      get(child(data, `AnnouncementCont/${childDataNotif[key]}`)).then((snapshot) => {
+        const data = snapshot.val();
+        displayNotif(data.key, data.title, data.content, data.timestamp, data.imageURL);
+      });
+
+    }
+
+    childDataNotif = [];
+
+  });
+
+}
+
 function displayAnnouncementsFromDB(role) {
   get(child(data, `AnnouncementCont`))
     .then((snapshot) => {
@@ -108,7 +152,7 @@ function displayAnnouncementsFromDB(role) {
       for (const key in data) {
         childData.push({ key, ...data[key] });
       }
-
+      
       for (let i = childData.length - 1; i >= 0; i--) {
         // loop backwards (display latest announcement first)
 
@@ -163,19 +207,31 @@ function submitForm(e) {
           document.getElementById("announcement-form").reset();
           // Hide the modal
           var modal = document.getElementById("announcementModal");
+
           modal.style.display = "none";
-          window.location.reload();
+          
+          const recentPostsRef = query(ref(getDatabase(app), 'AnnouncementCont'), orderByKey(), limitToLast(1));
+
+          get(recentPostsRef).then((snapshot) => {
+            if (snapshot.exists()) {
+              const data = snapshot.val();
+              for (const key in data) {
+                set(ref(getDatabase(app), `users/${user.uid}/Notifications/${key}`), {
+                  key: key,
+                  read: false
+                }).then(() => {
+                  window.location.reload();
+                });
+              }
+            }
+          });
+
         });
       }
     );
   };
   uploadFiles(image);
-}
 
-// Function to clear announcement container
-function clearAnnouncementContainer() {
-  const announcementsContainer = document.getElementById("announcements");
-  announcementsContainer.innerHTML = "";
 }
 
 function displayAnnouncement(key, title, content, timestamp, imageURL, role) {
@@ -185,11 +241,10 @@ function displayAnnouncement(key, title, content, timestamp, imageURL, role) {
     role === "Admin"
       ? (createBtn.style.display = "block")
       : (createBtn.style.display = "none");
+
   const announcement = document.createElement("div");
   announcement.classList.add("card", "my-3");
   announcement.setAttribute("data-key", key);
-
-  console.log(role);
 
   // Add hover effect
   announcement.addEventListener("mouseover", () => {
@@ -263,7 +318,7 @@ function displayAnnouncement(key, title, content, timestamp, imageURL, role) {
   const cardTimestamp = document.createElement("small");
   cardTimestamp.classList.add("text-muted", "mb-3");
   cardTimestamp.textContent = timeSincePosted;
-
+  
   // Make the announcement card clickable
   announcement.addEventListener("click", (e) => {
 
@@ -275,14 +330,21 @@ function displayAnnouncement(key, title, content, timestamp, imageURL, role) {
         
         update(ref(db, `users/${user.uid}/Notifications/${announcementKey}`), {
           read: true
-        });
+        }).then(() => {
+          console.log("Read");
 
-        const notifCount = parent.document.getElementById("notifCount");
-        if(notifCount.textContent == Object.keys(snapshot.val()).length) {
-          return;
-        } else {
-          notifCount.textContent = Object.keys(snapshot.val()).length - 1;
+          const notifCount = parent.document.getElementById("notifCount");
+          if(notifCount.textContent != 0) {
+            notifCount.textContent--;
+          } else {
+            console.log("No notifications");
+            notifCount.style.display = "none";
+          }
+
         }
+        ).catch((error) => {
+          console.error(error);
+        }); 
 
       }
 
@@ -312,7 +374,6 @@ function displayAnnouncement(key, title, content, timestamp, imageURL, role) {
     );
     viewAnnouncementModal.show();
   });
-
 
   const editButton = document.createElement("btn");
   editButton.classList.add("mx-2", "editBtn", "bi", "bi-pencil-square");
@@ -363,7 +424,6 @@ function displayAnnouncement(key, title, content, timestamp, imageURL, role) {
             getStorage(app),
             `AnnouncementImgs/${newTitle}`
           );
-          let delImage;
 
           const uploadTask = uploadBytesResumable(
             storageRef,
@@ -401,7 +461,8 @@ function displayAnnouncement(key, title, content, timestamp, imageURL, role) {
           }
 
           deleteObject(delImage)
-            .then(() => {})
+            .then(() => {
+            })
             .catch((error) => {
               // Uh-oh, an error occurred!
             });
@@ -426,6 +487,7 @@ function displayAnnouncement(key, title, content, timestamp, imageURL, role) {
     ).textContent;
     const delKey = ref(db, `AnnouncementCont/${announcementKey}`);
     const delImage = sRef(getStorage(app), `AnnouncementImgs/${title}`);
+    const userRef = ref(getDatabase(app), `users/`);
 
     deleteObject(delImage)
       .then(() => {
@@ -437,11 +499,35 @@ function displayAnnouncement(key, title, content, timestamp, imageURL, role) {
 
     remove(delKey)
       .then(() => {
+        
+        get(userRef).then((snapshot) => {
+          if (snapshot.exists()) {
+            const data = snapshot.val();
+            for (const key in data) {
+              console.log(key, "key", announcementKey, "data[key]");
+  
+              remove(ref(getDatabase(), `users/${key}/Notifications/${announcementKey}`))
+              .then(() => {
+                console.log(`Remove notification for", ${key}, succeeded.`);
+                // window.location.reload();
+              })
+  
+              .catch((error) => {
+                console.log("Remove failed: " + error.message);
+              });
+  
+            }
+          } else {
+            console.log("No data available");
+          }
+        });
+
         console.log("Remove succeeded.");
       })
       .catch((error) => {
         console.log("Remove failed: " + error.message);
       });
+    
 
     announcement.remove();
     e.stopPropagation();
@@ -456,6 +542,76 @@ function displayAnnouncement(key, title, content, timestamp, imageURL, role) {
   announcement.appendChild(cardBody);
   // cardBody.appendChild(cardTimestamp);
   announcements.appendChild(announcement);
+}
+
+function displayNotif(key, title, content, timestamp, imgURL) {
+  const notifs = parent.document.getElementById("notifCont");
+  
+  console.log(key, "key", title, "title", content, "content", timestamp, "timestamp");
+
+  const notif = parent.document.createElement("div");
+  notif.classList.add("card", "my-3");
+  notif.setAttribute("data-key", key);
+  
+  const notifBody = parent.document.createElement("div");
+  notifBody.classList.add("card-body", "w-100");
+
+  const notifTitle = parent.document.createElement("h5");
+  notifTitle.classList.add(
+    "card-header",
+    "text-uppercase",
+    "fw-bold",
+    "fs-3",
+  );
+  
+
+  notifTitle.textContent = title;
+  notifTitle.setAttribute("data-title", title);
+
+  const notifContent = parent.document.createElement("p");
+  notifContent.classList.add("card-text", "lead", "mx-3", "h-100", "text-black", "fs-6", "pt-3");
+  notifContent.textContent = content;
+  notifContent.setAttribute("data-content", content);
+
+  const notifFooter = parent.document.createElement("div");
+  notifFooter.classList.add("card-footer", "text-muted", "lead");
+
+  const notifText = parent.document.createElement("small");
+  notifText.classList.add("text-muted");
+
+  // Display time since posted
+  const currentTime = new Date();
+  const publishTime = new Date(timestamp);
+  const timeDiff = Math.abs(currentTime - publishTime);
+  const daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+  const hoursDiff = Math.floor(timeDiff / (1000 * 60 * 60));
+  const minutesDiff = Math.floor(timeDiff / (1000 * 60));
+  const secondsDiff = Math.floor(timeDiff / 1000);
+
+  let timeSincePosted = "";
+  if (daysDiff > 0) {
+    timeSincePosted += daysDiff + " day" + (daysDiff > 1 ? "s" : "") + " ago";
+  } else if (hoursDiff > 0) {
+    timeSincePosted +=
+      hoursDiff + " hour" + (hoursDiff > 1 ? "s" : "") + " ago";
+  } else if (minutesDiff > 0) {
+    timeSincePosted +=
+      minutesDiff + " minute" + (minutesDiff > 1 ? "s" : "") + " ago";
+  } else {
+    timeSincePosted +=
+      secondsDiff + " second" + (secondsDiff > 1 ? "s" : "") + " ago";
+  }
+
+  const notifTimestamp = parent.document.createElement("small");
+  notifTimestamp.classList.add("text-muted", "mb-3");
+  notifTimestamp.textContent = timeSincePosted;
+
+  notifBody.appendChild(notifTitle);
+  notifBody.appendChild(notifContent);
+  notifBody.appendChild(notifFooter);
+  notifFooter.appendChild(notifTimestamp);
+  notif.appendChild(notifBody);
+  notifs.appendChild(notif);
 }
 
 function updatePost(newTitle, newContent, announcementKey, imgURL) {

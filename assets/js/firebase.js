@@ -1,6 +1,6 @@
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
-  import { getDatabase, set, child, ref, get, remove, push, update} from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
+  import { getDatabase, set, child, onChildAdded, query, orderByKey, limitToLast, onChildRemoved, ref, get, remove, push, update} from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
   import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
 
   // TODO: Add SDKs for Firebase products that you want to use
@@ -141,13 +141,21 @@
             username: username.value,
             email: email.value,
             LastLogin: Date.now(),
-            Role: "Admin"
-        })
+            Role: "User"
+        }).then(() => {
+          updateProfile(auth.currentUser, { displayName: username.value, 
+            Role: "User" })
+            .then(() => {
+              // Update successful
+              window.location = '../pages/home.html'
+            })
+            .catch((error) => {
+              // An error occurred
 
-        updateProfile(auth.currentUser, { displayName: username.value, 
-                                          Role: "Admin" })
-
-        // setTimeout(function(){ window.location = '../pages/home.html' }, 3000);
+            });
+        }).catch((error) => {
+          // An error occurred
+        });
         // ...
         })
         .catch((error) => {
@@ -223,4 +231,4 @@
     }
 };
   
-  export { database, auth, userData, app, getDatabase, child, ref, get, remove, push, update };
+  export { database, orderByKey, auth, userData, set, query, limitToLast, app, getDatabase, child, ref, get, remove, push, update };
