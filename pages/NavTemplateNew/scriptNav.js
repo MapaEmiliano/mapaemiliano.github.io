@@ -63,19 +63,29 @@ function refreshGrid(area) {
           const gridCircles = document.querySelectorAll(".circlers"); // selects all the circles or entrances
         
           gridCircles.forEach((item) => {
-        
+
             item.addEventListener("click", function (e) {
         
               var curX = this.getAttribute("cx"); // gets the x coordinate of the clicked circle
               var curY = this.getAttribute("cy"); // gets the y coordinate of the clicked circle
         
               var clicked = toGridCoordinate(curX, curY); // converts the coordinate of the clicked node to the grid coordinate
-              // console.log(clicked);
+        
+              let startID = document.getElementById("start");
+              let endID = document.getElementById("end");
+        
+              let startImg = document.querySelector(".startImg");
+              let endImg = document.querySelector(".endImg");
         
               if(data.CustomFunction){
         
                 if(startPos){
                   var endPos = toGridCoordinate(curX, curY);
+
+                  this.setAttribute("id", "end"); // sets the id of the clicked node to end
+                  endImg.style.opacity = "1";
+                  endImg.setAttribute("x", curX - 35);
+                  endImg.setAttribute("y", curY - 45);
           
                   data.CustomFunction(startPos, endPos);
           
@@ -84,6 +94,12 @@ function refreshGrid(area) {
                   clearPath();
                   clearStairs();
                   startPos = toGridCoordinate(curX, curY);
+
+                  this.setAttribute("id", "start"); // sets the id of the clicked node to start         
+                  startImg.setAttribute("x", this.getAttribute("cx") - 30);
+                  startImg.setAttribute("y", this.getAttribute("cy") - 45);
+                  endImg.style.opacity = "0";
+                  startImg.style.opacity = "1";
                 }
         
               } else {
@@ -101,6 +117,11 @@ function refreshGrid(area) {
                     });
                     return;
                   }
+        
+                  this.setAttribute("id", "end"); // sets the id of the clicked node to end
+                  endImg.style.opacity = "1";
+                  endImg.setAttribute("x", curX - 35);
+                  endImg.setAttribute("y", curY - 45);
           
                   setWalkables(data.WalkableGrids); // resets the walkables for the current area
           
@@ -130,14 +151,27 @@ function refreshGrid(area) {
                   startPos = false; // resets the start position to false
           
                 } else {
+        
+                  if(startID){
+                    startID.removeAttribute("id"); // removes the id of the start node if it exists
+                    if(endID){
+                      endID.removeAttribute("id"); // removes the id of the end node if it exists
+                    }
+                  }
+        
                   clearStairs(); // clears the stairs if they exist
                   clearPath(); // clears the path if it exists
                   startPos = toGridCoordinate(curX, curY); // sets the start position to the clicked node
+                  this.setAttribute("id", "start"); // sets the id of the clicked node to start
+                  
+                  startImg.setAttribute("x", this.getAttribute("cx") - 30);
+                  startImg.setAttribute("y", this.getAttribute("cy") - 45);
+                  endImg.style.opacity = "0";
+                  startImg.style.opacity = "1";
           
                 }
         
               }
-        
         
             });
           });
@@ -285,6 +319,16 @@ function drawGrid(arrEnt) { // arrEnt = array of entrances, arrClicks = array of
   .attr("class", "pin");
   pinObj.attr("opacity", 0);
 
+  var startImg = paper.image("/imgs/start.png", 0, 0, nodeSize + 10, nodeSize + 10)
+  .attr("class", "startImg")
+  .attr("opacity", 0);
+
+  var endImg = paper.image("/imgs/end.png", 0, 0, nodeSize + 10, nodeSize + 10)
+  .attr("class", "endImg")
+  .attr("opacity", 0);
+
+  gridObjs.push(startImg);
+  gridObjs.push(endImg);
   gridObjs.push(focusObj);
   gridObjs.push(pinObj);
 
@@ -394,7 +438,12 @@ checkElement('rect').then(() => { // waits for the grid objects to finish drawin
       var curY = this.getAttribute("cy"); // gets the y coordinate of the clicked circle
 
       var clicked = toGridCoordinate(curX, curY); // converts the coordinate of the clicked node to the grid coordinate
-      // console.log(clicked);
+
+      let startID = document.getElementById("start");
+      let endID = document.getElementById("end");
+
+      let startImg = document.querySelector(".startImg");
+      let endImg = document.querySelector(".endImg");
 
       if(data.CustomFunction){
 
@@ -425,6 +474,11 @@ checkElement('rect').then(() => { // waits for the grid objects to finish drawin
             });
             return;
           }
+
+          this.setAttribute("id", "end"); // sets the id of the clicked node to end
+          endImg.style.opacity = "1";
+          endImg.setAttribute("x", curX - 35);
+          endImg.setAttribute("y", curY - 45);
   
           setWalkables(data.WalkableGrids); // resets the walkables for the current area
   
@@ -454,20 +508,32 @@ checkElement('rect').then(() => { // waits for the grid objects to finish drawin
           startPos = false; // resets the start position to false
   
         } else {
+
+          if(startID){
+            startID.removeAttribute("id"); // removes the id of the start node if it exists
+            if(endID){
+              endID.removeAttribute("id"); // removes the id of the end node if it exists
+            }
+          }
+
           clearStairs(); // clears the stairs if they exist
           clearPath(); // clears the path if it exists
           startPos = toGridCoordinate(curX, curY); // sets the start position to the clicked node
+          this.setAttribute("id", "start"); // sets the id of the clicked node to start
+          
+          startImg.setAttribute("x", this.getAttribute("cx") - 30);
+          startImg.setAttribute("y", this.getAttribute("cy") - 45);
+          endImg.style.opacity = "0";
+          startImg.style.opacity = "1";
   
         }
 
       }
 
-
     });
   });
 
 });
-
 
 function navigateTo(posFrom, posTo) { // used to navigate to a location from the sidebar
 
@@ -482,6 +548,33 @@ function navigateTo(posFrom, posTo) { // used to navigate to a location from the
   var end = coordSetter(posTo);
 
   let clonedGrid = grid.clone();
+
+  console.log("Start: " + start[0], start[1]);
+
+  let allSP = document.querySelectorAll(".circlers");
+  allSP.forEach((item) => {
+   
+    let curCircle = toGridCoordinate(item.getAttribute("cx"), item.getAttribute("cy"));
+
+    if(curCircle[0] == start[0] && curCircle[1] == start[1]){
+      item.setAttribute("id", "start");
+
+      let startImg = document.querySelector(".startImg");
+      startImg.setAttribute("x", item.getAttribute("cx") - 30);
+      startImg.setAttribute("y", item.getAttribute("cy") - 45);
+      startImg.style.opacity = "1";
+    }
+
+    if(curCircle[0] == end[0] && curCircle[1] == end[1]){
+      item.setAttribute("id", "end");
+
+      let endImg = document.querySelector(".endImg");
+      endImg.setAttribute("x", item.getAttribute("cx") - 35);
+      endImg.setAttribute("y", item.getAttribute("cy") - 45);
+      endImg.style.opacity = "1";
+    }
+
+  });
 
   clearStairs();
   clearPath();

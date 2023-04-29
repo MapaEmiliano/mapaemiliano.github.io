@@ -195,6 +195,13 @@ let floors = {};
 const floorGetter = (result) => floors[result] || "Not found!";
 
 function checkIframe(frame, bldng2D) {
+
+  setTimeout(() => {
+    $(".mainCont").css({
+      width: "calc(" + $(".topBar").width() + "px + 30px)",
+    });
+  }, 200);
+  
   const sideItem3D = document.getElementById("sideItem3D");
   sideItem3D.style.display = "none";
   const dataSrch = document.getElementById("suggestions");
@@ -281,6 +288,7 @@ function checkIframe(frame, bldng2D) {
     }, { signal: controller.signal });
 
   } else if (frame === "navFrame") {
+
     selectedFrame.style.height = "100%";
 
     const navModal = new bootstrap.Modal(document.getElementById("navModal"), {

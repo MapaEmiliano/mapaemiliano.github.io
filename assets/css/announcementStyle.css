@@ -83,8 +83,8 @@ p{
 }
 
 .card {
-  width: 20%;
-  height: 50%;
+  width: 300px;
+  height: 500px;
   transition: all 0.6s;
 }
 

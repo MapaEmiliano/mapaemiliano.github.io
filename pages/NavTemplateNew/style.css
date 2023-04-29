@@ -49,14 +49,12 @@ svg {
   opacity: .4;
 }
 
-#startPos {
-  opacity: 1;
-  animation: pin 1s linear infinite;
+#start {
+  opacity: 0;
 }
 
-#endPos {
-  opacity: 1;
-  animation: pin 1s linear infinite;
+#end {
+  opacity: 0;
 }
 
 @keyframes pin {
