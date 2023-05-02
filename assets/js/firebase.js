@@ -64,6 +64,7 @@
         
           if ((e.type === 'keyup' && e.which === 13) || e.type == 'click') {
             register();
+            
           }
       
       }
@@ -184,11 +185,10 @@
   
   //Creating user accounts
   function register() {
-
-      if(!inputChecker()) {
-        return ;
-      }
-        
+    
+      if(!inputChecker()) {   
+        return;
+      } else {
         createUserWithEmailAndPassword(auth, email.value, password.value)
         .then((userCredential) => {
         // Signed in 
@@ -223,6 +223,7 @@
           alert(errorMessage);
         // ..
         });  
+      }
 
   }
 
@@ -236,29 +237,27 @@
       email.focus();
       return false;
 
-    }
-
-    if(username.value == "") {
+    } else if(username.value == "") {
         
         alert("Please enter a username!");
         username.focus();
         return false;
   
-      }
-
-    if(!validPass.test(password.value)) {
+      } else if(!validPass.test(password.value)) {
         
         alert("Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter and one number!");
         password.focus();
         return false;
   
-      }
-
-    if(password.value != passConf.value) {
+       } else if(password.value != passConf.value) {
       
       alert("Passwords do not match!");
       passConf.focus();
       return false;
+
+    } else {
+
+      return true;
 
     }
 
