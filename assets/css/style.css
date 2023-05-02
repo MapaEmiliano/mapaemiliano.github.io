@@ -202,6 +202,7 @@ body::-webkit-scrollbar-thumb {
   color: var(--bs-black);
   background-color: var(--bs-white);
 }
+/* home button active */
 .sidebar-menu-item.active a {
   background-color: var(--bs-dark);
   color: var(--bs-light);
@@ -271,6 +272,35 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+#demo-modal {
+    display: block;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+
+
+.modal-demo-dialog{
+
+
+
+
+}
+
+
+
+.tutoBody {
+  height: 800px;
+}
+
+#tutoHeader > h5{
+  color: black;
+  font-size: 30px;
+  text-align: center;
 }
 
 .notifMainCont {
@@ -477,6 +507,7 @@ fieldset {
     opacity: 0;
     visibility: hidden;
   }
+  
   .sidebar.collapsed {
     width: 4.75rem;
     left: 0;
@@ -523,15 +554,23 @@ fieldset {
 
 /* XX-Large devices (larger desktops, 1400px and up) */
 @media (max-width: 1400px) {
-  svg {
-    height: 95vh;
+
+  .tutoBody {
+    height: 800px;
   }
-  .SVG {
-    height: 200vh;  
-  }
-  .B1 {
-    height: 400vh;
+  
+}
+
+@media screen and (max-width: 767px) { 
+  #demo-modal {
+    display: block;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 }
+
+
 
 

@@ -1,19 +1,5 @@
-import {
-  app,
-  userData,
-  auth,
-  orderByKey,
-  query, 
-  limitToLast,
-  get,
-  child,
-  ref,
-  set,
-  getDatabase,
-  remove,
-  push,
-  update,
-} from "./firebase.js";
+import { getDatabase, set, child, query, orderByKey, limitToLast, ref, get, remove, push, update} from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
 // import firebase from './firebase.js';
 import {
   getStorage,
@@ -23,80 +9,36 @@ import {
   deleteObject,
 } from "https://cdnjs.cloudflare.com/ajax/libs/firebase/9.17.2/firebase-storage.min.js";
 
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCapXE73R8f0zJammjBV3L1Or_Fac9KJFw",
+    authDomain: "mapaemiliano-31b83.firebaseapp.com",
+    databaseURL: "https://mapaemiliano-31b83-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "mapaemiliano-31b83",
+    storageBucket: "mapaemiliano-31b83.appspot.com",
+    messagingSenderId: "577352319313",
+    appId: "1:577352319313:web:7f05f521959ad5d09d1370"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+
 let data = ref(getDatabase(app));
-let curUserRole;
 let user;
 
-setTimeout(function () {
-  curUserRole = userData.Role;
-  user = auth.currentUser; 
+window.addEventListener('message', function (e) {
+  // Get the sent data
+  const data = e.data.split(' ');
   
-  const notifButton = parent.document.getElementById("show-notif-btn");
-  notifButton.addEventListener("click", () => {
-  
-    const notifPanel = parent.document.getElementById("notifCont");
-    notifPanel.innerHTML = "";
-
+  if(data[0].includes("Notif")) {
     displayNotifFromDB();
-
-  });
-
-  const notifBell = get(child(data, `users/${user.uid}/Notifications`)).then(
-    (snapshot) => {
-
-      if(snapshot.exists()) {
-        const notifBell = parent.document.getElementById("notifCount");
-        let notifCount = Object.keys(snapshot.val()).length;
-        notifBell.innerHTML = notifCount;
-        const data = snapshot.val();
-
-        for (const key in data) {
-
-          if (data[key].read == true) {
-            notifCount--;
-            
-            if (notifCount == 0) {
-              notifBell.style.display = "none";
-              console.log("empty");
-            } else {
-              notifBell.innerHTML = notifCount;
-              notifBell.style.display = "block";
-            }
-            
-          }
-        }
-
-
-        for (const notif in data) {
-          
-
-
-        }
-
-
-      } else {
-        
-        get(child(data, `AnnouncementCont`)).then((snapshot) => {
-
-          if(snapshot.exists()) {
-            const data = snapshot.val();
-            for (const key in data) {
-              set(ref(getDatabase(app), `users/${user.uid}/Notifications/${key}`), {
-                key: key,
-                read: false
-              }).then(() => {
-                window.location.reload();
-              });
-            }
-          }
-          
-        });
-
-      }
-    });
-
-  displayAnnouncementsFromDB(curUserRole);
-}, 1500);
+    user = data[1];
+  } else {
+    displayAnnouncementsFromDB(data[1]);
+    user = data[2];
+  }
+  
+});
 
 const db = getDatabase();
 
@@ -114,7 +56,7 @@ const saveMessages = (title, content, imgUrl) => {
 
 function displayNotifFromDB(){
   let childDataNotif = [];
-  get(child(data, `users/${user.uid}/Notifications`)).then((snapshot) => {
+  get(child(data, `users/${user}/Notifications`)).then((snapshot) => {
     const data = snapshot.val();
     for(const key in data) {
 
@@ -127,8 +69,6 @@ function displayNotifFromDB(){
   }).then(() => {
 
     for(const key in childDataNotif){
-
-      // console.log(childDataNotif[key]);
 
       get(child(data, `AnnouncementCont/${childDataNotif[key]}`)).then((snapshot) => {
         const data = snapshot.val();
@@ -216,11 +156,11 @@ function submitForm(e) {
             if (snapshot.exists()) {
               const data = snapshot.val();
               for (const key in data) {
-                set(ref(getDatabase(app), `users/${user.uid}/Notifications/${key}`), {
+                update(ref(getDatabase(app), `users/${user}/Notifications/${key}`), {
                   key: key,
                   read: false
                 }).then(() => {
-                  window.location.reload();
+                  parent.location.reload();
                 });
               }
             }
@@ -324,11 +264,11 @@ function displayAnnouncement(key, title, content, timestamp, imageURL, role) {
 
     const announcementKey = e.target.parentElement.parentElement.getAttribute("data-key");
 
-    const toRead = get(child(data, `users/${user.uid}/Notifications`)).then((snapshot) => {
+    const toRead = get(child(data, `users/${user}/Notifications`)).then((snapshot) => {
       
       if(snapshot.exists()) {
         
-        update(ref(db, `users/${user.uid}/Notifications/${announcementKey}`), {
+        update(ref(db, `users/${user}/Notifications/${announcementKey}`), {
           read: true
         }).then(() => {
           console.log("Read");
@@ -352,7 +292,6 @@ function displayAnnouncement(key, title, content, timestamp, imageURL, role) {
       console.error(error);
     });
 
-    console.log(announcementKey);
     // Set the title and content of the View Announcement modal to the clicked announcement
     const viewAnnouncementModalTitle = document.getElementById(
       "viewAnnouncementModalLabel"
@@ -388,7 +327,6 @@ function displayAnnouncement(key, title, content, timestamp, imageURL, role) {
     const originalContent = cardContent.getAttribute("data-content");
     titleInput.value = originalTitle;
     contentInput.value = originalContent;
-    console.log(cardTitle.getAttribute("data-title"), "gsdgsdg");
     const announcementKey = e.target.closest(".card").getAttribute("data-key");
 
     // Show the edit-announcement-form modal
@@ -412,7 +350,6 @@ function displayAnnouncement(key, title, content, timestamp, imageURL, role) {
       let delImage;
       if (imgInput.files[0] != null) {
         console.log("file exists");
-        console.log(cardTitle.getAttribute("data-title"));
 
         const uploadFiles = async (file) => {
           const result = await delObject();
@@ -443,7 +380,7 @@ function displayAnnouncement(key, title, content, timestamp, imageURL, role) {
                 cardTitle.setAttribute("data-title", newTitle);
                 setTimeout(function () {
                   updatePost(newTitle, newContent, announcementKey, URL);
-                  window.location.reload();
+                  parent.location.reload();
                 }, 1000);
               });
             }
@@ -472,7 +409,7 @@ function displayAnnouncement(key, title, content, timestamp, imageURL, role) {
         uploadFiles(imgInput);
       } else {
         updatePost(newTitle, newContent, announcementKey);
-        window.location.reload();
+        parent.location.reload();
       }
     });
   });

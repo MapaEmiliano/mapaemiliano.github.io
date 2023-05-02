@@ -1,6 +1,6 @@
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
-  import { getDatabase, set, child, onChildAdded, query, orderByKey, limitToLast, onChildRemoved, ref, get, remove, push, update} from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
+  import { getDatabase, set, child, query, orderByKey, limitToLast, ref, get, remove, push, update} from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
   import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
 
   // TODO: Add SDKs for Firebase products that you want to use
@@ -28,7 +28,6 @@
   window.onload = function pageChecker(){
     
     let curPage = location.pathname;
-    console.log(curPage)
 
     if(curPage == "/index.html" || curPage == "/") {
 
@@ -76,13 +75,74 @@
       auth.onAuthStateChanged(user => {
         
         if(user) {
+
+          let annFrame = document.getElementById("announceFrame");
+          function sendRole(func, role) {
+            annFrame.contentWindow.postMessage(func + role); //vtName not set yet
+          }
+  
           let data = ref(getDatabase(app));
           get(child(data, `users/${user.uid}`)).then((snapshot) => {
             if (snapshot.exists()) {
               
-              userData.Role = snapshot.val().Role;
-              userData.Name = snapshot.val().username;
-              userData.user = user;
+              const notifButton = document.getElementById("show-notif-btn");
+              notifButton.addEventListener("click", () => {
+              
+                const notifPanel = document.getElementById("notifCont");
+                notifPanel.innerHTML = "";
+            
+                sendRole("Notif ", user.uid);
+            
+              });
+            
+              const notifBell = get(child(data, `users/${user.uid}/Notifications`)).then(
+                (snapshotBell) => {
+            
+                  if(snapshotBell.exists()) {
+                    const notifBell = document.getElementById("notifCount");
+                    let notifCount = Object.keys(snapshotBell.val()).length;
+                    notifBell.innerHTML = notifCount;
+                    const data = snapshot.val();
+            
+                    for (const key in data) {
+            
+                      if (data[key].read == true) {
+                        notifCount--;
+                        
+                        if (notifCount == 0) {
+                          notifBell.style.display = "none";
+                          console.log("empty");
+                        } else {
+                          notifBell.innerHTML = notifCount;
+                          notifBell.style.display = "block";
+                        }
+                        
+                      }
+                    }
+            
+                  } else {
+                    
+                    get(child(data, `AnnouncementCont`)).then((snapshotBell) => {
+            
+                      if(snapshotBell.exists()) {
+                        const data = snapshotBell.val();
+                        for (const key in data) {
+                          update(ref(getDatabase(app), `users/${user.uid}/Notifications/${key}`), {
+                            key: key,
+                            read: false
+                          }).then(() => {
+                            window.location.reload();
+                          });
+                        }
+                      }
+                      
+                    });
+            
+                  }
+                });
+                
+                sendRole("Display ", snapshot.val().Role + " " + user.uid);
+
             } else {
               console.log("No data available");
             }
@@ -116,19 +176,18 @@
     });
   } 
 }
+
+    const email = document.getElementById('email');
+    const username = document.getElementById('usrName');
+    const password = document.getElementById('password');
+    const passConf = document.getElementById('passConf');
   
   //Creating user accounts
   function register() {
 
-    let email = document.getElementById('email');
-    let username = document.getElementById('usrName');
-    let password = document.getElementById('password');
-    let passConf = document.getElementById('passConf');
-
-    if (password.value == passConf.value && email.value.includes("@")) {
-
-        let Read = {"Welcome": "Welcome to the website!"};
-        let Unread = {"bye": "adios"};
+      if(!inputChecker()) {
+        return ;
+      }
         
         createUserWithEmailAndPassword(auth, email.value, password.value)
         .then((userCredential) => {
@@ -141,10 +200,11 @@
             username: username.value,
             email: email.value,
             LastLogin: Date.now(),
-            Role: "User"
+            Role: "User",
+            newUser: true
         }).then(() => {
           updateProfile(auth.currentUser, { displayName: username.value, 
-            Role: "User" })
+            Role: "User", newUser: true })
             .then(() => {
               // Update successful
               window.location = '../pages/home.html'
@@ -164,9 +224,44 @@
         // ..
         });  
 
-    } else {
-        alert('An input is incorrect! Check if the passwords are the same or if the email is valid!');
+  }
+
+  function inputChecker() {
+    let validEmail = /^[a-z0-9._%+-]+@(gmail|yahoo|outlook)\.com$/;
+    let validPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+
+    if(!validEmail.test(email.value)) {
+
+      alert("Please enter a valid email address!");
+      email.focus();
+      return false;
+
     }
+
+    if(username.value == "") {
+        
+        alert("Please enter a username!");
+        username.focus();
+        return false;
+  
+      }
+
+    if(!validPass.test(password.value)) {
+        
+        alert("Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter and one number!");
+        password.focus();
+        return false;
+  
+      }
+
+    if(password.value != passConf.value) {
+      
+      alert("Passwords do not match!");
+      passConf.focus();
+      return false;
+
+    }
+
   }
 
   //Logging in 
@@ -179,7 +274,7 @@
       .then((userCredential) => {
     // Signed in 
     const user = userCredential.user;
-    set(ref(database, 'users/' + user.uid), {
+    update(ref(database, 'users/' + user.uid), {
         LastLogin: Date.now()
     })
 
@@ -231,4 +326,6 @@
     }
 };
   
+
+
   export { database, orderByKey, auth, userData, set, query, limitToLast, app, getDatabase, child, ref, get, remove, push, update };

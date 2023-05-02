@@ -289,6 +289,12 @@ function checkIframe(frame, bldng2D) {
 
   } else if (frame === "navFrame") {
 
+    setTimeout(function () {
+      let insidePin = selectedFrame.contentDocument.querySelector(".pin");
+      insidePin.style.opacity = "0";
+     }, 1000);
+  
+
     selectedFrame.style.height = "100%";
 
     const navModal = new bootstrap.Modal(document.getElementById("navModal"), {
@@ -484,6 +490,11 @@ function checkIframe(frame, bldng2D) {
 
   } else if (frame === "eac3DFrame") {
     const pinNames = [];
+
+   setTimeout(function () {
+    let insidePin = selectedFrame.contentDocument.getElementById("pin");
+    insidePin.style.opacity = "0";
+   }, 500);
 
     const data3D = document.querySelectorAll(".locate");
 

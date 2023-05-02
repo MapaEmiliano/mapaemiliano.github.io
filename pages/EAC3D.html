@@ -100,9 +100,8 @@ body::-webkit-scrollbar-thumb {
 
 
   window.onload = function() {
-
     document.getElementById('focus3D').scrollIntoView({behavior: "smooth", block: "center", inline: "center"});
-
+    console.log("loaded");
   }
 
   const pinXY = {
@@ -141,7 +140,7 @@ body::-webkit-scrollbar-thumb {
 
   function mapPin(loc) {
     var pin = document.getElementById("pin");
-
+        pin.style.opacity = "1";
     for(m in pinXY){
       if(m == loc){
         pin.style.display = "block";
