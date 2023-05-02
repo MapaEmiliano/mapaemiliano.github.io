@@ -274,24 +274,13 @@ main {
   align-items: center;
 }
 
-#demo-modal {
+/* #demo-modal {
     display: block;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-  }
-  
-
-
-.modal-demo-dialog{
-
-
-
-
-}
-
-
+  } */
 
 .tutoBody {
   height: 800px;
@@ -555,13 +544,21 @@ fieldset {
 /* XX-Large devices (larger desktops, 1400px and up) */
 @media (max-width: 1400px) {
 
-  .tutoBody {
-    height: 800px;
+svg {
+    height: 95vh;
   }
+  .SVG {
+    height: 200vh;  
+
+  }
+  .B1 {
+    height: 400vh;
+
+}
   
 }
 
-@media screen and (max-width: 767px) { 
+/* @media screen and (max-width: 767px) { 
   #demo-modal {
     display: block;
     position: fixed;
@@ -569,7 +566,7 @@ fieldset {
     left: 50%;
     transform: translate(-50%, -50%);
   }
-}
+} */
 
 
 
