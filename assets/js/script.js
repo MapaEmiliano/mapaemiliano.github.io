@@ -404,7 +404,8 @@ function checkIframe(frame, bldng2D) {
     
     let id;
     let vtId;
-    let selected;
+    // let selected;
+    let selected = document.getElementById("endPoint");
     let curOpts = document.querySelectorAll("option");
     let curList = document.querySelectorAll(".navItem");
     const navBtn = document.querySelector("#navBtn");
@@ -425,7 +426,7 @@ function checkIframe(frame, bldng2D) {
         let starting = document.getElementById("startPoint");
         starting.innerHTML = id;
 
-        selected = document.getElementById("endPoint");
+        // let selected = document.getElementById("endPoint");
 
         curOpts.forEach((k) => {
           if (k.value == id) {
@@ -450,6 +451,7 @@ function checkIframe(frame, bldng2D) {
     }, { signal: controller.signal });
 
     navBtn.addEventListener("click", function (e) {
+      console.log(e.target);
       selectedFrame.contentWindow.navigateTo(id, selected.value);
       navModal.hide();
     });

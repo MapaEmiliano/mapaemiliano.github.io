@@ -28,18 +28,26 @@ var numRows = Math.ceil(gridHeight / nodeSize), // get the number of rows and co
 
 function refreshGrid(area) {
 
-  $("#matrix").empty(); // clear the grid canvas
-  paper.clear(); // clear the grid canvas
+  // $("#matrix svg").html(""); // clear the grid canvas
+  const clearPaper = async () => {
+  
+  paper.remove(); // clear the grid canvas
+  grid = null; // clear the grid
   gridObjs = []; // clear the grid objects array
   svgMap.setAttribute("src", area + ".png"); // set the map image according to the area
   data = window[area];
   curArea = area;
   nodeSize = gridDataSetter(curArea);
- 
-  $('#pngMap').bind({
-    load: function() {
 
-        // $('#matrix').css({width: $('#pngMap').width(), height: $('#pngMap').height()});
+  };
+
+    async function reinitialize() {
+
+      console.log("Map loaded. Clearing paper..");
+
+      await clearPaper();
+      
+        $('#matrix').css({width: $('#pngMap').width(), height: $('#pngMap').height()});
         gridWidth = $('#pngMap').width();
         gridHeight = $('#pngMap').height();
         
@@ -178,12 +186,8 @@ function refreshGrid(area) {
         
         });
 
-    },
-    error: function() {
-        alert('There was an error loading the new image. Please refresh the page.');
     }
-    });
-
+    reinitialize(); // clears the paper
 }
 
 
@@ -548,8 +552,6 @@ function navigateTo(posFrom, posTo) { // used to navigate to a location from the
   var end = coordSetter(posTo);
 
   let clonedGrid = grid.clone();
-
-  console.log("Start: " + start[0], start[1]);
 
   let allSP = document.querySelectorAll(".circlers");
   allSP.forEach((item) => {

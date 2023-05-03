@@ -101,7 +101,6 @@ body::-webkit-scrollbar-thumb {
 
   window.onload = function() {
     document.getElementById('focus3D').scrollIntoView({behavior: "smooth", block: "center", inline: "center"});
-    console.log("loaded");
   }
 
   const pinXY = {
@@ -152,13 +151,20 @@ body::-webkit-scrollbar-thumb {
   }
 
   const bldingBtns = document.querySelectorAll("a");
+  const iframe2D = parent.document.getElementById("navFrame");
 
   bldingBtns.forEach(function(btn) {
     btn.addEventListener("click", function(e) {
       e.preventDefault();
+
       let src = "../pages/NavTemplateNew/2DEac.html";
       let imgName = btn.getAttribute("href") + ".png";
-      to2D(src, imgName);
+
+      iframe2D.contentWindow.location.reload();
+      
+      setTimeout(function() {
+        to2D(src, imgName);
+      }, 1000);
     });
   });
   
@@ -168,7 +174,6 @@ body::-webkit-scrollbar-thumb {
     const btn2D = parent.document.querySelector(".btn2D");
     const div3D = parent.document.getElementById("cont3D");
     const div2D = parent.document.getElementById("cont2D");
-    const iframe2D = parent.document.getElementById("navFrame");
 
     div3D.style.display = "none";
     div2D.style.display = "block";
@@ -177,9 +182,7 @@ body::-webkit-scrollbar-thumb {
     btn2D.classList.add("active");
     parent.checkIframe("navFrame", imgName.split(".")[0]);
     iframe2D.contentDocument.getElementById("pngMap").setAttribute("src", imgName);
-    iframe2D.contentWindow.location.reload();
-
-
+    
     setTimeout(function() {
 
       iframe2D.contentWindow.refreshGrid(imgName.split(".")[0]);
