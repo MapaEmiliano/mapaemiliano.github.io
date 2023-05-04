@@ -14,7 +14,7 @@
     <!-- start: CSS -->
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
-    
+    <script defer src='https://cdn.jsdelivr.net/gh/colxi/getEventListeners/src/getEventListeners.min.js'></script>
     <!-- end: CSS -->
     <title>Mapa-Emiliano</title>
 </head>
@@ -27,12 +27,6 @@
             <i class="sidebar-toggle bi-map-fill ms-auto fs-5 d-none d-md-block text-light toggleInside"></i>
         </div>
         <ul class="sidebar-menu p-3 mb-5" id="sidebarList">
-            <!-- <li class="sidebar-menu-item active">
-                <a href="home.html" class="fw-bold">
-                    <i class="bi-house sidebar-menu-item-icon"></i>
-                    HOME
-                </a>
-            </li> -->
             <li class="sidebar-menu-item" id="show-btn">
                 <a href="../pages/announce.html">
                     <i class="fa-solid fa-bullhorn sidebar-menu-item-icon"></i>
@@ -329,7 +323,8 @@
                               </div>
                             </div>
                         </div>
-                        <div class="modal fade justify-content-center" id="demo-modal" tabindex="-1" aria-labelledby="demo-modal-label" aria-hidden="true" >
+
+                        <div class="modal fade justify-content-center" id="demo-modal" tabindex="-1" aria-labelledby="demo-modal-label" aria-hidden="true" data-bs-backdrop="static">
                             <div class="modal-dialog modal-dialog-scrollable modal-xl modal-demo-dialog" >
                               <div class="modal-content" id="tutoCont">
                                 <div class="modal-header" id="tutoHeader">
@@ -392,9 +387,9 @@
             
                 
                 <div class="w-100 justify-content-evenly d-flex">
-                    <button type="button" class="btn btn-color" id="navBtn">Start Navigation</button>
-                    <button type="button" class="btn btn-color" id="locBtn">Locate</button>
-                    <button type="button" class="btn btn-color" id="vtBtn">Virtual Tour</button>
+                    <button type="button" class="btn btn-color mdlBtn" id="navBtn">Start Navigation</button>
+                    <button type="button" class="btn btn-color mdlBtn" id="locBtn">Locate</button>
+                    <button type="button" class="btn btn-color mdlBtn" id="vtBtn">Virtual Tour</button>
                 </div>
                     
             </div>

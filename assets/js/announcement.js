@@ -1,4 +1,4 @@
-import { getDatabase, set, child, query, orderByKey, limitToLast, ref, get, remove, push, update} from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
+import { getDatabase, child, query, orderByKey, limitToLast, ref, get, remove, push, update} from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
 // import firebase from './firebase.js';
 import {
@@ -23,25 +23,25 @@ import {
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
 
-let data = ref(getDatabase(app));
+let data = ref(getDatabase(app)); // Get a reference to the database service
 let user;
 
-window.addEventListener('message', function (e) {
+window.addEventListener('message', function (e) { // Listen for messages from parent window
   // Get the sent data
   const data = e.data.split(' ');
   
-  if(data[0].includes("Notif")) {
-    displayNotifFromDB();
+  if(data[0].includes("Notif")) { // If the data is a notification
+    displayNotifFromDB(); // Display the notification
     user = data[1];
   } else {
-    displayAnnouncementsFromDB(data[1]);
+    displayAnnouncementsFromDB(data[1]); // Display the announcements
     user = data[2];
   }
   
 });
 
-const db = getDatabase();
-
+const db = getDatabase(); // Get a reference to the database service
+ 
 // Save messages to Firebase Realtime Database
 const saveMessages = (title, content, imgUrl) => {
   push(ref(getDatabase(app), "AnnouncementCont/"), {
@@ -54,7 +54,7 @@ const saveMessages = (title, content, imgUrl) => {
   });
 };
 
-function displayNotifFromDB(){
+function displayNotifFromDB(){ // Display the notifications from the database 
   let childDataNotif = [];
   get(child(data, `users/${user}/Notifications`)).then((snapshot) => {
     const data = snapshot.val();
@@ -67,8 +67,8 @@ function displayNotifFromDB(){
     }
 
   }).then(() => {
-
-    for(const key in childDataNotif){
+ 
+    for(const key in childDataNotif){ // Loop through the notifications and display them
 
       get(child(data, `AnnouncementCont/${childDataNotif[key]}`)).then((snapshot) => {
         const data = snapshot.val();
@@ -83,7 +83,7 @@ function displayNotifFromDB(){
 
 }
 
-function displayAnnouncementsFromDB(role) {
+function displayAnnouncementsFromDB(role) { // Display the announcements from the database 
   get(child(data, `AnnouncementCont`))
     .then((snapshot) => {
       const data = snapshot.val();
@@ -109,16 +109,16 @@ function displayAnnouncementsFromDB(role) {
 // Listen for form submission and save announcement to Firebase Realtime Database
 document
   .getElementById("announcementModal")
-  .addEventListener("submit", submitForm);
+  .addEventListener("submit", submitForm); // Listen for form submission
 
 // Function to submit the form and save announcements to Firebase Realtime Database
-function submitForm(e) {
-  e.preventDefault();
+function submitForm(e) { 
+  e.preventDefault(); // Prevent default form behavior
   var title = document.getElementById("title").value;
   var content = document.getElementById("content").value;
   var image = document.getElementById("image");
 
-  const uploadFiles = (file) => {
+  const uploadFiles = (file) => { // Upload the image to Firebase Storage
     if (!file) {
       console.log("no file exists");
       return;
@@ -127,22 +127,22 @@ function submitForm(e) {
       contentType: "image/jpeg",
     };
 
-    const storageRef = sRef(getStorage(app), `AnnouncementImgs/${title}`);
+    const storageRef = sRef(getStorage(app), `AnnouncementImgs/${title}`); // Create a storage reference from our storage service
 
-    const uploadTask = uploadBytesResumable(
-      storageRef,
+    const uploadTask = uploadBytesResumable( // Upload the file and metadata 
+      storageRef, 
       file.files[0],
       metadata
     );
-    uploadTask.on(
+    uploadTask.on( // Listen for state changes, errors, and completion of the upload.
       "state_changed",
       null,
       (error) => {
         alert(error);
       },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((URL) => {
-          saveMessages(title, content, URL);
+      () => { // When the image has successfully uploaded, get its download URL and save it to the database
+        getDownloadURL(uploadTask.snapshot.ref).then((URL) => { 
+          saveMessages(title, content, URL); // Save the announcement to the database
           // Clear the form
           document.getElementById("announcement-form").reset();
           // Hide the modal
@@ -150,17 +150,17 @@ function submitForm(e) {
 
           modal.style.display = "none";
           
-          const recentPostsRef = query(ref(getDatabase(app), 'AnnouncementCont'), orderByKey(), limitToLast(1));
+          const recentPostsRef = query(ref(getDatabase(app), 'AnnouncementCont'), orderByKey(), limitToLast(1)); // Get the key of the announcement that was just added
 
-          get(recentPostsRef).then((snapshot) => {
-            if (snapshot.exists()) {
-              const data = snapshot.val();
+          get(recentPostsRef).then((snapshot) => { // Get the key of the announcement that was just added
+            if (snapshot.exists()) { 
+              const data = snapshot.val(); // Get the key of the announcement that was just added
               for (const key in data) {
-                update(ref(getDatabase(app), `users/${user}/Notifications/${key}`), {
+                update(ref(getDatabase(app), `users/${user}/Notifications/${key}`), { // Add the announcement to the user's notifications
                   key: key,
                   read: false
                 }).then(() => {
-                  parent.location.reload();
+                  parent.location.reload(); // Reload the page
                 });
               }
             }
@@ -170,19 +170,19 @@ function submitForm(e) {
       }
     );
   };
-  uploadFiles(image);
-
+  uploadFiles(image); // runs the function to upload the image
+ 
 }
 
-function displayAnnouncement(key, title, content, timestamp, imageURL, role) {
+function displayAnnouncement(key, title, content, timestamp, imageURL, role) { // Display the announcements
   const announcements = document.getElementById("announcements");
   const createBtn = document.getElementById("createBtn");
-  const userRole =
+  const userRole = // Get the user's role, if they are an admin, show the create, edit, and delete buttons
     role === "Admin"
       ? (createBtn.style.display = "block")
-      : (createBtn.style.display = "none");
+      : (createBtn.style.display = "none"); 
 
-  const announcement = document.createElement("div");
+  const announcement = document.createElement("div"); // Create the announcement card
   announcement.classList.add("card", "my-3");
   announcement.setAttribute("data-key", key);
 
@@ -268,25 +268,26 @@ function displayAnnouncement(key, title, content, timestamp, imageURL, role) {
       
       if(snapshot.exists()) {
         
-        update(ref(db, `users/${user}/Notifications/${announcementKey}`), {
-          read: true
-        }).then(() => {
-          console.log("Read");
+        if(snapshot.val()[announcementKey].read == false) {
+          update(ref(getDatabase(app), `users/${user}/Notifications/${announcementKey}`), {
+            read: true
+          }).then(() => {
+            console.log("Read");
 
-          const notifCount = parent.document.getElementById("notifCount");
-          if(notifCount.textContent != 0) {
-            notifCount.textContent--;
-          } else {
-            console.log("No notifications");
-            notifCount.style.display = "none";
+            const notifCount = parent.document.getElementById("notifCount");
+            if(notifCount.textContent > 0) {
+              notifCount.textContent--;
+              if(notifCount.textContent == 0) {
+                notifCount.style.display = "none";
+              }
+            } else {
+              console.log("No notifications");
+              notifCount.style.display = "none";
+            }
+            });
           }
 
         }
-        ).catch((error) => {
-          console.error(error);
-        }); 
-
-      }
 
     }).catch((error) => {
       console.error(error);
@@ -387,7 +388,7 @@ function displayAnnouncement(key, title, content, timestamp, imageURL, role) {
           );
         };
 
-        const delObject = () => {
+        const delObject = () => { // Delete the old image
           if (!newTitle == cardTitle.getAttribute("data-title")) {
             delImage = sRef(getStorage(app), `AnnouncementImgs/${newTitle}`);
           } else {

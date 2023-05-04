@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="/assets/css/style.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
-
+  <script src='https://cdn.jsdelivr.net/gh/colxi/getEventListeners/src/getEventListeners.min.js'></script>
   <title>EAC-C</title>
   <style> 
   .rectangles {
@@ -138,6 +138,7 @@ body::-webkit-scrollbar-thumb {
   }
 
   function mapPin(loc) {
+    console.log("lokasyon");
     var pin = document.getElementById("pin");
         pin.style.opacity = "1";
     for(m in pinXY){
@@ -148,6 +149,11 @@ body::-webkit-scrollbar-thumb {
         pin.scrollIntoView({behavior: "smooth", block: "center", inline: "center"});
       }
     }
+  }
+
+  function hidePin() {
+    var pin = document.getElementById("pin");
+    pin.style.opacity = "0";
   }
 
   const bldingBtns = document.querySelectorAll("a");
