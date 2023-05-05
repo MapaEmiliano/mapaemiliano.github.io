@@ -519,6 +519,25 @@ function checkIframe (frame, bldng2D) { // sets the fucntions of the iframe base
           }
         }
       }
+
+      if(Object.keys(locBtn.getEventListeners()).length > 0) {
+        if(Object.keys(locBtn.getEventListeners().click).length > 1) {
+          // console.log("removing loc listener!!!!!!!!!!!");
+          for(let lb in locBtn.getEventListeners().click) {
+            locBtn.removeEventListener(locBtn.getEventListeners().click[lb].type, locBtn.getEventListeners().click[lb].listener);
+          }
+        }
+      }
+
+      if(Object.keys(vtBtn.getEventListeners()).length > 0) {
+        if(Object.keys(vtBtn.getEventListeners().click).length > 1) {
+          // console.log("removing vt listener!!!!!!!!!!!");
+          for(let vb in vtBtn.getEventListeners().click) {
+            vtBtn.removeEventListener(vtBtn.getEventListeners().click[vb].type, vtBtn.getEventListeners().click[vb].listener);
+          }
+        }
+      }
+
     }
 
     const addSearchListener = async () => { // adds the event listeners to the buttons and searchbox
@@ -552,11 +571,13 @@ function checkIframe (frame, bldng2D) { // sets the fucntions of the iframe base
   } else if (frame === "eac3DFrame") { // if the frame is the 3D map
 
     const pinNames = []; // array of the names of the pins
-    if(selectedFrame.contentWindow.document.getElementById("pin").style.opacity == 1) { // if the pin is visible then hide it
+    setTimeout(function () {
+      if(selectedFrame.contentWindow.document.getElementById("pin").style.opacity == 1) { // if the pin is visible then hide it
 
-      selectedFrame.contentWindow.hidePin();
-
-    }
+        selectedFrame.contentWindow.hidePin();
+  
+      }
+    }, 500);
 
     data3D.forEach((d) => { 
       // Set data to the pinNames array

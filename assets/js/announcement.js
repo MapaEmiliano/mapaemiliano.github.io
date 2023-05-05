@@ -478,7 +478,6 @@ function displayAnnouncement(key, title, content, timestamp, imageURL, role) { /
   cardFooter.appendChild(editButton);
   cardFooter.appendChild(deleteButton);
   announcement.appendChild(cardBody);
-  // cardBody.appendChild(cardTimestamp);
   announcements.appendChild(announcement);
 }
 
