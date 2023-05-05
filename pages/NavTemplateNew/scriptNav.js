@@ -26,6 +26,8 @@ var paper = Raphael("matrix", gridWidth, gridHeight); // initialize Raphael (Gri
 var numRows = Math.ceil(gridHeight / nodeSize), // get the number of rows and columns of the grid
     numCols = Math.ceil(gridWidth / nodeSize); 
 
+var startedAnimation = false; // boolean to check if the route animation has started    
+
 function refreshGrid(area) { // function to refresh the grid when the area is changed
 
   // $("#matrix svg").html(""); // clear the grid canvas
@@ -330,10 +332,17 @@ function drawGrid(arrEnt) { // arrEnt = array of entrances, arrClicks = array of
   .attr("class", "endImg")
   .attr("opacity", 0);
 
+  var cover = paper.rect(0, 0, gridWidth, gridHeight) // initialize the cover object
+  .attr("fill", "red")
+  .attr("class", "cover")
+  .attr("opacity", 0);
+  
   gridObjs.push(startImg); // push the objects to the gridObjs array
   gridObjs.push(endImg);
   gridObjs.push(focusObj);
   gridObjs.push(pinObj);
+  gridObjs.push(cover);
+  
 
 }
 
@@ -379,6 +388,11 @@ function drawPath(path, path2) { // draw the route using the passed in path. pat
     focusPath.setAttribute("x", 0);
     focusPath.setAttribute("y", 0);
 
+    let coverRect = document.querySelector(".cover");
+    coverRect.style.display = "block";
+
+    startedAnimation = true;
+
     var i = 0;
     var size = this.nodeSize;
     var animatePath = function () {
@@ -400,6 +414,9 @@ function drawPath(path, path2) { // draw the route using the passed in path. pat
         
         this.path.animate({ path: newPath }, 100, animatePath);
         i++;
+      } else {
+        coverRect.style.display = "none";
+        startedAnimation = false;
       }
 
     }.bind(this);
@@ -407,6 +424,7 @@ function drawPath(path, path2) { // draw the route using the passed in path. pat
     animatePath();
 
 }
+
 
 function clearPath() { // clear the path if it exists.
   if (this.path) {
@@ -540,7 +558,10 @@ checkElement('rect').then(() => { // waits for the grid objects to finish drawin
 
 function navigateTo(posFrom, posTo) { // used to navigate to a location from the sidebar
 
-  const coordinates = {} // object to store the coordinates of the start points
+  if(startedAnimation == false) {
+    console.log("Started animation");
+
+      const coordinates = {} // object to store the coordinates of the start points
   for (var key in data.startPoints) { // loop through the start points and store the coordinates in the coordinates object
     coordinates[data.startPoints[key].Name] = [data.startPoints[key].Coordinates[0], data.startPoints[key].Coordinates[1]];
   }
@@ -608,6 +629,14 @@ function navigateTo(posFrom, posTo) { // used to navigate to a location from the
     drawPath(path); // calls drawPath function to draw the route.
 
   }
+
+    
+
+  } else {
+    alert("Animation already started. Please wait until it's finished!");
+    return;
+  }
+
 }
 
 function changeGrids(clone, minGrid, plusGrid) { // changes the grids for the current area

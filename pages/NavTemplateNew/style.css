@@ -65,6 +65,10 @@ svg {
   }
 }
 
+.cover {
+  display: none;
+}
+
 .circlers {
   opacity: .6;
   z-index: 99;
