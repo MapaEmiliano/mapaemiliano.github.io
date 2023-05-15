@@ -4428,7 +4428,7 @@ var B7 = {
   },
 
   startPoints: {
-    sp1: {
+    sp0: {
         Floor: 1,
         Name: "Entrance",
         Coordinates: [2, 80],
