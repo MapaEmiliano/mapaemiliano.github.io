@@ -1,14 +1,7 @@
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
-  import { getDatabase, set, child, ref, get, update, remove} from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
-  import { getAuth, createUserWithEmailAndPassword, sendPasswordResetEmail, sendEmailVerification, signInWithEmailAndPassword, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
-  import {
-    getStorage,
-    ref as sRef,
-    uploadBytesResumable, 
-    getDownloadURL,
-    deleteObject,
-  } from "https://cdnjs.cloudflare.com/ajax/libs/firebase/9.17.2/firebase-storage.min.js";
+  import { getDatabase, set, child, query, orderByKey, limitToLast, ref, get, remove, push, update} from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
+  import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
 
   // TODO: Add SDKs for Firebase products that you want to use
   // https://firebase.google.com/docs/web/setup#available-libraries
@@ -36,15 +29,6 @@
 
     if(curPage == "/index.html" || curPage == "/") { //User is not logged in and is in login page
 
-      const showPass = document.getElementById('passToggle');
-      const password = document.getElementById('password');
-      
-      showPass.addEventListener("click", function(){
-        this.classList.toggle("fa-eye-slash")
-        const type = password.getAttribute("type") === "password" ? "text" : "password"
-        password.setAttribute("type", type)
-      })
-
       const loginBtn = document.getElementById("loginBtn"); //get login button
       const inputs = document.querySelectorAll("input"); //get all inputs
 
@@ -64,35 +48,7 @@
     
     }
 
-      const forgotPass = document.getElementById("forgotPass"); //get forgot password button
-      forgotPass.addEventListener("click", (e) => { //add click event to forgot password button
-        
-        e.preventDefault(); //prevent default action
-        const resetPassEmail = prompt("Enter your email address to reset your password"); //prompt user to enter email address
-        if(resetPassEmail != null) { //if user entered an email address
-          sendPasswordResetEmail(auth, resetPassEmail) //send password reset email
-          .then(() => {
-            alert("Password reset email sent!");
-          }).catch((error) => {
-            alert(error.message);
-          });
-        } else { //if user did not enter an email address
-          alert("Please enter your email address to reset your password");
-        }
-
-      })
-      
     } else if (curPage == "/pages/signup.html") { //User is not logged in and is in signup page
-
-      let showPass = document.getElementById('passToggle');
-      let password = document.getElementById('password');
-      let passConf = document.getElementById('passConf');
-
-      showPass.addEventListener("click", function(){
-        this.classList.toggle("fa-eye-slash")
-        const type = password.getAttribute("type") === "password" ? "text" : "password"
-        password.setAttribute("type", type), passConf.setAttribute("type", type)
-      })
 
         const signUp = document.getElementById("createAcc"); //get signup button
         signUp.addEventListener("click", handler); //add click event to signup button
@@ -113,6 +69,7 @@
     
     } else { //User is logged in
 
+      $(document).ready(function () { //run functions when document is ready
       inactivityTime(); //check for inactivity
       auth.onAuthStateChanged(user => { //check if user is logged in
         
@@ -127,7 +84,6 @@
 
           get(child(data, `users/${user.uid}`)).then((snapshot) => { //get user data from database
             if (snapshot.exists()) {  //if user data exists
-              displayProfile();
 
               if(snapshot.val().newUser == true) { //if user is new, show tutorial modal
                 
@@ -173,7 +129,8 @@
                         notifCount--;
                         
                         if (notifCount < 1) { //if notification count is 0, hide notification count
-                          notifBell.style.display = "none";                  
+                          notifBell.style.display = "none";
+                          console.log("empty");
                         } else {
                           notifBell.innerHTML = notifCount;
                           notifBell.style.display = "block";
@@ -237,7 +194,7 @@
 
         }
       });
-    
+    });
   } 
 }
 
@@ -264,10 +221,10 @@
             email: email.value,
             LastLogin: new Date().toLocaleDateString(),
             Role: "User",
-            newUser: true,
-            profilePic: "https://firebasestorage.googleapis.com/v0/b/mapaemiliano-31b83.appspot.com/o/ProfilePics%2Fuser.png?alt=media&token=4db67858-baa5-4a38-b922-2c4122eacd72"
+            newUser: true
         }).then(() => {
 
+          
           updateProfile(auth.currentUser, { displayName: username.value, 
             Role: "User", newUser: true }) //update user profile
             .then(() => {
@@ -320,7 +277,7 @@
   
       } else if(!validPass.test(password.value)) { //check if password is valid
         
-        alert("Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter and one number! Do not use special characters!");
+        alert("Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter and one number!");
         password.focus();
         return false;
   
@@ -354,23 +311,15 @@
     }).then(() => {
       auth.onAuthStateChanged(user => {
         if(user) {
-          if(user.emailVerified || email.value.includes("adminMapa")) { //check if user has verified their email
-            console.log("User has logged in!");
-            window.location = '../pages/home.html'; //redirect to home page
+
+          if (user.emailVerified == false && !email.value.includes("adminMapa")) { //check if user has verified their email
+          
+            alert("Please verify your email!");
+            
           } else {
-            alert("Please verify your email first!");
-            const choice = confirm("Did not receive an email? Click OK to resend verification email!");
-            if(choice) {
-              sendEmailVerification(auth.currentUser).then(() => {
-                // Email verification sent!
-                alert("Email verification sent! Verify and login again!");
-                signOut(auth).then(() => {
-                window.location = '../'; //redirect to login page
-                }).catch((error) => {
-                  // An error happened.
-                });
-              });   
-            } 
+            alert("You have successfully logged in!");
+            window.location = '/pages/home.html'; //After successful login, user will be redirected to home.html
+
           }
         }
       });
@@ -421,243 +370,3 @@
     }
 };
   
-function editAccount() {
-  const newUsername = document.getElementById("newUserName").value; // Display a prompt dialog to enter the new username
-  const user = auth.currentUser;
-
-  if (newUsername !== null && newUsername.trim() !== "") {
-    // If the user entered a new username and it's not empty    
-    // Update the username in the authentication profile
-    updateProfile(user, { displayName: newUsername })
-      .then(() => {
-        // Update successful
-        update(ref(getDatabase(app), `users/${user.uid}`), { username: newUsername}).then(() => {
-          const usernameLabel = profileModal.querySelector("p:first-of-type");
-          usernameLabel.textContent = "Username: " + newUsername;
-          alert("Username updated successfully!");
-
-          const editProfileModal = document.getElementById("editProfile");
-          const bootstrapModal = bootstrap.Modal.getInstance(editProfileModal);
-          bootstrapModal.hide();
-
-        });
-
-      })
-      .catch((error) => {
-        // An error occurred
-        alert("Failed to update the username. Please try again later.");
-      });
-  }
-
-  const imgInput = document.getElementById("newProfPic");
-  let delImage;
-  if (imgInput.files[0] != null) {
-    console.log("file exists");
-
-    const uploadFiles = async (file) => {
-      
-      console.log("uploading");
-
-      // await delObject();
-      
-      const metadata = {
-        contentType: "image/jpeg",
-      };
-
-      const storageRef = sRef(
-        getStorage(app),
-        `ProfilePics/${user.uid}`
-      );
-
-      const uploadTask = uploadBytesResumable(
-        storageRef,
-        file.files[0],
-        metadata
-      );
-
-      uploadTask.on(
-        "state_changed",
-        null,
-        (error) => {
-          alert(error);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((URL) => {
-            console.log(URL);
-
-            update(ref(getDatabase(app), `users/${user.uid}`), { profilePic: URL}).then(() => {
-              window.location.reload();
-              console.log("Profile picture updated successfully!");
-            });
-            
-          });
-        }
-      );
-    };
-
-    // const delObject = () => { // Delete the old image
-    //   if (!newImg) {
-    //     delImage = sRef(getStorage(app), `ProfilePics/${user.uid}`);
-    //   } else {
-    //     delImage = sRef(
-    //       getStorage(app),
-    //       `ProfilePics/${user.uid}`
-    //     );
-    //   }
-
-    //   deleteObject(delImage)
-    //     .then(() => {
-    //     })
-    //     .catch((error) => {
-    //       // Uh-oh, an error occurred!
-    //     });
-    //   return;
-    // };
-
-    uploadFiles(imgInput);
-  }
-
-}
-
-  // function editAccount() {
-  //   const newUsernameInput = document.getElementById("newUserName");
-  //   const newProfilePicInput = document.getElementById("image");
-  
-  //   // Get the current values of the username and profile picture
-  //   const currentUsername = newUsernameInput.value;
-  //   const currentProfilePic = newProfilePicInput.files[0]; // Assumes only one file is selected
-  
-  //   auth.onAuthStateChanged(user => {
-  //     if (user) {
-  //       updateProfile(user,{
-  //         displayName: currentUsername
-  //       }).then(() => {
-  //         // Username updated successfully
-  //         console.log("Username updated successfully");
-  //       }).catch(error => {
-  //         // Handle any errors that occur during the update
-  //         console.log("Error updating username:", error);
-  //       });
-  
-  //       // Update the profile picture if a new one is selected
-  //       if (currentProfilePic) {
-  //         const storageRef = firebase.storage().ref();
-  //         const profilePicRef = storageRef.child("profilePictures/" + user.uid);
-          
-  //         profilePicRef.put(currentProfilePic).then(snapshot => {
-  //           console.log("Profile picture uploaded successfully");
-  //           // Get the download URL of the uploaded image
-  //           profilePicRef.getDownloadURL().then(url => {
-  //             // Update the user's profile with the new profile picture URL
-  //             user.updateProfile({
-  //               photoURL: url
-  //             }).then(() => {
-  //               // Profile picture URL updated successfully
-  //               console.log("Profile picture URL updated successfully");
-  //             }).catch(error => {
-  //               // Handle any errors that occur during the update
-  //               console.log("Error updating profile picture URL:", error);
-  //             });
-  //           });
-  //         }).catch(error => {
-  //           // Handle any errors that occur during the upload
-  //           console.log("Error uploading profile picture:", error);
-  //         });
-  //       }
-  //     }
-  //   });
-  
-  //   // close the modal
-  //   const editProfileModal = document.getElementById("editProfile");
-  //   const bootstrapModal = bootstrap.Modal.getInstance(editProfileModal);
-  //   bootstrapModal.hide();
-  // }
-  
-function deleteAccount() {
-  const user = auth.currentUser;
-
-  // Delete user data from the database
-  remove(ref(database, 'users/' + user.uid))
-    .then(() => {
-      // Delete the user
-      user.delete()
-        .then(() => {
-          // User deleted successfully
-          window.location = '../'; // Redirect to the login page
-        })
-        .catch((error) => {
-          // An error occurred while deleting the user
-          console.error(error);
-        });
-    })
-    .catch((error) => {
-      // An error occurred while deleting user data from the database
-      console.error(error);
-    });
-}
-  
-function displayProfile() {
-  const profileModal = document.getElementById("profileModal");
-  const profileTitle = document.getElementById("Profile");
-  const saveBtn = document.getElementById("saveBtn");
-  const delBtn = document.getElementById("delBtn");
-  const profileCont = document.querySelector(".ProfileCont");
-  const imgCont = document.querySelector(".profilePic");
-  const imgIcon = document.querySelector('.profileIcon');
-
-  auth.onAuthStateChanged(user => {
-    if (user) {
-      const username = user.displayName;
-      const email = user.email;
-     
-      const usernamePlaceholder = document.getElementById("usernamePlaceholder");
-      usernamePlaceholder.textContent = "Hello, " + username + "!";
-      profileTitle.textContent = "Profile";
-
-      // Create elements to display the profile information
-      const usernameLabel = document.createElement("p");
-      const emailLabel = document.createElement("p");
-
-      usernameLabel.textContent = "Username: " + username;
-      emailLabel.textContent = "Email: " + email;
-
-      profileCont.innerHTML = ""; // Clear previous content
-      imgCont.innerHTML = ""; // Clear previous content
-
-      // Create and set the profile picture
-      const profilePic = document.createElement("img");
-      const IconprofilePic = document.createElement("img");
-
-      get(ref(database, 'users/' + user.uid + '/profilePic')).then((snapshot) => {
-        profilePic.src = snapshot.val(); // Replace with the actual profile picture source
-        IconprofilePic.src = snapshot.val(); 
-      }).catch((error) => { console.error(error); });
-
-      profilePic.alt = "Profile Picture";
-      profilePic.classList.add("img-fluid", "profilePicStyle");
-      IconprofilePic.classList.add("img-fluid", "profileIcon");
-
-      imgIcon.appendChild(IconprofilePic);
-      imgCont.appendChild(profilePic);
-      profileCont.appendChild(usernameLabel);
-      profileCont.appendChild(emailLabel);
-
-      // Add event listeners to the buttons
-      saveBtn.addEventListener("click", () => {
-        editAccount();
-      });
-
-      delBtn.addEventListener("click", () => {
-        // Display an alert dialog
-        const confirmed = window.confirm("Are you sure you want to delete your account?");
-      
-        // Check the user's response
-        if (confirmed) {
-          deleteAccount(); // Call the deleteAccount() function
-        } else {
-          // Do nothing or handle the "no" response
-        }
-      });
-    }
-  });
-}

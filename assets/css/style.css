@@ -287,7 +287,7 @@ main {
 }
 
 #tutoHeader > h5{
-  color: black;
+  color: white;
   font-size: 30px;
   text-align: center;
 }
@@ -483,6 +483,37 @@ fieldset {
   position: relative;
   z-index: 1;
 
+}
+.profilePicStyle {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: block;
+}
+.ProfileCont{
+  width: 100%;
+  margin-top: 15px;
+}
+.profileIcon, .tutorialIcon{
+  height: 28px;
+  width: 28px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 5%;
+}
+
+
+
+
+.modal-header {
+  background-color: #8e0000de;
+  color: white;
 }
 
 /* start: Breakpoints */

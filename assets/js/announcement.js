@@ -501,7 +501,6 @@ function displayNotif(key, title, content, timestamp, imgURL) {
     "fs-3",
   );
   
-
   notifTitle.textContent = title;
   notifTitle.setAttribute("data-title", title);
 
@@ -509,7 +508,7 @@ function displayNotif(key, title, content, timestamp, imgURL) {
   notifContent.classList.add("card-text", "lead", "mx-3", "h-100", "text-black", "fs-6", "pt-3");
   notifContent.textContent = content;
   notifContent.setAttribute("data-content", content);
-
+    
   const notifFooter = parent.document.createElement("div");
   notifFooter.classList.add("card-footer", "text-muted", "lead");
 

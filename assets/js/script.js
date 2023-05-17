@@ -1,7 +1,6 @@
 $(document).ready(function () { // Start of document ready function
 
-  checkIframe("eac3DFrame"); // sets the default iframe to be loaded on page load to be eac3DFrame
-  clearFunc(); // clears the sidebar menu click event
+  initiateIframes(); // initiate the iframes
 
   $(".mainCont").css({ // sets the width of the main content to be the same as the topbar width
     width: "calc(" + $(".topBar").width() + "px + 30px)",
@@ -142,6 +141,29 @@ const checkElement = async (selector) => {
 // IFrame manipulate //
 
 //Checking which button is clicked and showing the corresponding iframe//
+
+const setIframeSrc = () => {
+
+  const navFrame = document.querySelector("#navFrame");
+  const eac3DFrame = document.querySelector("#eac3DFrame");
+  const vtFrame = document.querySelector("#vtFrame");
+  const annFrame = document.querySelector("#announceFrame");
+
+  navFrame.setAttribute("src", "../pages/NavTemplateNew/2DEac.html");
+  eac3DFrame.setAttribute("src", "../pages/EAC3D.html");
+  vtFrame.setAttribute("src", "https://jzhmrtn.github.io/");
+  annFrame.setAttribute("src", "../pages/announce.html");
+  
+
+};
+
+const initiateIframes = async () => {
+
+await setIframeSrc(); // checks if the button exists
+
+checkIframe("eac3DFrame"); // sets the default iframe to be loaded on page load to be eac3DFrame
+clearFunc(); // clears the sidebar menu click event
+
 const btns = document.querySelectorAll("#show-btn");
 const iframeDivs = document.querySelectorAll(".embed-responsive");
 let activeFrame;
@@ -182,6 +204,8 @@ for (let i = 0; i < btns.length; i++) {
       }
     }
   });
+}
+
 }
 
 // get references to the elements that will have event listeners
@@ -572,12 +596,13 @@ function checkIframe (frame, bldng2D) { // sets the fucntions of the iframe base
 
     const pinNames = []; // array of the names of the pins
     setTimeout(function () {
-      if(selectedFrame.contentWindow.document.getElementById("pin").style.opacity == 1) { // if the pin is visible then hide it
-
-        selectedFrame.contentWindow.hidePin();
-  
+      const pin = selectedFrame.contentWindow.document.getElementById("pin");
+      if(!pin) { // if the pin is visible then hide it
+        if(pin.style.opacity == 1){
+          selectedFrame.contentWindow.hidePin();
+        }
       }
-    }, 500);
+    }, 1000);
 
     data3D.forEach((d) => { 
       // Set data to the pinNames array

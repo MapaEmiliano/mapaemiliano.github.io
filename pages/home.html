@@ -26,7 +26,16 @@
             <a href="home.html" class="sidebar-logo text-uppercase fw-bold text-decoration-none text-light fs-4">Mapa-Emiliano</a>
             <i class="sidebar-toggle bi-map-fill ms-auto fs-5 d-none d-md-block text-light toggleInside"></i>
         </div>
+        <h5 class="d-flex justify-content-center align-item-center text-light text-nowrap"><span id="usernamePlaceholder"></span></h5>
         <ul class="sidebar-menu p-3 mb-5" id="sidebarList">
+            <li class="sidebar-menu-item" id="" data-bs-toggle="modal" data-bs-target="#profileModal">
+                <a href="#" >
+                    <!-- <i class="fa-solid fa-user sidebar-menu-item-icon"></i> -->
+                    <!-- <i class="fa-solid fa-user sidebar-menu-item-icon"></i> -->
+                    <i class="sidebar-menu-item-icon profileIcon"> <img src="" alt="" class="img-fluid"> </i>
+                    Profile
+                </a>
+            </li>
             <li class="sidebar-menu-item" id="show-btn">
                 <a href="../pages/announce.html">
                     <i class="fa-solid fa-bullhorn sidebar-menu-item-icon"></i>
@@ -39,12 +48,15 @@
                     About Us
                 </a>
             </li>
+
             <li class="sidebar-menu-item">
                 <a href="" id="signOut">
                     <i class="fa-solid fa-right-from-bracket sidebar-menu-item-icon"></i>
                     Sign Out
                 </a>
             </li>
+                  
+      
             <ul id="sideItem3D" style="display: block;">
                 <li class="sidebar-menu-item has-dropdown">
                     <a href="#">
@@ -258,6 +270,59 @@
     <div class="sidebar-overlay"></div>
     <!-- end: Sidebar -->
 
+    
+    <!-- Modal for Profile -->
+    <div class="modal fade" id="profileModal" tabindex="-1"  aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" >
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 id="Profile"></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body d-flex justify-content-center flex-wrap profileDetails">
+                <div class="profilePic profilePicStyle">
+                    <img src="" alt="" class="img-fluid ">
+                </div>
+                <div class="ProfileCont"></div>
+            </div>  
+
+            <div class="modal-footer d-flex justify-content-center flex-wrap">
+                <div class="w-100 justify-content-evenly d-flex">
+                    <button type="button" class="btn btn-color" id="editBtn" data-bs-toggle="modal" data-bs-target="#editProfile">Edit Account</button>
+                    <button type="button" class="btn btn-color" id="delBtn">Delete Account</button>
+                </div> 
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editProfile" tabindex="-1"  aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" >
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 id="Edit Profile"></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body d-flex justify-content-center flex-wrap profileDetails">
+                <div class="ProfileCont">
+                    <label for="image" >Change Profile Picture:</label>
+                    <input type="file" id="newProfPic" class="inputFile" name="image" accept="image/png, image/jpeg">
+                    <label for="">Username:</label>
+                    <input type="text" id="newUserName">
+                </div>
+            </div>  
+
+            <div class="modal-footer d-flex justify-content-center flex-wrap">
+                <div class="w-100 justify-content-evenly d-flex">
+                    <button type="button" class="btn btn-color" id="saveBtn">Save Changes</button>
+                </div> 
+            </div>
+        </div>
+        </div>
+    </div>
+
     <!-- start: Main -->
     <main class="bg-light">
         <div class="p-2">
@@ -295,7 +360,10 @@
                         </button>
                         
                         <button type="button" class="btn btn-sm text-light" id="show-demo-btn" data-bs-target="#demo-modal" data-bs-toggle="modal">
-                            <i class="fa-sharp fa-solid fa-robot"></i>
+                            <!-- <i class="fa-sharp fa-solid fa-robot"></i> -->
+                            <i>
+                            <img src="/imgs/Emil.jpg" alt="" class="tutorialIcon">
+                            </i>
                         </button>
 
                         <button type="button" class="btn btn-sm text-light a" data-bs-toggle="modal" data-bs-target="#notification-modal" id="show-notif-btn">
@@ -329,7 +397,7 @@
                               <div class="modal-content" id="tutoCont">
                                 <div class="modal-header" id="tutoHeader">
                                     <h5>Mapa Emiliano System Tutorial</h5>
-                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body tutoBody">
                                     <iframe width="100%" height="100%" src="https://www.youtube.com/embed/PnBJU1zQAtg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
@@ -345,7 +413,7 @@
         <div class="mainCont px-1 py-1 bg-main rounded shadow" >
 
             <div class="embed-responsive embed-responsive-16by9 sideCont" id="contAnnounce" style="display:none; height:100%; width:100%;">
-                <iframe src="../pages/announce.html" id="announceFrame" allowfullscreen width="100%" height="100%" frameborder="0"></iframe>
+                <iframe src="" id="announceFrame" allowfullscreen width="100%" height="100%" frameborder="0"></iframe>
             </div>  
 
             <div class="embed-responsive embed-responsive-16by9 sideCont" id="contAbout" style="display:none; height:100%; width:100%;">
@@ -353,16 +421,16 @@
             </div>   
 
             <div class="embed-responsive embed-responsive-16by9" id="cont3D" style="height:100%; width:100%;" class="active">
-                <iframe src="../pages/EAC3D.html" allowfullscreen id="eac3DFrame" height="100%" width="100%" frameborder="0"></iframe>
+                <iframe src="" allowfullscreen id="eac3DFrame" height="100%" width="100%" frameborder="0"></iframe>
             </div>
             
             <div class="embed-responsive embed-responsive-16by9" id="cont2D" style="display:none; height:100%; width:100%;">
-                <iframe src="../pages/NavTemplateNew/2DEac.html" id="navFrame" allowfullscreen width="100%" height="100%" frameborder="0"></iframe>
+                <iframe src="" id="navFrame" allowfullscreen width="100%" height="100%" frameborder="0"></iframe>
                 <!-- ../pages/NavTemplateNew/2DEac.html -->
             </div>
 
             <div class="embed-responsive embed-responsive-16by9" id="contVT" style="display:none; height:100%; width:100%;">
-                <iframe src="https://jzhmrtn.github.io/" id="vtFrame" frameborder="0" width="100%" height="100%" allowfullscreen sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals"></iframe>
+                <iframe src="" id="vtFrame" frameborder="0" width="100%" height="100%" allowfullscreen sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals"></iframe>
                 <!-- https://jzhmrtn.github.io/ -->
             </div>
 
@@ -398,11 +466,13 @@
         </div>
       </div>
 
+
+
     <!-- end: Main -->
     <!-- start: JS -->
     <script src="../assets/js/jquery.min.js"></script>
     <script src="../assets/js/bootstrap.bundle.js"></script>
-    <script src="../assets/js/script.js"></script>
+    <script defer src="../assets/js/script.js"></script>
     <script defer type="module" src="../assets/js/firebase.js"></script>
     <!-- end: JS -->
 </body>
