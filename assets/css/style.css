@@ -99,7 +99,7 @@ body::-webkit-scrollbar-thumb {
   background-color: #8e0000de;
 }
 
-.text-red:hover,
+/* .text-red:hover,
 .text-red {
   color: var(--bs-red);
 }
@@ -122,7 +122,7 @@ body::-webkit-scrollbar-thumb {
   min-width: 16rem;
   padding: 0;
   overflow: hidden;
-}
+} */
 /* start: Global */
 
 /* start: Sidebar */
@@ -498,16 +498,36 @@ fieldset {
   width: 100%;
   margin-top: 15px;
 }
-.profileIcon, .tutorialIcon{
-  height: 28px;
-  width: 28px;
+
+.profileIcon{
+  /* max-height: 150px; */
+  height: 150px;
+  width: 150px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 5%;
+  margin-bottom: 3%;
+  /* background-color: #0a58ca; */
 }
 
+.profileIcon img {
+   /* max-height: 150px; */
+   max-width: 100%;
+   max-height: 100%;
+   border-radius: 50%;
+   object-fit: cover;
+  
+}
+
+.tutorialIcon {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 
 

@@ -14,7 +14,7 @@ const gridNodeSize = { // list of areas and their respective node sizes
   B6: 42,
   B7: 40,
 };
-
+  
 const gridDataSetter = (result) => gridNodeSize[result] || "Not found!"; // return the node size of the grid according to current area
 
 var nodeSize = gridDataSetter(curArea); // set the node size of the grid according to current area
@@ -668,6 +668,8 @@ function addPin(location) { // adds a pin to the map
 
   clearAnims(); // clears the animations if they exist
 
+  let pinCoord; // variable to store the coordinates of the pin
+
   const pinCoords = {} // object to store the coordinates of the start points
 
   const pinCoordGetter = (pinLocPicked) => pinCoords[pinLocPicked] || "Not found!"; // return the picked location from sidebar
@@ -678,7 +680,7 @@ function addPin(location) { // adds a pin to the map
       pinCoords[data.startPoints[key].Name] = [data.startPoints[key].Coordinates[0] * nodeSize - 8, data.startPoints[key].Coordinates[1] * nodeSize - 40];
     }
 
-    var pinCoord = pinCoordGetter(location);
+    pinCoord = pinCoordGetter(location);
 
   } else {
 
@@ -686,8 +688,15 @@ function addPin(location) { // adds a pin to the map
       pinCoords[data.startPoints[key].Name] = [data.startPoints[key].PinLoc[0], data.startPoints[key].PinLoc[1]];
     }
 
-    var pinCoord = pinCoordGetter(location); // gets the coordinates of the pin
+    pinCoord = pinCoordGetter(location); // gets the coordinates of the pin
     
+  }
+
+  // console.log(pinCoord);
+
+  if(pinCoord == "Not found!") {
+    alert("Location not found!");
+    return;
   }
 
   var pin = document.querySelector(".pin"); // gets the pin reference

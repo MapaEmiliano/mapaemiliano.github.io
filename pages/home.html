@@ -26,13 +26,19 @@
             <a href="home.html" class="sidebar-logo text-uppercase fw-bold text-decoration-none text-light fs-4">Mapa-Emiliano</a>
             <i class="sidebar-toggle bi-map-fill ms-auto fs-5 d-none d-md-block text-light toggleInside"></i>
         </div>
-        <h5 class="d-flex justify-content-center align-item-center text-light text-nowrap"><span id="usernamePlaceholder"></span></h5>
+        <h5 class="d-flex justify-content-center align-item-center text-light text-nowrap w-100">
+            <div class="sidebar-logo text-center" >
+                <div class="profileIcon">
+                    <img src="" alt="" class="">
+                </div>
+                <span id="usernamePlaceholder" class="text-uppercase fw-bold text-decoration-none text-light fs-5"></span>
+            </div>
+        </h5>
+        <hr style="color: white; margin-bottom: 0;">
         <ul class="sidebar-menu p-3 mb-5" id="sidebarList">
             <li class="sidebar-menu-item" id="" data-bs-toggle="modal" data-bs-target="#profileModal">
                 <a href="#" >
-                    <!-- <i class="fa-solid fa-user sidebar-menu-item-icon"></i> -->
-                    <!-- <i class="fa-solid fa-user sidebar-menu-item-icon"></i> -->
-                    <i class="sidebar-menu-item-icon profileIcon"> <img src="" alt="" class="img-fluid"> </i>
+                    <i class="fa-solid fa-user sidebar-menu-item-icon"></i>
                     Profile
                 </a>
             </li>
@@ -282,7 +288,7 @@
 
             <div class="modal-body d-flex justify-content-center flex-wrap profileDetails">
                 <div class="profilePic profilePicStyle">
-                    <img src="" alt="" class="img-fluid ">
+                    <img src="" alt="" class=" ">
                 </div>
                 <div class="ProfileCont"></div>
             </div>  
@@ -308,7 +314,8 @@
             <div class="modal-body d-flex justify-content-center flex-wrap profileDetails">
                 <div class="ProfileCont">
                     <label for="image" >Change Profile Picture:</label>
-                    <input type="file" id="newProfPic" class="inputFile" name="image" accept="image/png, image/jpeg">
+                    <input type="file" id="newProfPic" class="inputFile mb-2" name="image" accept="image/png, image/jpeg">
+                    
                     <label for="">Username:</label>
                     <input type="text" id="newUserName">
                 </div>
@@ -400,7 +407,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body tutoBody">
-                                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/PnBJU1zQAtg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/PnBJU1zQAtg&origin=https://mapaemiliano.github.io" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                                 </div>
                               </div>
                             </div>

@@ -1,4 +1,4 @@
-$(document).ready(function () { // Start of document ready function
+  $(document).ready(function () { // Start of document ready function
 
   initiateIframes(); // initiate the iframes
 
@@ -277,6 +277,8 @@ function checkIframe (frame, bldng2D) { // sets the fucntions of the iframe base
 
   if (frame === "vtFrame") { // if the iframe id is vtFrame
     
+    searchBox.value = ""; // empties the search box
+
     let placeHolders = { // object to store the place holders of the search box
       Building1: "B1",
       Building2: "B2",
@@ -342,6 +344,8 @@ function checkIframe (frame, bldng2D) { // sets the fucntions of the iframe base
     addSearchListener();
 
   } else if (frame === "navFrame") { // if the iframe id is navFrame
+
+    searchBox.value = ""; // empties the search box
 
     if(selectedFrame.contentWindow.document.querySelector(".pin").style.opacity == 1) { // if the pin is visible then remove it
       selectedFrame.contentWindow.removePin();
@@ -594,11 +598,16 @@ function checkIframe (frame, bldng2D) { // sets the fucntions of the iframe base
 
   } else if (frame === "eac3DFrame") { // if the frame is the 3D map
 
+    searchBox.value = ""; // clears the search box
+
     const pinNames = []; // array of the names of the pins
     setTimeout(function () {
       const pin = selectedFrame.contentWindow.document.getElementById("pin");
-      if(!pin) { // if the pin is visible then hide it
-        if(pin.style.opacity == 1){
+      if(!pin) { // if the pin is null then reload the iframe
+        console.log("reloading");
+        selectedFrame.contentWindow.location.reload()
+      } else {
+        if(pin.style.opacity == 1){ // if the pin is visible then hide it
           selectedFrame.contentWindow.hidePin();
         }
       }

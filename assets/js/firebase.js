@@ -143,7 +143,7 @@
                     newUser: false
                   }).then(() => {
                     console.log("New user set to false");
-                    modalCreate.close();
+                    modalCreate.hide();
                   });
                 });
 
@@ -611,7 +611,7 @@ function displayProfile() {
       const email = user.email;
      
       const usernamePlaceholder = document.getElementById("usernamePlaceholder");
-      usernamePlaceholder.textContent = "Hello, " + username + "!";
+      usernamePlaceholder.textContent = username;
       profileTitle.textContent = "Profile";
 
       // Create elements to display the profile information
@@ -635,7 +635,7 @@ function displayProfile() {
 
       profilePic.alt = "Profile Picture";
       profilePic.classList.add("img-fluid", "profilePicStyle");
-      IconprofilePic.classList.add("img-fluid", "profileIcon");
+      IconprofilePic.classList.add("profileIcon");
 
       imgIcon.appendChild(IconprofilePic);
       imgCont.appendChild(profilePic);
