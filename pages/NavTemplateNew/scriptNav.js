@@ -30,7 +30,6 @@ var startedAnimation = false; // boolean to check if the route animation has sta
 
 function refreshGrid(area) { // function to refresh the grid when the area is changed
 
-  // $("#matrix svg").html(""); // clear the grid canvas
   const clearPaper = async () => {
   
   paper.remove(); // clear the grid canvas
@@ -561,9 +560,19 @@ function navigateTo(posFrom, posTo) { // used to navigate to a location from the
   if(startedAnimation == false) {
     console.log("Started animation");
 
-      const coordinates = {} // object to store the coordinates of the start points
+  const coordinates = {} // object to store the coordinates of the start points
   for (var key in data.startPoints) { // loop through the start points and store the coordinates in the coordinates object
     coordinates[data.startPoints[key].Name] = [data.startPoints[key].Coordinates[0], data.startPoints[key].Coordinates[1]];
+  }
+
+  let startID = document.getElementById("start");
+  let endID = document.getElementById("end");
+  if(startID){
+    startID.removeAttribute("id"); // removes the id of the start node if it exists
+    startPos = false;
+    if(endID){
+      endID.removeAttribute("id"); // removes the id of the end node if it exists
+    }
   }
 
   const coordSetter = (locationPicked) => coordinates[locationPicked] || "Not found!"; // return the picked location from sidebar

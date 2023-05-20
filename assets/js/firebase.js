@@ -29,11 +29,23 @@
   const database = getDatabase(app);
   const auth = getAuth();
 
+  let curPage = window.location.pathname; //get current page 
+  let timer;
+  if(curPage == "/pages/home.html") { //if current page is home page
+      let countDown = 0; //set countdown to 0
+      console.log(countDown);
+      timer = setInterval(() => { //set interval to check for inactivity
+        countDown++; //increase countdown by 1
+        console.log(countDown);
+        if(countDown == 60) { //if countdown reaches 60 seconds
+          window.location.reload(); //reload page
+        }
+      }, 1000);
+  }
+
   //Check current page and run functions
   window.onload = function pageChecker(){
-
-    let curPage = location.pathname; //get current page 
-
+    
     if(curPage == "/index.html" || curPage == "/") { //User is not logged in and is in login page
 
       const showPass = document.getElementById('passToggle');
@@ -112,12 +124,15 @@
       }
     
     } else { //User is logged in
-
+   
       inactivityTime(); //check for inactivity
+      let blocker = document.getElementById("blocker"); //get blocker element
+      let loading = document.getElementById("loading"); //get loading element
+
       auth.onAuthStateChanged(user => { //check if user is logged in
         
         if(user) { //if user is logged in
-
+ 
           let annFrame = document.getElementById("announceFrame"); //get iframe element for announcements
           function sendRole(func, role) { //function to send role to iframe
             annFrame.contentWindow.postMessage(func + role); //send role to iframe
@@ -126,7 +141,11 @@
           let data = ref(getDatabase(app)); //get database
 
           get(child(data, `users/${user.uid}`)).then((snapshot) => { //get user data from database
+            
             if (snapshot.exists()) {  //if user data exists
+              blocker.style.display = "none"; //hide blocker
+              loading.style.display = "none"; //hide loading
+              clearInterval(timer); //clear countdown
               displayProfile();
 
               if(snapshot.val().newUser == true) { //if user is new, show tutorial modal
@@ -522,7 +541,6 @@ function deleteAccount() {
 }
   
 function displayProfile() {
-  const profileModal = document.getElementById("profileModal");
   const profileTitle = document.getElementById("Profile");
   const saveBtn = document.getElementById("saveBtn");
   const delBtn = document.getElementById("delBtn");
