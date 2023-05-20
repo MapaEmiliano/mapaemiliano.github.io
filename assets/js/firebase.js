@@ -439,6 +439,7 @@ function editAccount() {
           const editProfileModal = document.getElementById("editProfile");
           const bootstrapModal = bootstrap.Modal.getInstance(editProfileModal);
           bootstrapModal.hide();
+          window.location.reload();
 
         });
 
@@ -450,15 +451,12 @@ function editAccount() {
   }
 
   const imgInput = document.getElementById("newProfPic");
-  let delImage;
   if (imgInput.files[0] != null) {
     console.log("file exists");
 
     const uploadFiles = async (file) => {
       
       console.log("uploading");
-
-      // await delObject();
       
       const metadata = {
         contentType: "image/jpeg",
@@ -495,83 +493,10 @@ function editAccount() {
       );
     };
 
-    // const delObject = () => { // Delete the old image
-    //   if (!newImg) {
-    //     delImage = sRef(getStorage(app), `ProfilePics/${user.uid}`);
-    //   } else {
-    //     delImage = sRef(
-    //       getStorage(app),
-    //       `ProfilePics/${user.uid}`
-    //     );
-    //   }
-
-    //   deleteObject(delImage)
-    //     .then(() => {
-    //     })
-    //     .catch((error) => {
-    //       // Uh-oh, an error occurred!
-    //     });
-    //   return;
-    // };
-
     uploadFiles(imgInput);
   }
 
 }
-
-  // function editAccount() {
-  //   const newUsernameInput = document.getElementById("newUserName");
-  //   const newProfilePicInput = document.getElementById("image");
-  
-  //   // Get the current values of the username and profile picture
-  //   const currentUsername = newUsernameInput.value;
-  //   const currentProfilePic = newProfilePicInput.files[0]; // Assumes only one file is selected
-  
-  //   auth.onAuthStateChanged(user => {
-  //     if (user) {
-  //       updateProfile(user,{
-  //         displayName: currentUsername
-  //       }).then(() => {
-  //         // Username updated successfully
-  //         console.log("Username updated successfully");
-  //       }).catch(error => {
-  //         // Handle any errors that occur during the update
-  //         console.log("Error updating username:", error);
-  //       });
-  
-  //       // Update the profile picture if a new one is selected
-  //       if (currentProfilePic) {
-  //         const storageRef = firebase.storage().ref();
-  //         const profilePicRef = storageRef.child("profilePictures/" + user.uid);
-          
-  //         profilePicRef.put(currentProfilePic).then(snapshot => {
-  //           console.log("Profile picture uploaded successfully");
-  //           // Get the download URL of the uploaded image
-  //           profilePicRef.getDownloadURL().then(url => {
-  //             // Update the user's profile with the new profile picture URL
-  //             user.updateProfile({
-  //               photoURL: url
-  //             }).then(() => {
-  //               // Profile picture URL updated successfully
-  //               console.log("Profile picture URL updated successfully");
-  //             }).catch(error => {
-  //               // Handle any errors that occur during the update
-  //               console.log("Error updating profile picture URL:", error);
-  //             });
-  //           });
-  //         }).catch(error => {
-  //           // Handle any errors that occur during the upload
-  //           console.log("Error uploading profile picture:", error);
-  //         });
-  //       }
-  //     }
-  //   });
-  
-  //   // close the modal
-  //   const editProfileModal = document.getElementById("editProfile");
-  //   const bootstrapModal = bootstrap.Modal.getInstance(editProfileModal);
-  //   bootstrapModal.hide();
-  // }
   
 function deleteAccount() {
   const user = auth.currentUser;

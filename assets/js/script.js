@@ -1,7 +1,5 @@
   $(document).ready(function () { // Start of document ready function
 
-  initiateIframes(); // initiate the iframes
-
   $(".mainCont").css({ // sets the width of the main content to be the same as the topbar width
     width: "calc(" + $(".topBar").width() + "px + 30px)",
   });
@@ -63,6 +61,9 @@
     $(".sidebar").addClass("collapsed"); 
     $(".mainCont").addClass("lowRes");
   }
+
+  initiateIframes(); // initiate the iframes
+
 });
 
 $(window).resize(function () { // window resize event
@@ -162,7 +163,6 @@ const initiateIframes = async () => {
 await setIframeSrc(); // checks if the button exists
 
 checkIframe("eac3DFrame"); // sets the default iframe to be loaded on page load to be eac3DFrame
-clearFunc(); // clears the sidebar menu click event
 
 const btns = document.querySelectorAll("#show-btn");
 const iframeDivs = document.querySelectorAll(".embed-responsive");
