@@ -457,9 +457,55 @@ function editAccount() {
 
           const editProfileModal = document.getElementById("editProfile");
           const bootstrapModal = bootstrap.Modal.getInstance(editProfileModal);
-          bootstrapModal.hide();
-          window.location.reload();
 
+          const imgInput = document.getElementById("newProfPic");
+          if (imgInput.files[0] != null) {
+            console.log("file exists");
+        
+            const uploadFiles = async (file) => {
+              
+              console.log("uploading");
+              
+              const metadata = {
+                contentType: "image/jpeg",
+              };
+        
+              const storageRef = sRef(
+                getStorage(app),
+                `ProfilePics/${user.uid}`
+              );
+        
+              const uploadTask = uploadBytesResumable(
+                storageRef,
+                file.files[0],
+                metadata
+              );
+        
+              uploadTask.on(
+                "state_changed",
+                null,
+                (error) => {
+                  alert(error);
+                },
+                () => {
+                  getDownloadURL(uploadTask.snapshot.ref).then((URL) => {
+                    console.log(URL);
+        
+                    update(ref(getDatabase(app), `users/${user.uid}`), { profilePic: URL}).then(() => {
+                      window.location.reload();
+                      console.log("Profile picture updated successfully!");
+                    });
+                    
+                  });
+                }
+              );
+            };
+        
+            uploadFiles(imgInput);
+          } else {
+            bootstrapModal.hide();
+            window.location.reload();
+          }      
         });
 
       })
@@ -467,52 +513,52 @@ function editAccount() {
         // An error occurred
         alert("Failed to update the username. Please try again later.");
       });
-  }
-
-  const imgInput = document.getElementById("newProfPic");
-  if (imgInput.files[0] != null) {
-    console.log("file exists");
-
-    const uploadFiles = async (file) => {
-      
-      console.log("uploading");
-      
-      const metadata = {
-        contentType: "image/jpeg",
-      };
-
-      const storageRef = sRef(
-        getStorage(app),
-        `ProfilePics/${user.uid}`
-      );
-
-      const uploadTask = uploadBytesResumable(
-        storageRef,
-        file.files[0],
-        metadata
-      );
-
-      uploadTask.on(
-        "state_changed",
-        null,
-        (error) => {
-          alert(error);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((URL) => {
-            console.log(URL);
-
-            update(ref(getDatabase(app), `users/${user.uid}`), { profilePic: URL}).then(() => {
-              window.location.reload();
-              console.log("Profile picture updated successfully!");
+  } else {
+    const imgInput = document.getElementById("newProfPic");
+    if (imgInput.files[0] != null) {
+      console.log("file exists");
+  
+      const uploadFiles = async (file) => {
+        
+        console.log("uploading");
+        
+        const metadata = {
+          contentType: "image/jpeg",
+        };
+  
+        const storageRef = sRef(
+          getStorage(app),
+          `ProfilePics/${user.uid}`
+        );
+  
+        const uploadTask = uploadBytesResumable(
+          storageRef,
+          file.files[0],
+          metadata
+        );
+  
+        uploadTask.on(
+          "state_changed",
+          null,
+          (error) => {
+            alert(error);
+          },
+          () => {
+            getDownloadURL(uploadTask.snapshot.ref).then((URL) => {
+              console.log(URL);
+  
+              update(ref(getDatabase(app), `users/${user.uid}`), { profilePic: URL}).then(() => {
+                window.location.reload();
+                console.log("Profile picture updated successfully!");
+              });
+              
             });
-            
-          });
-        }
-      );
-    };
-
-    uploadFiles(imgInput);
+          }
+        );
+      };
+  
+      uploadFiles(imgInput);
+    }
   }
 
 }
